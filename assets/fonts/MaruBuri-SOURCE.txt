@@ -1,0 +1,4 @@
+마루 부리 / 네이버 공식 웹폰트 원본 다운로드 (2026-10-27)
+https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css
+https://hangeul.naver.com/font
+Regular, SemiBold, Bold WOFF2 원본을 수정하지 않고 로컬에서 사용합니다.

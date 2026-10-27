@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ede8e1">
+  <meta name="description" content="혼자 읽던 책을 함께 나누는 소규모 북 스터디. 문장 사이에서 나에게 맞는 독서 모임을 만나보세요.">
+  <title>문장 사이 — 책으로 만나는 우리</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/SUIT-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/fonts/display.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <script type="module" src="assets/app.mjs"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">본문 바로가기</a>
+<svg class="filter-defs" aria-hidden="true" width="0" height="0"><defs>
+  <filter id="paper-edge" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".055" numOctaves="2" seed="12" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>
+</defs></svg>
+<div class="page-surface">
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="문장 사이 홈"><span class="brand-letters" aria-hidden="true"><i>문</i><i>장</i><i class="brand-space">사</i><i>이</i></span><svg class="brand-mark" viewBox="0 0 36 30" aria-hidden="true"><path d="M18 7C12 2 6 2 2 4v21c5-2 11-1 16 3 5-4 11-5 16-3V4c-4-2-10-2-16 3Z M18 7v21"/></svg></a>
+    <nav class="desktop-nav" aria-label="주 메뉴"><a href="#about">문장 사이 소개</a><a href="#meetings">함께 읽는 책</a><a href="how-it-works.html">참여 방법</a></nav>
+    <div class="header-actions"><a class="button button-dark button-small" href="find.html">모임 둘러보기</a><button class="button button-light button-small saved-trigger" type="button">내 신청<span class="saved-dot" hidden></span></button><button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button></div>
+  </header>
+  <div class="mobile-menu" id="mobile-menu" hidden><nav aria-label="모바일 주 메뉴"><a href="#about">문장 사이 소개</a><a href="#meetings">함께 읽는 책</a><a href="how-it-works.html">참여 방법</a></nav><a class="button button-dark" href="find.html">모임 둘러보기</a><button class="text-button saved-trigger" type="button">내 신청 보기</button></div>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div id="globe" aria-hidden="true"></div>
+      <div class="hero-copy"><h1 id="hero-title">혼자 읽던 책이,<br>함께 나누는 이야기가 되도록.</h1><p class="hero-subtitle">책 한 권과 서로 다른 생각이 만나는 곳, 문장 사이</p><div class="hero-actions"><a class="button button-dark" href="find.html">나에게 맞는 모임 찾기</a><a class="button button-light" href="how-it-works.html">어떻게 함께 읽나요</a></div></div>
+      <div class="reading-wall"><p>취향은 달라도, 이야기는 이어지니까</p><div class="ticker" lang="en" aria-label="Literature, Essays, Humanities, Philosophy, Art, Everyday Life"><div class="ticker-track"><span>Literature<span class="topic-icon">✳</span></span><span>Essays<span class="topic-icon">❧</span></span><span>Humanities<span class="topic-icon">✦</span></span><span>Philosophy<span class="topic-icon">⌘</span></span><span>Art<span class="topic-icon">✳</span></span><span>Everyday Life<span class="topic-icon">❧</span></span><span aria-hidden="true">Literature<span class="topic-icon">✳</span></span><span aria-hidden="true">Essays<span class="topic-icon">❧</span></span><span aria-hidden="true">Humanities<span class="topic-icon">✦</span></span><span aria-hidden="true">Philosophy<span class="topic-icon">⌘</span></span><span aria-hidden="true">Art<span class="topic-icon">✳</span></span><span aria-hidden="true">Everyday Life<span class="topic-icon">❧</span></span></div></div></div>
+    </section>
+
+    <section class="meetings-section content-section" id="meetings" aria-label="함께 읽는 모임">
+      <div class="section-note"><span>함께 읽는 풍경</span><span>대표 도서 1권 · 예시 모임 4가지</span></div>
+      <div class="paper-stack">
+        <article class="paper-card featured-book" data-meeting="silence">
+          <div class="card-copy"><div class="card-label"><span class="tiny-star" aria-hidden="true">✳</span> 이달의 대표 도서 · 막스 피카르트</div><div class="card-main"><h2>말이 잠시 멈춘 자리,<br>무엇이 남아 있을까요.</h2><p>10월 29일 오후 7시, 『침묵의 세계』를 함께 읽어요.<br class="desktop-break"> 책의 흐름과 핵심 질문, 우리만의 독서 노트를 펼쳐요.</p><a class="card-link" href="silence.html">침묵의 세계 · 독서 가이드와 모임 보기 <span aria-hidden="true">↗</span></a></div><div class="card-bottom"><p class="meeting-meta">10월 29일(목) 오후 7시 · 담당 발제 5명</p></div></div>
+          <div class="card-art art-sage"><div class="paper-print" aria-hidden="true"></div><span class="art-pencil" aria-hidden="true">a space for words to begin</span><div class="peel-frame" data-peel><img src="assets/book-silence-cover.jpg" width="700" height="989" alt="검정 바탕에 노란 제목 상자가 있는 침묵의 세계 개정3판 실제 표지"></div><span class="art-caption" aria-hidden="true">침묵을 읽고, 서로를 듣는 시간</span><span class="drag-hint" aria-hidden="true">문장 사이 독서 노트</span></div>
+        </article>
+        <article class="paper-card" data-meeting="fiction">
+          <div class="card-copy"><div class="card-label"><span class="tiny-star" aria-hidden="true">✳</span> 문학을 읽는 저녁</div><div class="card-main"><h2>같은 문장을 읽고,<br>다른 세계를 만나요.</h2><p>소설 속 인물의 선택부터 밑줄 친 한 문장까지.<br class="desktop-break"> 정답을 찾기보다, 서로의 시선을 빌려 읽어요.</p><button class="card-link" data-open-meeting="fiction" type="button">이 모임 자세히 보기 <span aria-hidden="true">↗</span></button></div><div class="card-bottom"><p class="meeting-meta">격주 화요일 · 저녁 7:30 · 온라인</p></div></div>
+          <div class="card-art art-peach"><div class="paper-print" aria-hidden="true"></div><span class="art-pencil" aria-hidden="true">a different point of view</span><div class="peel-frame" data-peel><img src="assets/book-forest.svg" width="480" height="480" alt="나무와 작은 별이 그려진 문장의 숲 책 콜라주"></div><span class="art-caption" aria-hidden="true">한 문장, 여러 개의 세계</span><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m6 10 4-4 4 4M10 6v9M5 4h10"/></svg>살짝 잡아당겨 보세요</span></div>
+        </article>
+        <article class="paper-card" data-meeting="essay">
+          <div class="card-copy"><div class="card-label"><span class="tiny-star" aria-hidden="true">❧</span> 나를 돌보는 읽기</div><div class="card-main"><h2>바쁜 하루 끝에서,<br>내 마음의 속도로.</h2><p>어떤 문장은 오늘의 나를 조금 더 알게 해줘요.<br class="desktop-break"> 에세이를 읽고 일상의 작은 장면을 나눠요.</p><button class="card-link" data-open-meeting="essay" type="button">이 모임 자세히 보기 <span aria-hidden="true">↗</span></button></div><div class="card-bottom"><p class="meeting-meta">격주 목요일 · 저녁 8:00 · 온라인</p></div></div>
+          <div class="card-art art-sage"><div class="paper-print" aria-hidden="true"></div><span class="art-pencil" aria-hidden="true">take your time</span><div class="peel-frame" data-peel><img src="assets/book-slow.svg" width="480" height="480" alt="차 한 잔과 창가가 그려진 느린 마음 책 콜라주"></div><span class="art-caption" aria-hidden="true">서두르지 않아도 괜찮아</span><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m6 10 4-4 4 4M10 6v9M5 4h10"/></svg>살짝 잡아당겨 보세요</span></div>
+        </article>
+        <article class="paper-card" data-meeting="humanities">
+          <div class="card-copy"><div class="card-label"><span class="tiny-star" aria-hidden="true">✦</span> 질문이 자라는 시간</div><div class="card-main"><h2>당연했던 것들에,<br>다시 물음표를 붙여요.</h2><p>도시와 일, 관계와 사회를 새로운 눈으로.<br class="desktop-break"> 인문서 한 권에서 시작해 우리 삶으로 이어가요.</p><button class="card-link" data-open-meeting="humanities" type="button">이 모임 자세히 보기 <span aria-hidden="true">↗</span></button></div><div class="card-bottom"><p class="meeting-meta">매달 둘째 토요일 · 오후 2:00 · 오프라인</p></div></div>
+          <div class="card-art art-lilac"><div class="paper-print" aria-hidden="true"></div><span class="art-pencil" aria-hidden="true">look a little closer</span><div class="peel-frame" data-peel><img src="assets/book-city.svg" width="480" height="480" alt="흑백 도시 건축이 그려진 낯선 도시 책 콜라주"></div><span class="art-caption" aria-hidden="true">익숙한 세상을 낯설게</span><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m6 10 4-4 4 4M10 6v9M5 4h10"/></svg>살짝 잡아당겨 보세요</span></div>
+        </article>
+        <article class="paper-card" data-meeting="free">
+          <div class="card-copy"><div class="card-label"><span class="tiny-star" aria-hidden="true">⌘</span> 각자의 책, 하나의 테이블</div><div class="card-main"><h2>당신이 좋아한 책을,<br>우리도 알고 싶어요.</h2><p>어떤 책이든 괜찮아요. 요즘 읽는 책을 가져와<br class="desktop-break"> 마음에 남은 이야기 하나를 들려주세요.</p><button class="card-link" data-open-meeting="free" type="button">이 모임 자세히 보기 <span aria-hidden="true">↗</span></button></div><div class="card-bottom"><p class="meeting-meta">매주 일요일 · 오전 10:00 · 온라인</p></div></div>
+          <div class="card-art art-butter"><div class="paper-print" aria-hidden="true"></div><span class="art-pencil" aria-hidden="true">bring your own story</span><div class="peel-frame" data-peel><img src="assets/book-night.svg" width="480" height="480" alt="달과 별이 그려진 밤의 대화 책 콜라주"></div><span class="art-caption" aria-hidden="true">좋아하는 마음을 나눠요</span><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m6 10 4-4 4 4M10 6v9M5 4h10"/></svg>살짝 잡아당겨 보세요</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="how-section content-section" id="how-it-works" aria-labelledby="how-title">
+      <h2 class="section-title" id="how-title">좋은 대화는, 이렇게 시작돼요.</h2>
+      <div class="steps-grid">
+        <article class="step"><div class="step-art"><img src="assets/step-choose.svg" width="728" height="456" alt="한 권의 책을 고르는 손 그림" loading="lazy"></div><div class="step-copy"><span class="step-number">하나</span><h3>마음이 가는 모임을 골라요</h3><p>읽고 싶은 주제, 편안한 시간.<br>지금의 나에게 맞는 모임을 찾아보세요.</p></div></article>
+        <article class="step"><div class="step-art"><img src="assets/step-note.svg" width="728" height="456" alt="밑줄과 메모가 남은 독서 노트 그림" loading="lazy"></div><div class="step-copy"><span class="step-number">둘</span><h3>한 문장쯤, 마음에 담아 와요</h3><p>완벽한 감상문은 필요 없어요.<br>좋았던 문장이나 떠오른 질문이면 충분해요.</p></div></article>
+        <article class="step"><div class="step-art"><img src="assets/step-talk.svg" width="728" height="456" alt="책과 찻잔이 놓인 대화 테이블 그림" loading="lazy"></div><div class="step-copy"><span class="step-number">셋</span><h3>서로의 이야기에 귀 기울여요</h3><p>말하는 만큼 듣는 시간도 소중하게.<br>다른 생각을 환영하는 자리를 함께 만들어요.</p></div></article>
+      </div>
+    </section>
+
+    <section class="sendoff-section" id="about" aria-labelledby="sendoff-title"><div class="sendoff-stage"><div class="ambient-wash" aria-hidden="true"></div><img class="floating-scrap scrap-one" src="assets/scrap-line.svg" width="180" height="160" alt="" loading="lazy"><img class="floating-scrap scrap-two" src="assets/scrap-flower.svg" width="180" height="180" alt="" loading="lazy"><img class="floating-scrap scrap-three" src="assets/scrap-book.svg" width="180" height="200" alt="" loading="lazy"><img class="floating-scrap scrap-four" src="assets/scrap-cup.svg" width="180" height="160" alt="" loading="lazy"><img class="floating-scrap scrap-five" src="assets/scrap-star.svg" width="180" height="180" alt="" loading="lazy"><div class="sendoff-copy"><p class="sendoff-note">책을 사이에 두고, 조금 더 가까이</p><h2 id="sendoff-title">다음 페이지는, 함께 넘겨요.</h2><a class="button button-dark" href="find.html">함께 읽을 모임 찾기</a></div></div></section>
+  </main>
+</div>
+<div class="footer-window"><footer class="site-footer"><div class="footer-legal"><span>© <span id="year">2026</span> 문장 사이</span><button class="text-button" data-info="about" type="button">모임 소개</button><button class="text-button" data-info="privacy" type="button">개인정보 안내</button></div><div class="footer-wordmark" aria-hidden="true">문장 사이</div></footer></div>
+
+<dialog class="meeting-dialog" id="meeting-dialog" aria-labelledby="meeting-title"><button class="dialog-close" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button><div id="dialog-content"></div></dialog>
+<div class="toast" role="status" aria-live="polite"></div>
+<noscript><p class="noscript-note">모임 소개는 그대로 읽을 수 있어요. 상세 보기와 참여 신청은 JavaScript가 필요해요.</p></noscript>
+</body>
+</html>

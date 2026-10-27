@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-10-23",
+  "book": {
+    "title": "침묵의 세계",
+    "originalTitle": "Die Welt des Schweigens",
+    "author": "막스 피카르트",
+    "translator": "최승자",
+    "publisher": "까치",
+    "edition": "개정3판",
+    "publicationDate": "2010-07-30",
+    "pages": 278,
+    "isbn13": "9788972914679",
+    "source": "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=7498220",
+    "cover": {
+      "file": "assets/book-silence-cover.jpg",
+      "width": 700,
+      "height": 989,
+      "source": "https://image.aladin.co.kr/product/749/82/letslook/8972914673_f.jpg",
+      "credit": "알라딘 도서 표지 · 까치"
+    }
+  },
+  "coverage": {
+    "fullTextVerified": false,
+    "type": "공개 목차·서문 및 본문 발췌·학술 해설을 바탕으로 만든 독서 길잡이",
+    "notVerified": [
+      "한국어판 전문",
+      "각 장의 한국어판 시작 쪽수",
+      "본문 전체를 대조한 장별 완독 요약"
+    ],
+    "editorialContent": [
+      "독서 동선",
+      "토론 질문",
+      "현대적 적용과 반론"
+    ],
+    "userProvided": [
+      "모임 일시",
+      "담당자",
+      "쪽수와 담당 장 제목"
+    ]
+  },
+  "club": {
+    "id": "silence",
+    "name": "침묵의 세계 함께 읽기",
+    "status": "일정·담당 범위 확정",
+    "format": "온라인",
+    "sessions": 1,
+    "minutesPerSession": null,
+    "participants": null,
+    "date": "2026-10-29T19:00:00+09:00",
+    "fee": null,
+    "storage": "참여 신청 체험은 현재 브라우저에만 저장",
+    "presenters": [
+      "승철",
+      "동진",
+      "지홍",
+      "건국",
+      "사무엘"
+    ],
+    "dateSource": "모임 제공 정보"
+  },
+  "sources": [
+    {
+      "id": "bibliography",
+      "type": "한국어판 서지·목차",
+      "url": "https://m.yes24.com/goods/detail/4066828"
+    },
+    {
+      "id": "german-preface",
+      "type": "독일어 서문 공개 발췌",
+      "url": "https://www.sarto.de/die-welt-des-schweigens"
+    },
+    {
+      "id": "french-excerpt",
+      "type": "프랑스 출판사 공개 본문 발췌",
+      "url": "https://www.editions-baconniere.ch/fr/catalogue/le-monde-du-silence"
+    },
+    {
+      "id": "theological-analysis",
+      "type": "학술 해설·2차 자료",
+      "author": "Yap Fu Lan",
+      "year": 2011,
+      "pagesConsulted": "인쇄쪽 79–82 · PDF 3–6쪽",
+      "url": "https://journal.driyarkara.ac.id/index.php/diskursus/article/download/203/117"
+    },
+    {
+      "id": "poetic-language",
+      "type": "학술 해설·2차 자료",
+      "author": "Adriano Marchetti",
+      "url": "https://licorne.edel.univ-poitiers.fr/index.php?id=5883"
+    }
+  ],
+  "assignments": [
+    {
+      "name": "승철",
+      "startPage": 1,
+      "endPage": 59,
+      "from": "침묵의 모습",
+      "through": "침묵 속의 마성과 말",
+      "startPageInferred": false,
+      "source": "모임 제공 정보"
+    },
+    {
+      "name": "동진",
+      "startPage": 60,
+      "endPage": 106,
+      "from": "말과 몸짓",
+      "through": "형상과 침묵",
+      "startPageInferred": false,
+      "source": "모임 제공 정보"
+    },
+    {
+      "name": "지홍",
+      "startPage": 107,
+      "endPage": 145,
+      "from": "사랑과 침묵",
+      "through": "농부와 침묵",
+      "startPageInferred": false,
+      "source": "모임 제공 정보"
+    },
+    {
+      "name": "건국",
+      "startPage": 146,
+      "endPage": 227,
+      "from": "침묵 속의 인간과 사물",
+      "through": "잡음어",
+      "startPageInferred": true,
+      "source": "모임 제공 정보"
+    },
+    {
+      "name": "사무엘",
+      "startPage": 228,
+      "endPage": null,
+      "from": "라디오",
+      "through": "침묵과 신앙",
+      "startPageInferred": true,
+      "source": "모임 제공 정보"
+    }
+  ],
+  "chapterGuide": {
+    "title": "동진 담당 일곱 장 상세 읽기",
+    "source": "assets/silence-seven-chapters.md",
+    "data": "assets/silence-chapters.json",
+    "providedOn": "2026-10-27",
+    "scope": "말과 몸짓–형상과 침묵 · 모임 담당 60–106쪽",
+    "preservation": "제공 자료의 본문·해설·예시·질문·활동·비교표·출처를 전체 보존"
+  }
+}
