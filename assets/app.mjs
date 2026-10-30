@@ -1,3 +1,4 @@
+import {initBookshelf} from './bookshelf.mjs';
 const $=selector=>document.querySelector(selector);
 const motion=matchMedia('(prefers-reduced-motion: reduce)');
 const wide=matchMedia('(min-width:768px)');
@@ -49,5 +50,6 @@ function onScroll(){pending=false;$('.brand').classList.toggle('is-collapsed',sc
 function requestScroll(){if(!pending){pending=true;requestAnimationFrame(onScroll)}}
 addEventListener('scroll',requestScroll,{passive:true});addEventListener('resize',requestScroll);motion.addEventListener('change',requestScroll);onScroll();updateSaved();
 const linkedMeeting=new URLSearchParams(location.search).get('meeting');if(Object.hasOwn(meetings,linkedMeeting)&&$('#meetings')){document.querySelector(`[data-open-meeting="${linkedMeeting}"]`)?.focus({preventScroll:true});showMeeting(linkedMeeting)}
+initBookshelf();
 import('./effects.mjs').then(m=>m.initEffects()).catch(error=>console.warn('Decorative effects unavailable; static artwork remains.',error));
 

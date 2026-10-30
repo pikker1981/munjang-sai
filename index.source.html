@@ -10,6 +10,7 @@
   <link rel="preload" href="assets/fonts/SUIT-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/fonts/display.css">
   <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/bookshelf.css">
   <script type="module" src="assets/app.mjs"></script>
 </head>
 <body>
@@ -32,6 +33,28 @@
     </section>
 
     <section class="meetings-section content-section" id="meetings" aria-label="함께 읽는 모임">
+      <div class="bookshelf" id="bookshelf" data-bookshelf aria-labelledby="bookshelf-title">
+        <div class="bookshelf-heading"><p class="bookshelf-eyebrow">문장 사이의 책장</p><h2 id="bookshelf-title">오늘은, 어떤 책을 펼칠까요?</h2><p id="bookshelf-description">『침묵의 세계』를 골라 독서 가이드로 들어가요.</p></div>
+        <div class="bookshelf-scene">
+          <div class="bookshelf-row">
+            <div class="bookshelf-placeholder" aria-hidden="true"></div>
+            <div class="bookshelf-placeholder bookshelf-placeholder--clay" aria-hidden="true"></div>
+            <a class="bookshelf-link" href="silence.html" data-bookshelf-link aria-label="침묵의 세계 — 독서 가이드 열기" aria-describedby="bookshelf-description">
+              <span class="bookshelf-book" aria-hidden="true">
+                <span class="bookshelf-face bookshelf-front"><img src="assets/book-silence-cover.jpg" width="700" height="989" alt="" decoding="async" loading="eager"></span>
+                <span class="bookshelf-face bookshelf-back"></span>
+                <span class="bookshelf-face bookshelf-spine"><span class="bookshelf-spine-title">침묵의 세계</span><span class="bookshelf-spine-author">막스 피카르트</span></span>
+                <span class="bookshelf-face bookshelf-pages"></span><span class="bookshelf-face bookshelf-top"></span><span class="bookshelf-face bookshelf-bottom"></span>
+              </span>
+              <span class="bookshelf-caption" aria-hidden="true"><strong>침묵의 세계</strong><span>막스 피카르트 · 독서 가이드 ↗</span></span>
+            </a>
+            <div class="bookshelf-placeholder bookshelf-placeholder--stone" aria-hidden="true"></div>
+            <div class="bookshelf-placeholder bookshelf-placeholder--blue" aria-hidden="true"></div>
+          </div>
+          <div class="bookshelf-plank" aria-hidden="true"></div>
+        </div>
+        <p class="bookshelf-note">함께 읽을 다음 책 네 권은 준비 중이에요.</p><span class="bookshelf-status" role="status" aria-live="polite" data-bookshelf-status></span>
+      </div>
       <div class="section-note"><span>함께 읽는 풍경</span><span>대표 도서 1권 · 예시 모임 4가지</span></div>
       <div class="paper-stack">
         <article class="paper-card featured-book" data-meeting="silence">
