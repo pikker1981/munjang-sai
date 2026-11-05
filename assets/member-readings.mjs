@@ -10,8 +10,20 @@ if(host){
  const key=id=>'sbs-member-reading-draft-v1:'+recordId+':'+id;
  host.insertAdjacentHTML('beforeend',`<nav class="member-reading-nav" aria-label="멤버별 정리 선택">${PEOPLE.map(([id,name])=>`<a href="#member-reading-${id}">${name}</a>`).join('')}</nav><div class="member-reading-list">${PEOPLE.map(([id,name])=>`<details class="member-reading-category" id="member-reading-${id}" data-reader="${id}"><summary><span>${name}</span><small data-range-label>담당 부분을 확인하고 있어요.</small></summary><div class="member-reading-body"><p class="member-reading-saved" data-saved>공통 정리 내용을 불러오고 있어요.</p><form data-reader-form="${id}"><label for="reading-range-${id}">담당 부분 · 쪽수 / 장</label><input id="reading-range-${id}" name="range" maxlength="300" disabled><label for="reading-content-${id}">${name}의 본문 정리</label><textarea id="reading-content-${id}" name="content" maxlength="20000" rows="10" placeholder="담당 부분의 내용과 핵심 생각, 발제 내용을 직접 정리해주세요." disabled></textarea><p class="member-reading-note">입력 중에는 이 브라우저에 초안으로 보관해요. 저장하면 이 책의 공통 정리와 모임 정리 화면에 함께 반영돼요.</p><button type="submit" class="member-reading-save" disabled>${name} 정리 저장</button><p class="member-reading-status" role="status"></p><div data-conflict></div></form>${id==='dongjin'&&guide?'<div data-existing-reading><p class="member-reading-original-label">동진의 기존 일곱 장 상세 자료</p></div>':''}</div></details>`).join('')}</div>`);
  if(guide){host.querySelector('[data-existing-reading]').append(guide);}
- function revealOriginal(){const target=document.getElementById(location.hash.slice(1));if(target===host)requestAnimationFrame(()=>host.scrollIntoView({block:'start',behavior:'instant'}));const original=target&&guide?.contains(target);const category=original?host.querySelector('[data-reader="dongjin"]'):target?.closest('.member-reading-category');if(category){host.querySelectorAll('.member-reading-category').forEach(item=>item.open=item===category);if(!original&&target===category)requestAnimationFrame(()=>category.scrollIntoView({block:'start',behavior:'instant'}));}}
- addEventListener('hashchange',revealOriginal);host.querySelector('.member-reading-nav').addEventListener('click',event=>{const link=event.target.closest('a');if(link&&link.hash===location.hash){event.preventDefault();revealOriginal();}});revealOriginal();
+ let selectedReader='dongjin';
+ function revealOriginal(){
+  let target;try{target=document.getElementById(decodeURIComponent(location.hash.slice(1)));}catch{}
+  const original=target&&guide?.contains(target),category=original?host.querySelector('[data-reader="dongjin"]'):target?.closest('.member-reading-category');
+  if(category)selectedReader=category.dataset.reader;
+  host.querySelectorAll('.member-reading-category').forEach(item=>{const selected=item.dataset.reader===selectedReader;item.hidden=!selected;item.open=selected;});
+  host.querySelectorAll('.member-reading-nav a').forEach(link=>{if(link.hash==='#member-reading-'+selectedReader)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
+  if(target===host)requestAnimationFrame(()=>host.scrollIntoView({block:'start',behavior:'instant'}));
+  if(category&&!original&&target===category)requestAnimationFrame(()=>host.scrollIntoView({block:'start',behavior:'instant'}));
+ }
+ addEventListener('hashchange',revealOriginal);
+ host.querySelector('.member-reading-nav').addEventListener('click',event=>{const link=event.target.closest('a');if(link&&link.hash===location.hash){event.preventDefault();revealOriginal();}});
+ host.addEventListener('click',event=>{if(event.target.closest('.member-reading-category > summary'))event.preventDefault();});
+ revealOriginal();
  function panel(id){return host.querySelector(`[data-reader="${id}"]`);}
  function snapshot(member){return {range:member?.range||'',content:member?.content||''};}
  function same(a,b){return a.range===b.range&&a.content===b.content;}

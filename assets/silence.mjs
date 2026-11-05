@@ -1,18 +1,26 @@
 const sectionLinks=[...document.querySelectorAll('.silence-rail nav a')];
 const sections=sectionLinks.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
 const progress=document.querySelector('.silence-progress span');
-let scrollQueued=false;
+let activeSection=sections[0],scrollQueued=false;
+function hashTarget(){try{return document.getElementById(decodeURIComponent(location.hash.slice(1)));}catch{return null;}}
 function updateReading(){
-  const threshold=innerWidth<=767?160:140;
-  let current=sections[0];
-  for(const section of sections){if(section.getClientRects().length&&section.getBoundingClientRect().top<=threshold)current=section;}
-  sectionLinks.forEach(a=>{if(a.hash===`#${current?.id}`)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
-  if(sections.length&&progress){const top=sections[0].getBoundingClientRect().top+scrollY;const end=sections.at(-1).getBoundingClientRect().bottom+scrollY-innerHeight;const fraction=Math.max(0,Math.min(1,(scrollY-top+threshold)/Math.max(1,end-top+threshold)));progress.style.width=`${Math.round(fraction*100)}%`;}
-  scrollQueued=false;
+ sectionLinks.forEach(a=>{if(a.hash==='#'+activeSection?.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
+ if(activeSection&&progress){const rect=activeSection.getBoundingClientRect(),threshold=innerWidth<=767?160:140;const fraction=Math.max(0,Math.min(1,(threshold-rect.top)/Math.max(1,rect.height-innerHeight+threshold)));progress.style.width=Math.round(fraction*100)+'%';}
+ scrollQueued=false;
 }
+function selectCategory(scroll=false){
+ const target=hashTarget(),guide=document.querySelector('#chapter-guide');
+ const selected=sections.find(section=>target&&(section===target||section.contains(target)))||((target&&guide&&(target===guide||guide.contains(target)))?document.querySelector('#member-readings'):null);
+ if(selected)activeSection=selected;else if(!location.hash)activeSection=sections[0];
+ sections.forEach(section=>section.hidden=section!==activeSection);
+ document.querySelector('.silence-leaves')?.classList.add('has-category-views');updateReading();
+ if(scroll&&selected)requestAnimationFrame(()=>{const destination=target?.getClientRects().length?target:selected;destination.scrollIntoView({block:'start',behavior:'instant'});});
+}
+addEventListener('hashchange',()=>selectCategory(true));
+document.addEventListener('click',event=>{const link=event.target.closest('a[href^="#"]');if(link&&link.hash===location.hash)selectCategory(true);});
 addEventListener('scroll',()=>{if(!scrollQueued){scrollQueued=true;requestAnimationFrame(updateReading);}},{passive:true});
 addEventListener('resize',updateReading);
-updateReading();
+selectCategory(Boolean(location.hash));
 const note=document.querySelector('#silence-note');
 const save=document.querySelector('#silence-note-save');
 const remove=document.querySelector('#silence-note-delete');
