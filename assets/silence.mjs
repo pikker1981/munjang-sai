@@ -21,6 +21,7 @@ document.addEventListener('click',event=>{const link=event.target.closest('a[hre
 addEventListener('scroll',()=>{if(!scrollQueued){scrollQueued=true;requestAnimationFrame(updateReading);}},{passive:true});
 addEventListener('resize',updateReading);
 selectCategory(Boolean(location.hash));
+document.addEventListener('DOMContentLoaded',()=>selectCategory(Boolean(location.hash)),{once:true});
 const note=document.querySelector('#silence-note');
 const save=document.querySelector('#silence-note-save');
 const remove=document.querySelector('#silence-note-delete');
