@@ -167,7 +167,7 @@ function attachBook(shelf,link){
     addEventListener('wheel',preventScroll,{passive:false});
     addEventListener('touchmove',preventScroll,{passive:false});
     link.setAttribute('aria-busy','true');
-    if(status)status.textContent=(link.querySelector('.bookshelf-caption strong')?.textContent||'책')+' 모임 기록을 여는 중이에요. Escape 키로 취소할 수 있어요.';
+    if(status)status.textContent=(link.querySelector('.bookshelf-caption strong')?.textContent||'책')+' 독서 가이드를 여는 중이에요. Escape 키로 취소할 수 있어요.';
     select(transaction);
   }
   link.addEventListener('click',handleClick);

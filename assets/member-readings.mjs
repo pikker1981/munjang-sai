@@ -3,14 +3,15 @@ import {fetchLibrary,publishStudy} from './study-client.mjs';
 const host=document.querySelector('#member-readings');
 const escapeHtml=value=>String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 if(host){
- const recordId=host.dataset.recordId||'silence',guide=document.querySelector('#chapter-guide');
+ let recordId=host.dataset.recordId||new URLSearchParams(location.search).get('record')||'';
+ const guide=document.querySelector('#chapter-guide');
  let library,record,ready=false;
  const states=new Map();
  const key=id=>'sbs-member-reading-draft-v1:'+recordId+':'+id;
- host.insertAdjacentHTML('beforeend',`<nav class="member-reading-nav" aria-label="멤버별 정리 선택">${PEOPLE.map(([id,name])=>`<a href="#member-reading-${id}">${name}</a>`).join('')}</nav><div class="member-reading-list">${PEOPLE.map(([id,name])=>`<details class="member-reading-category" id="member-reading-${id}" data-reader="${id}"><summary><span>${name}</span><small data-range-label>담당 부분을 확인하고 있어요.</small></summary><div class="member-reading-body"><p class="member-reading-saved" data-saved>공통 정리 내용을 불러오고 있어요.</p><form data-reader-form="${id}"><label for="reading-range-${id}">담당 부분 · 쪽수 / 장</label><input id="reading-range-${id}" name="range" maxlength="300" disabled><label for="reading-content-${id}">${name}의 본문 정리</label><textarea id="reading-content-${id}" name="content" maxlength="20000" rows="10" placeholder="담당 부분의 내용과 핵심 생각, 발제 내용을 직접 정리해주세요." disabled></textarea><p class="member-reading-note">입력 중에는 이 브라우저에 초안으로 보관해요. 저장하면 이 책의 공통 정리와 모임 정리 화면에 함께 반영돼요.</p><button type="submit" class="member-reading-save" disabled>${name} 정리 저장</button><p class="member-reading-status" role="status"></p><div data-conflict></div></form>${id==='dongjin'?'<div data-existing-reading><p class="member-reading-original-label">동진의 기존 일곱 장 상세 자료</p></div>':''}</div></details>`).join('')}</div>`);
+ host.insertAdjacentHTML('beforeend',`<nav class="member-reading-nav" aria-label="멤버별 정리 선택">${PEOPLE.map(([id,name])=>`<a href="#member-reading-${id}">${name}</a>`).join('')}</nav><div class="member-reading-list">${PEOPLE.map(([id,name])=>`<details class="member-reading-category" id="member-reading-${id}" data-reader="${id}"><summary><span>${name}</span><small data-range-label>담당 부분을 확인하고 있어요.</small></summary><div class="member-reading-body"><p class="member-reading-saved" data-saved>공통 정리 내용을 불러오고 있어요.</p><form data-reader-form="${id}"><label for="reading-range-${id}">담당 부분 · 쪽수 / 장</label><input id="reading-range-${id}" name="range" maxlength="300" disabled><label for="reading-content-${id}">${name}의 본문 정리</label><textarea id="reading-content-${id}" name="content" maxlength="20000" rows="10" placeholder="담당 부분의 내용과 핵심 생각, 발제 내용을 직접 정리해주세요." disabled></textarea><p class="member-reading-note">입력 중에는 이 브라우저에 초안으로 보관해요. 저장하면 이 책의 공통 정리와 모임 정리 화면에 함께 반영돼요.</p><button type="submit" class="member-reading-save" disabled>${name} 정리 저장</button><p class="member-reading-status" role="status"></p><div data-conflict></div></form>${id==='dongjin'&&guide?'<div data-existing-reading><p class="member-reading-original-label">동진의 기존 일곱 장 상세 자료</p></div>':''}</div></details>`).join('')}</div>`);
  if(guide){host.querySelector('[data-existing-reading]').append(guide);}
- function revealOriginal(){const target=document.getElementById(location.hash.slice(1));const original=target&&guide?.contains(target);const category=original?host.querySelector('[data-reader="dongjin"]'):target?.closest('.member-reading-category');if(category){host.querySelectorAll('.member-reading-category').forEach(item=>item.open=item===category);if(!original&&target===category)requestAnimationFrame(()=>category.scrollIntoView({block:'start',behavior:'instant'}));}}
- addEventListener('hashchange',revealOriginal);revealOriginal();
+ function revealOriginal(){const target=document.getElementById(location.hash.slice(1));if(target===host)requestAnimationFrame(()=>host.scrollIntoView({block:'start',behavior:'instant'}));const original=target&&guide?.contains(target);const category=original?host.querySelector('[data-reader="dongjin"]'):target?.closest('.member-reading-category');if(category){host.querySelectorAll('.member-reading-category').forEach(item=>item.open=item===category);if(!original&&target===category)requestAnimationFrame(()=>category.scrollIntoView({block:'start',behavior:'instant'}));}}
+ addEventListener('hashchange',revealOriginal);host.querySelector('.member-reading-nav').addEventListener('click',event=>{const link=event.target.closest('a');if(link&&link.hash===location.hash){event.preventDefault();revealOriginal();}});revealOriginal();
  function panel(id){return host.querySelector(`[data-reader="${id}"]`);}
  function snapshot(member){return {range:member?.range||'',content:member?.content||''};}
  function same(a,b){return a.range===b.range&&a.content===b.content;}
@@ -31,12 +32,22 @@ if(host){
  }
  async function load(){
   try{
-   library=await fetchLibrary();record=library.records.find(item=>item.id===recordId);if(!record)throw Error('이 책의 모임 기록을 찾지 못했어요.');ready=true;
+   library=await fetchLibrary();if(!recordId)recordId=library.latestId;record=library.records.find(item=>item.id===recordId);if(!record)throw Error('이 책의 모임 기록을 찾지 못했어요.');ready=true;
+   const bookHeader=document.querySelector('[data-reading-book]');
+   if(bookHeader){
+    const s=record.study;document.title=s.book+' — 독서 가이드 · S.B.S';bookHeader.querySelector('h1').textContent=s.book;bookHeader.querySelector('[data-reading-author]').textContent=s.bookInfo?.author||'함께 읽을 다음 책';bookHeader.querySelector('[data-reading-intro]').textContent=s.bookSummary||'아래 멤버별 공간에서 이 책의 내용을 함께 정리해요.';
+    bookHeader.querySelector('[data-reading-meeting]').textContent=(s.date||'날짜 미정')+' · '+(s.time||'시간 미정')+(s.place?' · '+s.place:'');
+    const image=bookHeader.querySelector('img');try{const u=new URL(s.bookInfo?.cover,location.href);if(s.bookInfo?.cover==='assets/book-silence-cover.jpg'||(u.protocol==='https:'&&!u.username&&!u.password&&!u.port&&['image.aladin.co.kr','image.yes24.com','contents.kyobobook.co.kr','image.kyobobook.co.kr'].includes(u.hostname))){image.src=u.href;image.alt=s.book+' 표지';image.hidden=false;bookHeader.querySelector('[data-reading-cover-empty]').hidden=true;}}catch{}
+    const summaryLink=bookHeader.querySelector('[data-reading-summary]');summaryLink.href='find.html?record='+encodeURIComponent(recordId)+'#summary';summaryLink.hidden=false;
+    bookHeader.querySelector('[data-reading-original]').hidden=recordId!=='silence';
+   }
    for(const [id]of PEOPLE){const base=snapshot(record.study.members[id]);let draft,raw=null;try{raw=localStorage.getItem(key(id));draft=JSON.parse(raw||'null');}catch{}
     const valid=draft&&typeof draft.range==='string'&&typeof draft.content==='string'&&draft.base&&typeof draft.base.range==='string'&&typeof draft.base.content==='string';
     states.set(id,{...(valid?{range:draft.range.slice(0,300),content:draft.content.slice(0,20000),base:snapshot(draft.base)}:{...base,base}),lastRaw:raw,draftKey:key(id)});show(id);backups(id);
    }
-  }catch(error){for(const [id]of PEOPLE)panel(id).querySelector('.member-reading-status').textContent='공통 기록을 불러오지 못했어요. 잠시 후 새로고침해주세요.';}
+   requestAnimationFrame(()=>{revealOriginal();const target=document.getElementById(location.hash.slice(1));if(target&&guide?.contains(target))target.scrollIntoView({block:'start',behavior:'instant'});});
+   if(guide){const link=document.createElement('a');link.className='member-reading-confirm';link.href='find.html?record='+encodeURIComponent(recordId)+'#summary';link.textContent='이 책의 전체 모임 정리 보기 ↗';host.querySelector('.member-reading-nav').after(link);}
+  }catch(error){for(const [id]of PEOPLE)panel(id).querySelector('.member-reading-status').textContent='공통 기록을 불러오지 못했어요. 잠시 후 새로고침해주세요.';const header=document.querySelector('[data-reading-book]');if(header){header.querySelector('h1').textContent='책의 기록을 불러오지 못했어요';header.querySelector('[data-reading-intro]').textContent='책장으로 돌아가 다시 선택해주세요.';}}
  }
  host.addEventListener('input',event=>{
   const form=event.target.closest('[data-reader-form]');if(!form)return;const id=form.dataset.readerForm,state=states.get(id);if(!state)return;
