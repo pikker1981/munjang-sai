@@ -30,14 +30,13 @@
 .brand-fullname{position:absolute;top:29px;left:0;font:400 10px/1.2 var(--sans);letter-spacing:0;white-space:nowrap;transition:opacity .24s}.brand.is-collapsed .brand-fullname{opacity:0}
 
 @media(max-width:640px){.hero h1{font-size:clamp(23px,6.4vw,28px);line-height:1.5;max-width:340px;margin-inline:auto;word-break:keep-all}.hero-subtitle{font-size:12px;line-height:1.8;max-width:300px}}
-/* Airy hero copy with a slow, warm shimmer across the letterforms. */
+/* Airy hero copy and a legible, staggered wave across individual letters. */
 .hero{padding-top:clamp(100px,9vw,140px)}
-.hero h1{line-height:1.7;text-shadow:0 0 18px rgba(202,169,107,.2)}
+.hero h1{line-height:1.7;color:#514a3f}
 .hero-subtitle{margin-top:36px}
 .hero-actions{margin-top:36px}
-@supports ((background-clip:text) or (-webkit-background-clip:text)){
-  .hero h1{background-image:linear-gradient(110deg,#514a3f 0%,#514a3f 39%,#76623f 47%,#625137 53%,#514a3f 61%,#514a3f 100%);background-size:250% 100%;background-position:140% 50%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:hero-text-glow 7s ease-in-out infinite}
-}
-@keyframes hero-text-glow{0%,12%{background-position:140% 50%;text-shadow:0 0 14px rgba(202,169,107,.12)}65%,100%{background-position:-40% 50%;text-shadow:0 0 22px rgba(202,169,107,.3)}}
-@media(max-width:640px){.hero{padding-top:92px}.hero h1{line-height:1.8}.hero-subtitle{margin-top:34px}.hero-actions{margin-top:34px}}
-@media(prefers-reduced-motion:reduce){.hero h1{animation:none;background:none;color:#514a3f;text-shadow:none}}
+.hero-word{display:inline-block;white-space:nowrap}
+.hero-letter{--letter-lift:-5px;display:inline-block;animation:hero-letter-wave 6.8s ease-in-out infinite;animation-delay:calc(var(--letter)*65ms)}
+@keyframes hero-letter-wave{0%,5%,30%,100%{transform:translateY(0);color:#514a3f;text-shadow:0 0 0 transparent}14%{transform:translateY(var(--letter-lift));color:#76623f;text-shadow:0 0 8px #d5ad6cb3,0 0 19px #d5ad6c80}22%{transform:translateY(1px);color:#625137;text-shadow:0 0 10px #d5ad6c40}}
+@media(max-width:640px){.hero{padding-top:92px}.hero h1{line-height:1.8}.hero-letter{--letter-lift:-3px}.hero-subtitle{margin-top:34px}.hero-actions{margin-top:34px}}
+@media(prefers-reduced-motion:reduce){.hero-letter{animation:none;transform:none;color:#514a3f;text-shadow:none}}
