@@ -10,6 +10,7 @@ const emptyStudy=()=>({date:'',time:'',place:'',book:'',bookLink:'',bookSummary:
 let study = emptyStudy();
 let storageFailed = false;
 let lookupPhase='idle',lookupMessage='',lookupTimer,lookupController,lookupSequence=0;
+let activeLookup=Promise.resolve();
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function normalizedStudy(raw){
  const next=emptyStudy();
@@ -58,7 +59,8 @@ function bookInfoHtml(){
  return `<section class="book-info-card" aria-labelledby="book-info-title"><p class="book-info-kicker">링크에서 가져온 책 정보</p><div class="book-info-heading">${cover?`<img src="${escapeHtml(cover)}" alt="${escapeHtml(b.title)} 표지" loading="lazy" referrerpolicy="no-referrer">`:''}<div><h2 id="book-info-title">${escapeHtml(b.title)}</h2><dl>${entries.map(([k,v])=>`<div><dt>${k}</dt><dd>${escapeHtml(v)}</dd></div>`).join('')}</dl></div></div><div class="finder-field"><label for="study-bookSummary">간단한 책 소개 <span>직접 수정 가능</span></label><textarea id="study-bookSummary" name="bookSummary" data-book-link="${escapeHtml(b.linkInput)}" maxlength="6000" placeholder="서점에 소개가 없으면 직접 작성해주세요.">${escapeHtml(study.bookSummary)}</textarea></div><p class="book-info-source">서점의 공개 소개를 간단히 표시했어요.${supportedBookUrl(b.sourceUrl)?` <a href="${escapeHtml(b.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(b.store)} 원문 보기 ↗</a>`:''}</p><button type="button" class="finder-back" data-action="lookup-book">책 정보 다시 불러오기 ↻</button><p class="book-info-message" role="status">${escapeHtml(message)}</p></section>`;
 }
 function updateBookInfo(){const slot=panel.querySelector('#book-info-slot');if(slot)slot.innerHTML=bookInfoHtml();}
-async function lookupBookInfo(){
+function lookupBookInfo(){activeLookup=performBookLookup();return activeLookup;}
+async function performBookLookup(){
  clearTimeout(lookupTimer);lookupController?.abort();const sequence=++lookupSequence;const link=study.bookLink.trim();
  if(!link){lookupPhase='idle';lookupMessage='';updateBookInfo();return;}
  if(!supportedBookUrl(link)){lookupPhase='error';lookupMessage='알라딘·교보문고·YES24의 도서 상세 링크를 입력해주세요. 검색·단축 링크는 지원하지 않아요.';updateBookInfo();return;}
@@ -79,10 +81,20 @@ async function lookupBookInfo(){
  }catch(error){if(sequence!==lookupSequence)return;lookupPhase='error';lookupMessage=error.name==='AbortError'?'조회 시간이 길어졌어요. 잠시 후 다시 조회해주세요.':error.message==='Failed to fetch'?'조회 서버에 연결하지 못했어요. 잠시 후 다시 조회해주세요.':error.message;updateBookInfo();}
  finally{clearTimeout(timeout);}
 }
+function renderSummary(){
+ try{study=readLatest()||study;}catch{storageFailed=true;}
+ const b=study.bookInfo,cover=b?safeCover(b.cover):'';
+ const date=/^\d{4}-\d{2}-\d{2}$/.test(study.date)?study.date.replace(/(\d{4})-(\d{2})-(\d{2})/,'$1년 $2월 $3일'):study.date;
+ const details=b?[['저자',b.author],['역자',b.translator],['출판사',b.publisher],['출간일',b.publishedAt],['쪽수',b.pages?b.pages+'쪽':''],['ISBN',b.isbn]].filter(([,v])=>v):[];
+ panel.innerHTML=`<article class="study-summary"><header class="study-summary-head"><p class="finder-eyebrow">S.B.S · 다음 스터디 모임</p><h1 tabindex="-1">다음 모임, 이렇게 함께 읽어요</h1><p>저장한 모임 정보와 책, 각자의 담당 내용을 한곳에 모았어요.</p><a class="finder-primary" href="#study">모임 정보 수정 ↗</a></header><div class="study-summary-grid"><section class="study-summary-card" aria-labelledby="summary-meeting-title"><p class="book-info-kicker">함께 만나는 날</p><h2 id="summary-meeting-title">다음 스터디 모임 안내</h2><dl class="study-summary-details">${[['날짜',date],['시간',study.time],['장소',study.place]].map(([k,v])=>`<div><dt>${k}</dt><dd>${escapeHtml(v||'아직 정하지 않았어요')}</dd></div>`).join('')}</dl></section><section class="study-summary-card" aria-labelledby="summary-book-title"><p class="book-info-kicker">함께 읽을 다음 책</p><div class="book-info-heading">${cover?`<img src="${escapeHtml(cover)}" alt="${escapeHtml(study.book||b.title)} 표지" referrerpolicy="no-referrer">`:''}<div><h2 id="summary-book-title">${escapeHtml(study.book||b?.title||'아직 정하지 않았어요')}</h2><dl>${details.map(([k,v])=>`<div><dt>${k}</dt><dd>${escapeHtml(v)}</dd></div>`).join('')}</dl></div></div>${study.bookSummary?`<h3>간단한 책 소개</h3><p class="study-summary-text">${escapeHtml(study.bookSummary)}</p>`:''}${supportedBookUrl(study.bookLink)?`<a class="study-summary-source" href="${escapeHtml(study.bookLink)}" target="_blank" rel="noopener noreferrer">도서 원문 링크 보기 ↗</a>`:''}</section><section class="study-summary-members" aria-labelledby="summary-members-title"><div class="study-summary-section-head"><p class="book-info-kicker">각자의 읽기, 함께 나눌 생각</p><h2 id="summary-members-title">개별 담당 정리</h2></div><div class="study-summary-member-grid">${people.map(([id,name])=>`<article class="study-summary-card"><div class="study-summary-member-head"><h3>${name}</h3><a href="#member-${id}">${name} 담당 수정 ↗</a></div><p class="study-summary-range">${escapeHtml(study.members[id].range||'담당 부분 미정')}</p><p class="study-summary-text${study.members[id].content?'':' is-empty'}">${escapeHtml(study.members[id].content||'아직 작성한 담당 내용이 없어요.')}</p></article>`).join('')}</div></section></div><footer class="study-summary-footer"><a class="finder-back" href="index.html">← 메인으로</a><p>이 정리본은 현재 브라우저에 저장한 내용을 보여줘요.</p><a class="finder-primary" href="#study">모임 정보 수정 ↗</a></footer></article>`;
+ panel.querySelector('h1')?.focus({preventScroll:true});
+}
 function render() {
  const hash=location.hash.slice(1);
  const person=people.find(([id])=>hash==='member-'+id);
+ document.body.classList.toggle('is-study-summary',hash==='summary');
  left.classList.toggle('is-form',hash==='study'||Boolean(person));
+ if(hash==='summary'){renderSummary();return;}
  if(hash!=='study'&&!person){panel.innerHTML=intro;return;}
  let title,subtitle,body,back;
  if(person) {
@@ -118,7 +130,20 @@ panel.addEventListener('input',event=>{
  status();
 });
 panel.addEventListener('keydown',event=>{if(event.target.name==='bookLink'&&event.key==='Enter'){event.preventDefault();lookupBookInfo();}});
-panel.addEventListener('submit',event=>{event.preventDefault();persist();status();});
+panel.addEventListener('submit',async event=>{
+ event.preventDefault();
+ if(location.hash!=='#study'){persist();status();return;}
+ const link=study.bookLink,button=event.submitter;
+ if(button)button.disabled=true;
+ try{
+  clearTimeout(lookupTimer);
+  if(lookupPhase==='loading'){status('책 정보를 불러온 뒤 전체 정리 화면으로 이동할게요.');await activeLookup;}
+  else if(link.trim()&&!study.bookInfo&&supportedBookUrl(link)){status('책 정보를 확인하고 있어요.');await lookupBookInfo();}
+  if(location.hash!=='#study')return;
+  if(study.bookLink!==link){status('책 링크가 변경됐어요. 확인 후 다시 저장해주세요.');return;}
+  if(persist())location.hash='summary';else status();
+ }finally{if(button)button.disabled=false;}
+});
 addEventListener('hashchange',render);
 render();
 const pause=document.querySelector('.finder-pause');
