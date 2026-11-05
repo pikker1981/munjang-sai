@@ -5,7 +5,7 @@ let scrollQueued=false;
 function updateReading(){
   const threshold=innerWidth<=767?160:140;
   let current=sections[0];
-  for(const section of sections){if(section.getBoundingClientRect().top<=threshold)current=section;}
+  for(const section of sections){if(section.getClientRects().length&&section.getBoundingClientRect().top<=threshold)current=section;}
   sectionLinks.forEach(a=>{if(a.hash===`#${current?.id}`)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
   if(sections.length&&progress){const top=sections[0].getBoundingClientRect().top+scrollY;const end=sections.at(-1).getBoundingClientRect().bottom+scrollY-innerHeight;const fraction=Math.max(0,Math.min(1,(scrollY-top+threshold)/Math.max(1,end-top+threshold)));progress.style.width=`${Math.round(fraction*100)}%`;}
   scrollQueued=false;
