@@ -4,6 +4,7 @@ import {initMotionControl,isMotionPaused,revealPanel,cancelPanelAnimation} from 
 const $=selector=>document.querySelector(selector);
 const motion=matchMedia('(prefers-reduced-motion: reduce)');
 const wide=matchMedia('(min-width:768px)');
+const touchScroll=matchMedia('(hover:none), (pointer:coarse), (any-pointer:coarse)');
 const dialog=$('#meeting-dialog');
 const content=$('#dialog-content');
 const storageKey='munjang-sai-applications-v1';
@@ -51,9 +52,9 @@ content.addEventListener('click',e=>{if(e.target.closest('[data-show-saved]'))sh
 document.querySelectorAll('[data-info]').forEach(b=>b.addEventListener('click',event=>{event.preventDefault();const privacy=b.dataset.info==='privacy';openDialog(`<div class="dialog-top"><p class="dialog-eyebrow">S.B.S(Solafide Book Study)</p><h2 id="meeting-title">${privacy?'개인정보 안내':'책으로 만나는 우리'}</h2><p>${privacy?'개인 노트와 공개 모임 기록을 구분해요.':'책 한 권을 사이에 두고 서로의 생각을 나눠요.'}</p></div><div class="dialog-body"><p style="font-size:14px;line-height:1.9">${privacy?'개인 신청 내용과 도서 가이드의 독서 노트·밑줄은 현재 기기의 브라우저에 보관돼요. 다음 스터디의 일정·도서·개별 담당 및 발제는 입력 중에는 초안으로 보관하고, 편집 암호로 마무리 저장하면 서버의 공통 기록에 저장되어 모든 방문자에게 공개돼요. 개인 연락처는 수집하지 않아요. 공유 기기에서는 개인 노트와 초안을 정리해주세요.':'S.B.S는 읽기의 즐거움을 대화로 이어가는 소규모 북 스터디를 제안해요. 다른 생각을 존중하고, 끝까지 읽지 못한 날에도 편하게 이야기할 수 있는 자리를 지향해요.'}</p><p class="detail-note">대표 도서 『침묵의 세계』는 실제 출간 도서예요. 공개 저장한 도서·일정·멤버 정리는 방문자가 함께 보는 모임 기록이에요. 나머지 큐레이션 카드와 로컬 신청 화면은 체험용 예시예요. 실제 모집 접수와 결제 기능은 제공하지 않아요.</p></div>`)}));
 
 let pending=false;
-function onScroll(){pending=false;$('.brand').classList.toggle('is-collapsed',scrollY>56);updateFooter();const cards=[...document.querySelectorAll('.paper-card')];if(!wide.matches||motion.matches){cards.forEach(c=>{c.style.transform='';c.style.filter='';c.style.removeProperty('--dim')});return}const tops=cards.map(c=>c.getBoundingClientRect().top);cards.forEach((card,i)=>{if(i===cards.length-1)return;const bottom=tops[i]+card.offsetHeight,p=Math.max(0,Math.min(1,(bottom-tops[i+1])/Math.max(1,bottom-112)));card.style.transform=`translateY(${-8*p}px) scale(${1-.035*p})`;card.style.setProperty('--dim',String(.5*p));card.style.filter=p>.6?`blur(${2*(p-.6)/.4}px)`:''})}
+function onScroll(){pending=false;$('.brand').classList.toggle('is-collapsed',scrollY>56);updateFooter();const cards=[...document.querySelectorAll('.paper-card')];if(!wide.matches||touchScroll.matches||motion.matches){cards.forEach(c=>{c.style.transform='';c.style.filter='';c.style.removeProperty('--dim')});return}const tops=cards.map(c=>c.getBoundingClientRect().top);cards.forEach((card,i)=>{if(i===cards.length-1)return;const bottom=tops[i]+card.offsetHeight,p=Math.max(0,Math.min(1,(bottom-tops[i+1])/Math.max(1,bottom-112)));card.style.transform=`translateY(${-8*p}px) scale(${1-.035*p})`;card.style.setProperty('--dim',String(.5*p));card.style.filter=p>.6?`blur(${2*(p-.6)/.4}px)`:''})}
 function requestScroll(){if(!pending){pending=true;requestAnimationFrame(onScroll)}}
-addEventListener('scroll',requestScroll,{passive:true});addEventListener('resize',requestScroll);motion.addEventListener('change',requestScroll);onScroll();updateSaved();
+addEventListener('scroll',requestScroll,{passive:true});addEventListener('resize',requestScroll);motion.addEventListener('change',requestScroll);touchScroll.addEventListener('change',requestScroll);onScroll();updateSaved();
 const linkedMeeting=new URLSearchParams(location.search).get('meeting');if(Object.hasOwn(meetings,linkedMeeting)&&$('#meetings')){document.querySelector(`[data-open-meeting="${linkedMeeting}"]`)?.focus({preventScroll:true});showMeeting(linkedMeeting)}
 let effectsModule=null,effectsCleanup=()=>{};
 initMotionControl();

@@ -1,0 +1,21 @@
+/* Keep touch scrolling in normal document flow, including iPad with a trackpad. */
+@media (hover: none), (pointer: coarse), (any-pointer: coarse) {
+  .home-page .paper-card {
+    position: relative;
+    top: auto;
+    transform: none !important;
+    filter: none !important;
+    will-change: auto;
+    --dim: 0 !important;
+  }
+
+  .home-page .footer-window {
+    min-height: 0;
+    clip-path: none;
+  }
+
+  .home-page .site-footer {
+    position: relative;
+    inset: auto;
+  }
+}
