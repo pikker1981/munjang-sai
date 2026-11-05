@@ -9,3 +9,5 @@
 .finder-field .finder-consent{display:flex;font-weight:400;margin-bottom:0}.finder-field .finder-consent span{font-size:12px;color:#5d564b}
 
 
+
+.study-members{margin-top:26px}.study-members h2{font:600 18px/1.6 var(--display);letter-spacing:-.04em}.study-members>p,.study-book-context{font-size:12px;color:#7c776e;margin:7px 0 15px}.study-member-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.study-member{background:#faf8f5;border:1px solid #e4dfd7;border-radius:7px;padding:12px;text-align:left;min-height:64px;overflow-wrap:anywhere}.study-member strong{display:block;font-size:13px;font-weight:600}.study-member span{display:block;font-size:11px;color:#7c776e;margin-top:4px}.study-member:hover{background:#f0ebe3;border-color:#b2a593}.study-book-context{padding:10px 12px;background:#faf8f5;border-radius:6px;margin-top:0}.finder-field #member-content{min-height:200px}.finder-field #member-questions{min-height:130px}
