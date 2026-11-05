@@ -1,12 +1,14 @@
 import {cachedLibrary,libraryHasCache,fetchLibrary,publishStudy} from './study-client.mjs';
 import {beginLoading} from './loading.mjs';
 import {revealPanel,isMotionPaused,setMotionPaused} from './motion.mjs';
+import {enhanceDateTimeFields} from './date-time-picker.mjs';
 const panel = document.querySelector('#finder');
 const left = document.querySelector('.finder-left');
 const intro = panel.innerHTML;
 const recordId=new URLSearchParams(location.search).get('record')||'';
 const storageKey = recordId?'sbs-study-draft-v1:'+recordId:'sbs-next-study-v1';
 let hadCachedLibrary=libraryHasCache(),connectionPending=false,bookLoader,publicLoader;
+let pickerCleanup=()=>{};
 let publicLibrary=cachedLibrary(),publicReady=false,publicFailure='',recordVersion=publicLibrary.records.find(record=>record.id===recordId)?.version||0;
 const people = [['dongjin','서동진'],['geonguk','안건국'],['jihong','유지홍'],['seungcheol','김승철'],['jingyu','박진규'],['samuel','안사무엘']];
 const fields = ['date','time','place','book','bookLink','bookSummary'];
@@ -142,7 +144,7 @@ function updateConnectionNotice(){
  form.querySelector('button[type="submit"]').disabled=!publicReady&&(!location.hash.startsWith('#member-')||Boolean(recordId));
 }
 function render(){
- publicLoader?.cancel();bookLoader?.cancel();renderView();updatePreview();updateConnectionNotice();
+ publicLoader?.cancel();bookLoader?.cancel();pickerCleanup();renderView();pickerCleanup=enhanceDateTimeFields(panel)||(()=>{});updatePreview();updateConnectionNotice();
  const loading=panel.querySelector('[data-library-loading]:not([data-library-loading="false"])');if(loading)publicLoader=beginLoading(loading,{kind:'book',label:'확정 모임을 불러오고 있어요'});
  if(publicFailure&&hadCachedLibrary&&location.hash==='#summary'){const note=document.createElement('p');note.className='study-connection-status';note.setAttribute('role','status');note.textContent='연결하지 못해 이 브라우저에 저장된 기록을 보여주고 있어요. 최신 정보와 다를 수 있어요. ';const retry=document.createElement('button');retry.type='button';retry.className='finder-back';retry.dataset.action='reload-public';retry.textContent='최신 기록 다시 확인';note.append(retry);panel.prepend(note);}
  revealPanel(panel.querySelector('.finder-form,.study-summary,.finder-intro'));
