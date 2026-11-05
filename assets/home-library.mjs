@@ -7,6 +7,7 @@ function imageFor(record){
  return 'assets/book-placeholder.svg';
 }
 const guideHref=record=>record.id==='silence'?'silence.html':'reading.html?record='+encodeURIComponent(record.id);
+const summaryHref=record=>'find.html?record='+encodeURIComponent(record.id)+'#summary';
 function schedule(study){
  let date='날짜 미정';
  if(/^\d{4}-\d{2}-\d{2}$/.test(study.date)){const d=new Date(study.date+'T00:00:00+09:00');date=`${Number(study.date.slice(5,7))}월 ${Number(study.date.slice(8,10))}일(${'일월화수목금토'[d.getUTCDay()===6?0:d.getUTCDay()+1]})`;}
@@ -21,16 +22,25 @@ export function initHomeLibrary(initBookshelf,{beforeChange=()=>{},afterChange=(
  const shelf=document.querySelector('[data-bookshelf]');if(!shelf)return;
  const row=shelf.querySelector('.bookshelf-row'),featured=document.querySelector('.featured-book');
  const originalFeatured=featured?.innerHTML;
- let cleanup=()=>{},library=cachedLibrary(),lastSignature='',lastFetch=0;
+ let cleanup=()=>{},library=cachedLibrary(),lastSignature='',lastFetch=0,fetching=false;
+ function updateStatus(offline){
+  const note=shelf.querySelector('.bookshelf-note');if(!note)return;
+  note.setAttribute('role','status');
+  note.textContent=offline?'공통 기록에 연결하지 못했어요. 표시된 책장은 최신이 아닐 수 있어요.':'가운데는 이번 모임의 책, 옆에는 함께 읽어온 책들이에요.';
+  if(offline){const retry=document.createElement('button');retry.type='button';retry.className='text-button bookshelf-retry';retry.textContent='다시 연결';retry.addEventListener('click',()=>refresh({force:true}));note.append(retry);}
+ }
  function apply(next,{offline=false}={}){
-  const signature=JSON.stringify(next)+offline;if(signature===lastSignature)return;lastSignature=signature;library=next;
+  if(!next?.records?.length){updateStatus(true);return;}
+  const signature=JSON.stringify(next);if(signature===lastSignature){updateStatus(offline);return;}lastSignature=signature;library=next;
   beforeChange();cleanup();
-  const current=library.records.find(record=>record.id===library.latestId),previous=library.records.filter(record=>record.id!==current.id).sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+  const current=library.records.find(record=>record.id===library.latestId)||library.records[0],previous=library.records.filter(record=>record.id!==current.id).sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
   const slots=[previous[2],previous[0],current,previous[1],previous[3]],colors=['','--clay','','--stone','--blue'];
   shelf.classList.toggle('has-long-title',slots.some(record=>record&&(record.study.book.length>15||(record.study.bookInfo?.author||'').length>24)));
   row.innerHTML=slots.map((record,index)=>record?spine(record,index===2):`<div class="bookshelf-placeholder${colors[index]?' bookshelf-placeholder'+colors[index]:''}" aria-hidden="true"></div>`).join('');
   shelf.querySelector('#bookshelf-description').textContent=`가운데에는 가장 최근에 확정한 『${current.study.book}』이 있어요.`;
-  shelf.querySelector('.bookshelf-note').textContent=offline?'공통 기록에 연결하지 못했어요. 표시된 책장은 최신이 아닐 수 있어요.':'가운데는 이번 모임의 책, 옆에는 함께 읽어온 책들이에요.';
+  updateStatus(offline);
+  document.querySelectorAll('.home-page .hero-actions a.button-dark,[data-current-study-summary]').forEach(link=>link.href=summaryHref(current));
+  document.querySelectorAll('[data-current-study-guide]').forEach(link=>link.href=guideHref(current));
   shelf.querySelector('.bookshelf-history')?.remove();
   const history=document.createElement('details');history.className='bookshelf-history';
   history.innerHTML=`<summary>함께 읽어온 책과 모임 기록 · ${library.records.length}권</summary><div class="bookshelf-history-grid">${[current,...previous].map(record=>`<a href="${guideHref(record)}"><img src="${escapeHtml(imageFor(record))}" alt="" loading="lazy"><span><strong>${escapeHtml(record.study.book)}</strong><small>${escapeHtml(schedule(record.study))}${record.id===library.latestId?' · 이번 모임':''}</small></span></a>`).join('')}</div>`;shelf.append(history);
@@ -45,9 +55,12 @@ export function initHomeLibrary(initBookshelf,{beforeChange=()=>{},afterChange=(
   const note=document.querySelector('.section-note>span:last-child');if(note)note.textContent='확정 도서 '+library.records.length+'권 · 함께 읽는 모임';
   cleanup=initBookshelf()||(()=>{});afterChange();
  }
- async function refresh(){
-  if(Date.now()-lastFetch<5000)return;lastFetch=Date.now();
+ async function refresh({force=false}={}){
+  if(fetching||(!force&&Date.now()-lastFetch<5000))return;lastFetch=Date.now();fetching=true;
+  const note=shelf.querySelector('.bookshelf-note'),retry=note?.querySelector('.bookshelf-retry');
+  note?.setAttribute('aria-busy','true');if(retry){retry.disabled=true;retry.textContent='연결 중';}
   try{apply(await fetchLibrary());}catch{apply(library,{offline:true});}
+  finally{fetching=false;note?.removeAttribute('aria-busy');}
  }
  apply(library);refresh();
  addEventListener('pageshow',refresh);addEventListener('focus',refresh);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});

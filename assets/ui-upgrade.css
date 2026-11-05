@@ -1,0 +1,184 @@
+/* Hallmark · built: the project · redesign: polish · theme: S.B.S preserved · signature: the real bookshelf · copy: verbatim */
+/* critique: use a clear green action hierarchy and readable help text without changing the existing page composition. */
+/* Hallmark · answered F3 · Existing S.B.S headings keep their approved Korean line breaks in this polish. */
+:root {
+  --cream: var(--sbs-ground);
+  --paper: var(--sbs-paper);
+  --ink: var(--sbs-ink);
+  --muted: var(--sbs-muted);
+  --line: var(--sbs-rule);
+  --sans: var(--sbs-font-body);
+  --display: var(--sbs-font-display);
+  --title: var(--sbs-font-title);
+  --ease: var(--sbs-ease);
+}
+
+html, body { overflow-x: clip; }
+body { color: var(--sbs-ink); font-family: var(--sbs-font-body); }
+.silence-page {
+  --silence-paper: var(--sbs-paper);
+  --silence-sub: var(--sbs-muted);
+  --silence-rule: var(--sbs-rule);
+}
+h1, h2, h3, .card-main, .hero-copy { min-width: 0; overflow-wrap: break-word; }
+
+.button-dark, .finder-primary, .study-password-dialog .finder-primary {
+  background: var(--sbs-accent);
+  color: var(--sbs-accent-ink);
+  border: 1px solid var(--sbs-accent);
+  box-shadow: var(--sbs-control-shadow);
+}
+.finder-primary, .study-password-dialog .finder-primary { min-height: var(--sbs-touch-size); font-size: 14px; }
+.button-dark:hover, .finder-primary:hover, .study-password-dialog .finder-primary:hover {
+  background: var(--sbs-accent-hover);
+  border-color: var(--sbs-accent-hover);
+  filter: none;
+}
+.button-dark:active, .finder-primary:active { background: var(--sbs-accent-active); }
+.button-light {
+  color: var(--sbs-ink);
+  background: var(--sbs-surface);
+  border-color: var(--sbs-border);
+  box-shadow: var(--sbs-control-shadow);
+}
+.card-link, .book-guide-link, .silence-source-link, .study-summary-source {
+  color: var(--sbs-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.featured-book .card-link { font-weight: 600; }
+.desktop-nav a[aria-current], .desktop-nav a:hover { color: var(--sbs-accent); }
+.silence-rail nav a[aria-current] {
+  color: var(--sbs-accent-ink);
+  background: var(--sbs-accent);
+  border-color: var(--sbs-accent);
+  font-weight: 600;
+}
+.member-reading-nav a[aria-current="page"] {
+  color: var(--sbs-accent-ink);
+  background: var(--sbs-accent);
+  border-color: var(--sbs-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.how-rail a[aria-current] {
+  color: var(--sbs-accent);
+  background: var(--sbs-soft-accent);
+  font-weight: 600;
+}
+.finder-option input:checked + span {
+  color: var(--sbs-accent) !important;
+  background: var(--sbs-soft-accent);
+  border-color: var(--sbs-accent);
+  box-shadow: inset 0 0 0 1px var(--sbs-accent);
+}
+
+.hero-subtitle, .reading-wall > p, .card-main > p, .step p,
+.footer-legal, .section-note, .field-note, .detail-note, .detail-list dt,
+.application-card p, .dialog-eyebrow, .dialog-top > p, .form-back,
+.sendoff-note, .step-number, .bookshelf-note, .bookshelf-heading > p,
+.bookshelf-caption > span, .meeting-meta, .finder-eyebrow,
+.finder-form-note, .finder-field label span, .finder-field legend span,
+.study-members > p, .study-member span, .study-book-context,
+.study-summary-head > p:not(.finder-eyebrow), .study-summary-details dt,
+.study-summary-text.is-empty, .study-summary-range, .study-summary-footer p,
+.study-summary-member-head a, .member-reading-body .member-reading-note,
+.member-reading-status, .silence-progress-label, .silence-note-controls > span,
+.how-story-caption, .how-step-copy > p, .how-insiders p,
+.how-scouted > p, .how-never-grid p {
+  color: var(--sbs-muted);
+}
+.dialog-body .detail-note, .finder-form-note { background: var(--sbs-ground); }
+.finder-storage-note, [data-load-error], .sbs-error { color: var(--sbs-error); }
+.finder-field [aria-invalid="true"] { border-color: var(--sbs-error) !important; }
+
+.field input, .field textarea,
+.finder-field input:not([type="radio"]):not([type="checkbox"]),
+.finder-field select, .finder-field textarea,
+.member-reading-body input, .member-reading-body textarea,
+.silence-notebook textarea, .study-password-dialog input {
+  color: var(--sbs-ink);
+  background: var(--sbs-surface);
+  border-color: var(--sbs-border);
+  accent-color: var(--sbs-accent);
+}
+input::placeholder, textarea::placeholder,
+.field input::placeholder, .field textarea::placeholder,
+.finder-field input::placeholder, .finder-field textarea::placeholder,
+.silence-notebook textarea::placeholder {
+  color: var(--sbs-muted);
+  opacity: 1;
+}
+input[type="checkbox"], input[type="radio"], .how-film-progress { accent-color: var(--sbs-accent); }
+
+body :is(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible,
+.silence-page :is(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible,
+.finder-option input:focus-visible + span {
+  outline: 3px solid var(--sbs-focus);
+  outline-offset: 3px;
+  transition-duration: 0s;
+  transition-delay: 0s;
+}
+.button:disabled, .finder-primary:disabled { cursor: not-allowed; }
+.mobile-menu nav button { padding: 0; background: var(--sbs-clear); color: inherit; font: inherit; }
+
+.motion-control { position: relative; z-index: 2; display: flex; justify-content: center; margin-top: 12px; }
+.motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--sbs-touch-size);
+  padding: 8px 12px;
+  border: 1px solid var(--sbs-clear);
+  border-radius: 999px;
+  background: var(--sbs-clear);
+  color: var(--sbs-muted);
+  font: 400 12px/1.5 var(--sbs-font-body);
+}
+.motion-toggle:hover, .motion-toggle[aria-pressed="true"] {
+  color: var(--sbs-accent);
+  background: var(--sbs-surface);
+  border-color: var(--sbs-rule);
+}
+.motion-toggle svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+.motion-toggle [hidden] { display: none; }
+.motion-toggle:disabled { cursor: default; }
+.bookshelf-retry { margin-left: 8px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.bookshelf-history summary { min-height: var(--sbs-touch-size); align-content: center; }
+
+@media (max-width: 991px) {
+  .header-actions > .button-small, .menu-toggle { min-height: var(--sbs-touch-size); height: var(--sbs-touch-size); }
+  .menu-toggle { width: var(--sbs-touch-size); }
+  .menu-toggle span { top: 21px; left: 14px; }
+  .header-actions > .button-small { font-size: 12px; }
+  .mobile-menu :is(a, button) { min-height: var(--sbs-touch-size); align-content: center; }
+}
+@media (max-width: 767px) {
+  .hero-actions .button, .button-small, .dialog-close, .finder-primary,
+  .finder-back, .form-back, .member-reading-nav a, .member-reading-body .text-button,
+  .silence-note-controls .text-button, .silence-details summary,
+  .how-film-controls button, .bookshelf-retry {
+    min-height: var(--sbs-touch-size);
+  }
+  .hero-actions .button { height: auto; }
+  .dialog-close { min-width: var(--sbs-touch-size); }
+  .footer-legal { flex-wrap: wrap; gap: 8px 20px; font-size: 12px; }
+  .footer-legal .text-button { min-height: var(--sbs-touch-size); }
+  .field-note, .detail-note, .dialog-eyebrow, .finder-form-note,
+  .finder-field label, .finder-field legend, .finder-field label span,
+  .finder-field legend span, .member-reading-body .member-reading-note,
+  .member-reading-status, .study-summary-range, .study-summary-footer p {
+    font-size: 13px;
+  }
+  .finder-field input:not([type="radio"]):not([type="checkbox"]),
+  .finder-field select, .finder-field textarea, .field input, .field textarea,
+  .study-password-dialog input {
+    min-height: var(--sbs-touch-size);
+    font-size: 16px;
+  }
+  .silence-rail nav a { min-height: var(--sbs-touch-size); padding-inline: 12px; }
+  .silence-rail nav a[aria-current] { border-radius: 5px 5px 0 0; }
+  .finder-option span { min-height: var(--sbs-touch-size); display: flex; align-items: center; }
+  .motion-control { margin-top: 8px; }
+}

@@ -1,4 +1,5 @@
 // Progressive enhancement: the artwork and page remain usable without WebGL.
+import {isMotionPaused} from './motion.mjs';
 const TAU = Math.PI * 2;
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -72,7 +73,7 @@ function makeGlobe(host) {
       const p = project(lat, lon);
       if (p[2] < .03) continue;
       let x = p[0], y = p[1];
-      if (pointer && !motion.matches) {
+      if (pointer && !motion.matches && !isMotionPaused()) {
         const dx = x - pointer.x, dy = y - pointer.y, distance = Math.hypot(dx, dy);
         if (distance > .1 && distance < 110) {
           const push = (1 - distance / 110) ** 2 * 19;
@@ -86,10 +87,10 @@ function makeGlobe(host) {
   function tick(time) {
     frame = 0;
     if (disposed || !visible || document.hidden) { previous = 0; return; }
-    if (previous && !motion.matches) phase += Math.min((time - previous) / 1000, .05) * .028;
+    if (previous && !motion.matches && !isMotionPaused()) phase += Math.min((time - previous) / 1000, .05) * .028;
     previous = time;
     draw();
-    if (!motion.matches) frame = requestAnimationFrame(tick);
+    if (!motion.matches && !isMotionPaused()) frame = requestAnimationFrame(tick);
   }
   function resume() { if (!frame && visible && !document.hidden && !disposed) frame = requestAnimationFrame(tick); }
   function resize() {
@@ -121,12 +122,13 @@ function makeGlobe(host) {
     resume();
   };
   document.addEventListener('visibilitychange', stateChange);
+  document.addEventListener('sbs:motionchange', stateChange);
   motion.addEventListener('change', stateChange);
   resize();
   return () => {
     disposed = true; cancelAnimationFrame(frame); ro.disconnect(); io.disconnect();
     interactionHost.removeEventListener('pointermove', move); interactionHost.removeEventListener('pointerleave', leave);
-    document.removeEventListener('visibilitychange', stateChange); motion.removeEventListener('change', stateChange); canvas.remove();
+    document.removeEventListener('visibilitychange', stateChange); document.removeEventListener('sbs:motionchange', stateChange); motion.removeEventListener('change', stateChange); canvas.remove();
   };
 }
 

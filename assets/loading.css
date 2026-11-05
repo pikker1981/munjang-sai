@@ -1,0 +1,12 @@
+/* Skullet 0.0.3 measures presentational samples, never visitor input. */
+:root{--skullet-base:var(--sbs-skeleton-base);--skullet-highlight:var(--sbs-skeleton-highlight);--skullet-radius:6px;--skullet-animation:shimmer;--skullet-speed:slow}
+.sbs-loading-region{padding:16px 0;min-width:0}
+.sbs-loading-stage{min-height:92px}
+.sbs-loading-sample{font:400 16px/1.8 var(--sans);color:var(--sbs-muted)}
+.sbs-loading-sample.is-book{display:grid;grid-template-columns:80px minmax(0,1fr);gap:18px;align-items:center}
+.sbs-loading-cover{height:116px;border-radius:4px;background:var(--sbs-skeleton-base)}
+.sbs-loading-lines p{margin:0 0 10px;min-width:0;overflow-wrap:anywhere}
+.sbs-loading-label,.sbs-load-error{font:400 13px/1.7 var(--sans);margin:10px 0;color:var(--sbs-muted);overflow-wrap:anywhere}
+.sbs-load-error{color:var(--sbs-error)}
+.sbs-loading-fallback .sbs-loading-lines p{color:transparent;background:var(--sbs-skeleton-base);border-radius:6px}
+.sbs-loading-fallback .sbs-loading-lines p:last-child{width:72%}

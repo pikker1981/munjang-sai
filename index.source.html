@@ -9,8 +9,13 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/SUIT-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/fonts/display.css">
-  <link rel="stylesheet" href="assets/style.css?v=mobile-home-book-footer-20261105">
-  <link rel="stylesheet" href="assets/bookshelf.css?v=shared-library-20261105">
+  <link rel="stylesheet" href="assets/design-tokens.css?v=sbs-design-20261105">
+  <link rel="stylesheet" href="assets/style.css?v=sbs-design-20261105">
+  <link rel="stylesheet" href="assets/bookshelf.css?v=sbs-design-20261105">
+  <link rel="stylesheet" href="assets/vendor/skullet.css?v=0.0.3">
+  <link rel="stylesheet" href="assets/ui-upgrade.css?v=sbs-design-20261105">
+  <link rel="stylesheet" href="assets/motion.css?v=sbs-design-20261105">
+  <link rel="stylesheet" href="assets/loading.css?v=sbs-design-20261105">
   <script type="module" src="assets/app.mjs"></script>
 </head>
 <body class="home-page">
@@ -22,9 +27,9 @@
   <header class="site-header">
     <a class="brand" href="#" aria-label="S.B.S(Solafide Book Study) 홈"><span class="brand-letters" aria-hidden="true"><i>S.</i><i>B.</i><i>S</i><span class="brand-fullname">(Solafide Book Study)</span></span><svg class="brand-mark" viewBox="0 0 36 30" aria-hidden="true"><path d="M18 7C12 2 6 2 2 4v21c5-2 11-1 16 3 5-4 11-5 16-3V4c-4-2-10-2-16 3Z M18 7v21"/></svg></a>
     <nav class="desktop-nav" aria-label="주 메뉴"><a href="#about">S.B.S 소개</a><a href="#meetings">함께 읽는 책</a><a href="how-it-works.html">참여 방법</a></nav>
-    <div class="header-actions"><a class="button button-dark button-small" href="find.html">모임 둘러보기</a><button class="button button-light button-small saved-trigger" type="button">내 신청<span class="saved-dot" hidden></span></button><button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button></div>
+    <div class="header-actions"><a class="button button-dark button-small" href="find.html#study">다음 모임 정하기</a><button class="button button-light button-small saved-trigger" type="button">내 신청<span class="saved-dot" hidden></span></button><button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button></div>
   </header>
-  <div class="mobile-menu" id="mobile-menu" hidden><nav aria-label="모바일 주 메뉴"><a href="#about">S.B.S 소개</a><a href="#meetings">함께 읽는 책</a><a href="how-it-works.html">참여 방법</a></nav><a class="button button-dark" href="find.html">모임 둘러보기</a><button class="text-button saved-trigger" type="button">내 신청 보기</button></div>
+  <div class="mobile-menu" id="mobile-menu" hidden><nav aria-label="모바일 주 메뉴"><button type="button" data-info="about">S.B.S 소개</button><a href="#meetings">함께 읽는 책</a><a href="how-it-works.html">참여 방법</a></nav><a class="button button-dark" href="find.html#study">다음 모임 정하기</a><button class="text-button saved-trigger" type="button">내 신청 보기</button></div>
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <div id="globe" aria-hidden="true"></div>

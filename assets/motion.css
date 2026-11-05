@@ -1,0 +1,53 @@
+/* Hallmark · built: the project · redesign: polish · theme: S.B.S preserved · signature: the real bookshelf · copy: verbatim */
+/* critique: keep the letter wave and book selection; shorten supporting transitions and provide a durable pause. */
+/* preserved: the approved 800ms book selection remains the site's deliberate signature interaction. */
+@view-transition { navigation: auto; }
+::view-transition-old(root) {
+  animation: sbs-page-out var(--sbs-duration-page) var(--sbs-ease-standard) both;
+}
+::view-transition-new(root) {
+  animation: sbs-page-in var(--sbs-duration-page) var(--sbs-ease-standard) both;
+}
+@keyframes sbs-page-out { to { opacity: 0; } }
+@keyframes sbs-page-in { from { opacity: 0; } }
+
+.hero-copy, .reading-wall { animation: none; opacity: 1; filter: none; }
+.hero-letter { animation-duration: 8.2s; }
+@keyframes hero-letter-wave {
+  0%, 5%, 30%, 100% { transform: translateY(0); color: var(--sbs-hero-ink); text-shadow: none; }
+  14% { transform: translateY(var(--letter-lift)); color: var(--sbs-wave-ink); text-shadow: 0 0 8px var(--sbs-wave-glow), 0 0 19px var(--sbs-wave-glow-wide); }
+  22% { transform: translateY(1px); color: var(--sbs-wave-settle); text-shadow: 0 0 10px var(--sbs-wave-glow-soft); }
+}
+.ticker:focus-within .ticker-track { animation-play-state: paused; }
+:root[data-motion-paused="true"] :is(.hero-letter, .ticker-track, .finder-ticker-track, .floating-scrap),
+:root[data-motion-page-hidden="true"] :is(.hero-letter, .ticker-track, .finder-ticker-track, .floating-scrap),
+[data-motion-offscreen="true"] :is(.hero-letter, .ticker-track, .finder-ticker-track, .floating-scrap) {
+  animation-play-state: paused;
+}
+.mobile-menu {
+  clip-path: none;
+  background: var(--sbs-ground);
+  transform: translateY(5px);
+  transition: opacity var(--sbs-duration-panel) var(--sbs-ease), transform var(--sbs-duration-panel) var(--sbs-ease);
+}
+.mobile-menu:not(.is-open) { pointer-events: none; }
+.mobile-menu.is-open { clip-path: none; transform: none; }
+.mobile-menu nav a, .mobile-menu.is-open nav a {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  transition: none;
+}
+.meeting-dialog[open] { animation: none; }
+.meeting-dialog::backdrop { background: var(--sbs-backdrop); }
+
+:root[data-motion-paused="true"]::view-transition-old(root),
+:root[data-motion-paused="true"]::view-transition-new(root) { animation-duration: 0s; }
+:root[data-motion-paused="true"] .mobile-menu { transition-duration: 0s; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  .hero-letter { animation: none; transform: none; color: var(--sbs-hero-ink); text-shadow: none; }
+  .ticker-track, .floating-scrap { animation: none; }
+  .mobile-menu { transition: none; transform: none; }
+}

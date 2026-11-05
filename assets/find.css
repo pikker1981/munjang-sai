@@ -19,3 +19,35 @@
 .study-summary-head h1{word-break:keep-all}
 
 .study-password-dialog{width:min(410px,calc(100vw - 36px));padding:28px;border:1px solid #d8cabc;border-radius:12px;background:#fffdfb;color:#514a3e;font:400 13px/1.8 var(--sans);box-shadow:0 16px 70px #30241735}.study-password-dialog::backdrop{background:#4d46386b;backdrop-filter:blur(4px)}.study-password-dialog h2{font:600 25px/1.5 var(--display);margin:7px 0 12px}.study-password-dialog label{display:block;font-weight:600;font-size:12px;margin:20px 0 7px}.study-password-dialog input{width:100%;height:42px;border:1px solid #d8cfc3;border-radius:6px;padding:8px 11px;background:#fff}.study-password-dialog form>div{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+/* Editing is a work surface; the introduction keeps its original composition. */
+.is-study-editor .finder-layout{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);align-items:start}
+.is-study-editor .finder-left.is-form{height:auto;min-height:100svh;padding:84px 32px 40px;display:block}
+.is-study-editor .finder-home{display:inline-flex;top:22px;left:32px;min-height:44px;align-items:center;color:var(--sbs-accent);font-size:14px}
+.is-study-editor .finder-panel{max-width:760px;height:auto;margin:auto;overflow:visible;border-radius:var(--sbs-radius,12px)}
+.is-study-editor .finder-form{height:auto}
+.is-study-editor .finder-form-head{padding:28px 28px 24px}
+.is-study-editor .finder-form-head h1{word-break:keep-all;overflow-wrap:normal;max-width:none;line-height:1.55;font-size:clamp(24px,2.1vw,32px)}
+.is-study-editor .finder-form-body{padding:24px 28px;overflow:visible}
+.is-study-editor .finder-form-footer{position:sticky;bottom:0;z-index:5;padding:18px 28px;background:var(--sbs-paper);border-radius:0 0 12px 12px}
+.is-study-editor .finder-powered{position:static;margin:24px auto 0;max-width:760px}
+.is-study-editor .finder-right{position:sticky;top:0;padding:84px 40px 40px;max-height:100svh;overflow:auto}
+.study-live-preview{width:100%;max-width:430px;min-width:0;color:var(--sbs-ink)}
+.preview-label{font:600 14px/1.6 var(--sans);color:var(--sbs-accent);margin-bottom:22px}
+.preview-cover{display:grid;place-items:center;padding:24px;background:var(--sbs-soft-accent);border-radius:12px;margin-bottom:24px;min-height:220px}
+.preview-cover img{max-height:280px;width:auto;max-width:100%;object-fit:contain}
+.study-live-preview h2{font:600 clamp(24px,2.5vw,34px)/1.5 var(--display);word-break:keep-all;overflow-wrap:anywhere}
+.preview-author,.preview-intro,.preview-notice{font:400 14px/1.8 var(--sans);color:var(--sbs-muted);margin-top:16px;overflow-wrap:anywhere}
+.preview-notice{padding-top:20px;border-top:1px solid var(--sbs-border);font-size:13px}
+.study-live-preview dl{display:grid;gap:12px;margin-top:22px}
+.study-live-preview dl>div{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;font:400 14px/1.75 var(--sans)}
+.study-live-preview dt{color:var(--sbs-muted)}
+.study-live-preview dd{margin:0;overflow-wrap:anywhere}
+.study-connection-status{padding:14px 16px;margin:0 0 22px;border:1px solid var(--sbs-border);border-radius:8px;background:var(--sbs-soft-accent);font:400 14px/1.8 var(--sans);color:var(--sbs-ink)}
+.study-connection-status button{margin-top:10px}
+.study-summary-guide{margin-top:22px}
+@media(max-width:767px){.is-study-editor .finder-layout{display:block}.is-study-editor .finder-left.is-form{padding:80px 16px 28px;height:auto;min-height:100svh}.is-study-editor .finder-home{top:18px;left:20px}.is-study-editor .finder-right{display:none}.is-study-editor .finder-form-head,.is-study-editor .finder-form-body{padding:22px 20px}.is-study-editor .finder-form-footer{padding:14px 16px;gap:10px}.is-study-editor .finder-form-head h1{font-size:24px}.is-study-editor .finder-grid{grid-template-columns:minmax(0,1fr)}.is-study-editor .finder-full{grid-column:auto}.is-study-editor .finder-panel{max-width:540px}.is-study-editor .finder-field input,.is-study-editor .finder-field textarea{font-size:16px}}
+.finder-page.is-study-editor .finder-field input:not([type=radio]):not([type=checkbox]),.finder-page.is-study-editor .finder-field textarea{font-size:16px;min-height:48px;padding:11px 13px}
+.finder-page.is-study-editor .finder-field label{font-size:14px;line-height:1.6}
+.finder-page .finder-subtitle,.finder-page .finder-form-note,.finder-page .study-members>p,.finder-page .book-link-hint{font-size:14px;line-height:1.8;color:var(--sbs-muted)}
+.finder-page .book-info-message{font-size:14px;line-height:1.8}
+.finder-page .finder-form h1[tabindex="-1"]:focus{outline:none}

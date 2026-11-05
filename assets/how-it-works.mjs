@@ -8,8 +8,8 @@ const toggle = film.querySelector('.how-film-toggle');
 const progress = film.querySelector('.how-film-progress');
 const clock = film.querySelector('.how-film-time');
 const status = film.querySelector('.how-film-status');
-const titles = ['취향을 알려주세요.', '함께 읽을 모임을 골라요.', '책과 질문을 준비해요.', '첫 인사를 나눠요.', '다음 페이지도 함께해요.'];
-const captions = ['좋아하는 이야기에서 출발해요.', '지금의 나에게 맞는 작은 테이블.', '한 문장과 작은 물음표 하나면 충분해요.', '다른 생각을 반갑게 맞이해요.', '우리의 대화는 다음 책으로 이어져요.'];
+const titles = ["책장에서 책을 골라요.","담당 범위를 확인해요.","자료를 읽고 정리해요.","모임 정보를 함께 확인해요.","다음 책을 함께 정해요."];
+const captions = ["책장에서 선택한 책의 독서 가이드로 이어져요.","이름을 선택하면 한 사람의 정리가 보여요.","장별 자료와 생각을 함께 준비해요.","확정한 일정과 담당을 공통 기록에서 확인해요.","책과 담당을 정하고 공개 저장해요."];
 let playing = false, elapsed = 0, frame = 0, last = 0, chapter = -1;
 function draw() {
   const next = Math.min(4, Math.floor(elapsed / 4));

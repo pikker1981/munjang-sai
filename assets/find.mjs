@@ -1,9 +1,12 @@
-import {cachedLibrary,fetchLibrary,publishStudy} from './study-client.mjs';
+import {cachedLibrary,libraryHasCache,fetchLibrary,publishStudy} from './study-client.mjs';
+import {beginLoading} from './loading.mjs';
+import {revealPanel,isMotionPaused,setMotionPaused} from './motion.mjs';
 const panel = document.querySelector('#finder');
 const left = document.querySelector('.finder-left');
 const intro = panel.innerHTML;
 const recordId=new URLSearchParams(location.search).get('record')||'';
 const storageKey = recordId?'sbs-study-draft-v1:'+recordId:'sbs-next-study-v1';
+let hadCachedLibrary=libraryHasCache(),connectionPending=false,bookLoader,publicLoader;
 let publicLibrary=cachedLibrary(),publicReady=false,publicFailure='',recordVersion=publicLibrary.records.find(record=>record.id===recordId)?.version||0;
 const people = [['dongjin','서동진'],['geonguk','안건국'],['jihong','유지홍'],['seungcheol','김승철'],['jingyu','박진규'],['samuel','안사무엘']];
 const fields = ['date','time','place','book','bookLink','bookSummary'];
@@ -65,7 +68,10 @@ function bookInfoHtml(){
  const entries=[['저자',b.author],['역자',b.translator],['출판사',b.publisher],['출간일',b.publishedAt],['쪽수',b.pages?b.pages+'쪽':''],['ISBN',b.isbn]].filter(([,v])=>v);
  return `<section class="book-info-card" aria-labelledby="book-info-title"><p class="book-info-kicker">링크에서 가져온 책 정보</p><div class="book-info-heading">${cover?`<img src="${escapeHtml(cover)}" alt="${escapeHtml(b.title)} 표지" loading="lazy" referrerpolicy="no-referrer">`:''}<div><h2 id="book-info-title">${escapeHtml(b.title)}</h2><dl>${entries.map(([k,v])=>`<div><dt>${k}</dt><dd>${escapeHtml(v)}</dd></div>`).join('')}</dl></div></div><div class="finder-field"><label for="study-bookSummary">간단한 책 소개 <span>직접 수정 가능</span></label><textarea id="study-bookSummary" name="bookSummary" data-book-link="${escapeHtml(b.linkInput)}" maxlength="6000" placeholder="서점에 소개가 없으면 직접 작성해주세요.">${escapeHtml(study.bookSummary)}</textarea></div><p class="book-info-source">서점의 공개 소개를 간단히 표시했어요.${supportedBookUrl(b.sourceUrl)?` <a href="${escapeHtml(b.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(b.store)} 원문 보기 ↗</a>`:''}</p><button type="button" class="finder-back" data-action="lookup-book">책 정보 다시 불러오기 ↻</button><p class="book-info-message" role="status">${escapeHtml(message)}</p></section>`;
 }
-function updateBookInfo(){const slot=panel.querySelector('#book-info-slot');if(slot)slot.innerHTML=bookInfoHtml();}
+function updateBookInfo(){
+ bookLoader?.cancel();const slot=panel.querySelector('#book-info-slot');if(slot){slot.innerHTML=bookInfoHtml();if(lookupPhase==='loading')bookLoader=beginLoading(slot.querySelector('.book-info-message'),{kind:study.bookInfo?'text':'book',label:'책 정보를 불러오고 있어요',preserve:Boolean(study.bookInfo)});const link=panel.querySelector('#study-bookLink');if(link){link.setAttribute('aria-invalid',String(lookupPhase==='error'));}}
+ updatePreview();
+}
 function lookupBookInfo(){activeLookup=performBookLookup();return activeLookup;}
 async function performBookLookup(){
  clearTimeout(lookupTimer);lookupController?.abort();const sequence=++lookupSequence;const link=study.bookLink.trim();
@@ -89,23 +95,25 @@ async function performBookLookup(){
  finally{clearTimeout(timeout);}
 }
 function renderSummary(){
- if(!publicReady&&!publicFailure){panel.innerHTML='<article class="study-summary"><h1 tabindex="-1">확정한 모임을 불러오고 있어요</h1><p role="status">공통 기록을 확인하고 있어요.</p></article>';return;}
+ if(!publicReady&&!publicFailure){panel.innerHTML='<article class="study-summary"><h1 tabindex="-1">확정한 모임을 불러오고 있어요</h1><p role="status" data-library-loading>공통 기록을 확인하고 있어요.</p></article>';return;}
+ if(publicFailure&&!hadCachedLibrary){panel.innerHTML='<article class="study-summary"><h1 tabindex="-1">모임 정보를 확인할 수 없어요</h1><p class="finder-storage-note" role="status">'+escapeHtml(publicFailure)+'</p><button class="finder-primary" data-action="reload-public" type="button">다시 연결하기</button><a class="finder-back" href="index.html#bookshelf">책장으로 돌아가기</a></article>';return;}
  const record=publicLibrary.records.find(item=>item.id===(recordId||publicLibrary.latestId));
+ if(!record&&publicFailure){panel.innerHTML='<article class="study-summary"><h1 tabindex="-1">이 모임을 아직 확인할 수 없어요</h1><p>저장된 목록에 없는 기록이에요. 서버에 다시 연결해 확인해주세요.</p><button type="button" class="finder-primary" data-action="reload-public">다시 연결하기</button><a class="finder-back" href="index.html#bookshelf">책장으로 돌아가기</a></article>';return;}
  if(!record){panel.innerHTML='<article class="study-summary"><h1 tabindex="-1">모임 기록을 찾지 못했어요</h1><p>주소를 확인하거나 메인 책장에서 다시 선택해주세요.</p><a class="finder-primary" href="index.html#bookshelf">책장으로 돌아가기</a></article>';return;}
  const viewStudy=record.study;
  const b=viewStudy.bookInfo,cover=b?safeCover(b.cover):'';
  const date=/^\d{4}-\d{2}-\d{2}$/.test(viewStudy.date)?viewStudy.date.replace(/(\d{4})-(\d{2})-(\d{2})/,'$1년 $2월 $3일'):viewStudy.date;
  const details=b?[['저자',b.author],['역자',b.translator],['출판사',b.publisher],['출간일',b.publishedAt],['쪽수',b.pages?b.pages+'쪽':''],['ISBN',b.isbn]].filter(([,v])=>v):[];
- panel.innerHTML=`<article class="study-summary"><header class="study-summary-head"><p class="finder-eyebrow">S.B.S · 다음 스터디 모임</p><h1 tabindex="-1">다음 모임, 이렇게 함께 읽어요</h1><p>저장한 모임 정보와 책, 각자의 담당 내용을 한곳에 모았어요.</p>${new URLSearchParams(location.search).has('draftKept')?'<p class="finder-storage-note">저장 중 추가로 작성한 초안은 브라우저에 남겨뒀어요. <a href="'+(new URLSearchParams(location.search).get('draftKept')==='new'?'find.html#study':'find.html?record='+encodeURIComponent(record.id)+'#study')+'">추가 초안 이어서 작성하기 ↗</a></p>':''}<a class="finder-primary" href="find.html?record=${encodeURIComponent(record.id)}#study">모임 정보 수정 ↗</a></header><div class="study-summary-grid"><section class="study-summary-card" aria-labelledby="summary-meeting-title"><p class="book-info-kicker">함께 만나는 날</p><h2 id="summary-meeting-title">다음 스터디 모임 안내</h2><dl class="study-summary-details">${[['날짜',date],['시간',viewStudy.time],['장소',viewStudy.place]].map(([k,v])=>`<div><dt>${k}</dt><dd>${escapeHtml(v||'아직 정하지 않았어요')}</dd></div>`).join('')}</dl></section><section class="study-summary-card" aria-labelledby="summary-book-title"><p class="book-info-kicker">함께 읽을 다음 책</p><div class="book-info-heading">${cover?`<img src="${escapeHtml(cover)}" alt="${escapeHtml(viewStudy.book||b.title)} 표지" referrerpolicy="no-referrer">`:''}<div><h2 id="summary-book-title">${escapeHtml(viewStudy.book||b?.title||'아직 정하지 않았어요')}</h2><dl>${details.map(([k,v])=>`<div><dt>${k}</dt><dd>${escapeHtml(v)}</dd></div>`).join('')}</dl></div></div>${viewStudy.bookSummary?`<h3>간단한 책 소개</h3><p class="study-summary-text">${escapeHtml(viewStudy.bookSummary)}</p>`:''}${supportedBookUrl(viewStudy.bookLink)?`<a class="study-summary-source" href="${escapeHtml(viewStudy.bookLink)}" target="_blank" rel="noopener noreferrer">도서 원문 링크 보기 ↗</a>`:''}${record.id==='silence'?'<a class="study-summary-source" href="silence.html">침묵의 세계 독서 가이드 열기 ↗</a>':''}</section><section class="study-summary-members" aria-labelledby="summary-members-title"><div class="study-summary-section-head"><p class="book-info-kicker">각자의 읽기, 함께 나눌 생각</p><h2 id="summary-members-title">개별 담당 정리</h2></div><div class="study-summary-member-grid">${people.map(([id,name])=>`<article class="study-summary-card"><div class="study-summary-member-head"><h3>${name}</h3><a href="find.html?record=${encodeURIComponent(record.id)}#member-${id}">${name} 담당 수정 ↗</a></div><p class="study-summary-range">${escapeHtml(viewStudy.members[id].range||'담당 부분 미정')}</p><p class="study-summary-text${viewStudy.members[id].content?'':' is-empty'}">${escapeHtml(viewStudy.members[id].content||'아직 작성한 담당 내용이 없어요.')}</p></article>`).join('')}</div></section></div><footer class="study-summary-footer"><a class="finder-back" href="index.html">← 메인으로</a><p>${publicFailure?'연결이 지연되어 마지막으로 확인한 공통 기록을 표시해요.':'모든 방문자가 함께 보는 확정 모임 기록이에요.'}</p><a class="finder-primary" href="find.html?record=${encodeURIComponent(record.id)}#study">모임 정보 수정 ↗</a></footer></article>`;
+ panel.innerHTML=`<article class="study-summary"><header class="study-summary-head"><p class="finder-eyebrow">S.B.S · 다음 스터디 모임</p><h1 tabindex="-1">다음 모임, 이렇게 함께 읽어요</h1><p>저장한 모임 정보와 책, 각자의 담당 내용을 한곳에 모았어요.</p>${new URLSearchParams(location.search).has('draftKept')?'<p class="finder-storage-note">저장 중 추가로 작성한 초안은 브라우저에 남겨뒀어요. <a href="'+(new URLSearchParams(location.search).get('draftKept')==='new'?'find.html#study':'find.html?record='+encodeURIComponent(record.id)+'#study')+'">추가 초안 이어서 작성하기 ↗</a></p>':''}<a class="finder-primary" href="find.html?record=${encodeURIComponent(record.id)}#study">모임 정보 수정 ↗</a></header><div class="study-summary-grid"><section class="study-summary-card" aria-labelledby="summary-meeting-title"><p class="book-info-kicker">함께 만나는 날</p><h2 id="summary-meeting-title">다음 스터디 모임 안내</h2><dl class="study-summary-details">${[['날짜',date],['시간',viewStudy.time],['장소',viewStudy.place]].map(([k,v])=>`<div><dt>${k}</dt><dd>${escapeHtml(v||'아직 정하지 않았어요')}</dd></div>`).join('')}</dl></section><section class="study-summary-card" aria-labelledby="summary-book-title"><p class="book-info-kicker">함께 읽을 다음 책</p><div class="book-info-heading">${cover?`<img src="${escapeHtml(cover)}" alt="${escapeHtml(viewStudy.book||b.title)} 표지" referrerpolicy="no-referrer">`:''}<div><h2 id="summary-book-title">${escapeHtml(viewStudy.book||b?.title||'아직 정하지 않았어요')}</h2><dl>${details.map(([k,v])=>`<div><dt>${k}</dt><dd>${escapeHtml(v)}</dd></div>`).join('')}</dl></div></div>${viewStudy.bookSummary?`<h3>간단한 책 소개</h3><p class="study-summary-text">${escapeHtml(viewStudy.bookSummary)}</p>`:''}${supportedBookUrl(viewStudy.bookLink)?`<a class="study-summary-source" href="${escapeHtml(viewStudy.bookLink)}" target="_blank" rel="noopener noreferrer">도서 원문 링크 보기 ↗</a>`:''}<a class="study-summary-guide finder-primary" href="${record.id==='silence'?'silence.html':'reading.html?record='+encodeURIComponent(record.id)}">독서 가이드 열기</a></section><section class="study-summary-members" aria-labelledby="summary-members-title"><div class="study-summary-section-head"><p class="book-info-kicker">각자의 읽기, 함께 나눌 생각</p><h2 id="summary-members-title">개별 담당 정리</h2></div><div class="study-summary-member-grid">${people.map(([id,name])=>`<article class="study-summary-card"><div class="study-summary-member-head"><h3>${name}</h3><a href="find.html?record=${encodeURIComponent(record.id)}#member-${id}">${name} 담당 수정 ↗</a></div><p class="study-summary-range">${escapeHtml(viewStudy.members[id].range||'담당 부분 미정')}</p><p class="study-summary-text${viewStudy.members[id].content?'':' is-empty'}">${escapeHtml(viewStudy.members[id].content||'아직 작성한 담당 내용이 없어요.')}</p></article>`).join('')}</div></section></div><footer class="study-summary-footer"><a class="finder-back" href="index.html">← 메인으로</a><p>${publicFailure?'연결이 지연되어 마지막으로 확인한 공통 기록을 표시해요.':'모든 방문자가 함께 보는 확정 모임 기록이에요.'}</p><a class="finder-primary" href="find.html?record=${encodeURIComponent(record.id)}#study">모임 정보 수정 ↗</a></footer></article>`;
  panel.querySelector('h1')?.focus({preventScroll:true});
 }
-function render() {
+function renderView() {
  const hash=location.hash.slice(1);
  const person=people.find(([id])=>hash==='member-'+id);
  document.body.classList.toggle('is-study-summary',hash==='summary');
  left.classList.toggle('is-form',hash==='study'||Boolean(person));
  if(hash==='summary'){renderSummary();return;}
- if(recordId&&!publicReady){panel.innerHTML=`<div class="finder-intro"><h1 tabindex="-1">${publicFailure?'공통 모임 기록에 연결하지 못했어요':'기존 모임을 불러오고 있어요'}</h1><p class="finder-subtitle">${publicFailure?'초안은 그대로 보관돼요. 잠시 후 다시 연결해주세요.':'잠시만 기다려주세요.'}</p>${publicFailure?'<button type="button" class="finder-primary" data-action="reload-public">다시 연결하기</button>':''}</div>`;return;}
+ if(recordId&&!publicReady){panel.innerHTML=`<div class="finder-intro"><h1 tabindex="-1">${publicFailure?'공통 모임 기록에 연결하지 못했어요':'기존 모임을 불러오고 있어요'}</h1><p class="finder-subtitle" data-library-loading="${!publicFailure}">${publicFailure?'초안은 그대로 보관돼요. 잠시 후 다시 연결해주세요.':'잠시만 기다려주세요.'}</p>${publicFailure?'<button type="button" class="finder-primary" data-action="reload-public">다시 연결하기</button>':''}</div>`;return;}
  if(recordId&&!publicLibrary.records.some(record=>record.id===recordId)){panel.innerHTML='<div class="finder-intro"><h1>모임 기록을 찾지 못했어요</h1><a href="index.html#bookshelf">책장으로 돌아가기</a></div>';return;}
  if(hash!=='study'&&!person){panel.innerHTML=intro;return;}
  let title,subtitle,body,back;
@@ -119,6 +127,25 @@ function render() {
  }
  panel.innerHTML=`<form class="finder-form"><div class="finder-form-head"><p class="finder-eyebrow">S.B.S · 다음 스터디 모임</p><h1 tabindex="-1">${title}</h1><p class="finder-subtitle">${subtitle}</p></div><div class="finder-form-body">${body}<p class="finder-form-note">입력 중인 초안은 이 브라우저에 보관돼요. 마무리 저장하면 확정한 모임 정보가 모든 방문자에게 공개돼요.</p><p id="study-status" class="finder-storage-note" role="status">${storageFailed?'브라우저 저장 공간을 사용할 수 없어요. 입력 후 저장 상태를 확인해주세요.':''}</p></div><div class="finder-form-footer"><a class="finder-back" href="${back}">← ${person?'모임 정보로':'이전'}</a><button type="submit" class="finder-primary"${!publicReady&&(!person||recordId)?' disabled':''}>${person?'담당 내용 저장':'모임 정보 저장'} <span aria-hidden="true">✓</span></button></div></form>`;
  panel.querySelector('h1')?.focus({preventScroll:true});
+}
+const preview=document.createElement('aside');preview.className='study-live-preview';preview.setAttribute('aria-label','작성 중인 모임 미리보기');document.querySelector('.finder-right')?.append(preview);
+function updatePreview(){
+ const editing=Boolean(panel.querySelector('.finder-form'));document.body.classList.toggle('is-study-editor',editing);preview.hidden=!editing;const proof=document.querySelector('.finder-proof');if(proof)proof.hidden=editing;if(!editing)return;
+ const b=study.bookInfo,cover=b?safeCover(b.cover):'';
+ preview.innerHTML='<p class="preview-label">작성 중인 모임 미리보기</p><div class="preview-cover">'+(cover?'<img src="'+escapeHtml(cover)+'" alt="'+escapeHtml(study.book)+' 표지" referrerpolicy="no-referrer">':'<img src="assets/book-placeholder.svg" alt="표지 미등록">')+'</div><h2>'+escapeHtml(study.book||'함께 읽을 다음 책')+'</h2><p class="preview-author">'+escapeHtml(b?.author||'책 링크를 넣으면 기본 정보를 불러와요.')+'</p><dl>'+[['모임 날짜',study.date||'아직 정하지 않았어요'],['시간',study.time||'아직 정하지 않았어요'],['장소',study.place||'아직 정하지 않았어요']].map(([k,v])=>'<div><dt>'+k+'</dt><dd>'+escapeHtml(v)+'</dd></div>').join('')+'</dl>'+(study.bookSummary?'<p class="preview-intro">'+escapeHtml(study.bookSummary.slice(0,240))+(study.bookSummary.length>240?'…':'')+'</p>':'')+'<p class="preview-notice">입력 중인 초안이에요. 공개 저장한 뒤 모두에게 반영돼요.</p>';
+}
+function updateConnectionNotice(){
+ const form=panel.querySelector('.finder-form');if(!form)return;
+ let notice=form.querySelector('.study-connection-status');if(!notice){notice=document.createElement('div');notice.className='study-connection-status';notice.setAttribute('role','status');form.querySelector('.finder-form-body').prepend(notice);}
+ notice.replaceChildren();notice.hidden=publicReady&&!publicFailure;
+ if(!notice.hidden){const text=document.createElement('p');text.textContent=publicFailure?publicFailure+' 초안은 이 브라우저에 유지돼요.': '공통 기록을 확인하고 있어요. 입력은 먼저 시작할 수 있어요.';notice.append(text);if(publicFailure){const retry=document.createElement('button');retry.type='button';retry.className='finder-primary';retry.dataset.action='reload-public';retry.textContent='다시 연결하기';retry.disabled=connectionPending;notice.append(retry);}}
+ form.querySelector('button[type="submit"]').disabled=!publicReady&&(!location.hash.startsWith('#member-')||Boolean(recordId));
+}
+function render(){
+ publicLoader?.cancel();bookLoader?.cancel();renderView();updatePreview();updateConnectionNotice();
+ const loading=panel.querySelector('[data-library-loading]:not([data-library-loading="false"])');if(loading)publicLoader=beginLoading(loading,{kind:'book',label:'확정 모임을 불러오고 있어요'});
+ if(publicFailure&&hadCachedLibrary&&location.hash==='#summary'){const note=document.createElement('p');note.className='study-connection-status';note.setAttribute('role','status');note.textContent='연결하지 못해 이 브라우저에 저장된 기록을 보여주고 있어요. 최신 정보와 다를 수 있어요. ';const retry=document.createElement('button');retry.type='button';retry.className='finder-back';retry.dataset.action='reload-public';retry.textContent='최신 기록 다시 확인';note.append(retry);panel.prepend(note);}
+ revealPanel(panel.querySelector('.finder-form,.study-summary,.finder-intro'));
 }
 panel.addEventListener('click',event=>{
  if(event.target.closest('[data-action="recover-record"]'))recoverRecord();
@@ -141,7 +168,7 @@ panel.addEventListener('input',event=>{
  }
  const result=persist(person?{member:person[0],memberKeys:[target.name]}:target.name==='bookSummary'?{keys:['bookSummary'],expectedLink:target.dataset.bookLink}:{keys:target.name==='bookLink'?['bookLink','bookInfo','bookSummary']:[target.name]});
  if(result==='changed'){study=readLatest()||study;lookupPhase='error';lookupMessage='다른 탭에서 책을 변경했어요. 최신 책 정보를 표시했어요.';render();return;}
- status();
+ status();updatePreview();
 });
 panel.addEventListener('keydown',event=>{if(event.target.name==='bookLink'&&event.key==='Enter'){event.preventDefault();lookupBookInfo();}});
 panel.addEventListener('submit',async event=>{
@@ -154,7 +181,7 @@ panel.addEventListener('submit',async event=>{
   return;
  }
  const link=study.bookLink,button=event.submitter;
- if(button)button.disabled=true;
+ if(button){button.disabled=true;button.dataset.restLabel=button.textContent;button.textContent='저장 준비 중…';}
  try{
   clearTimeout(lookupTimer);
   if(lookupPhase==='loading'){status('책 정보를 불러온 뒤 전체 정리 화면으로 이동할게요.');await activeLookup;}
@@ -162,7 +189,7 @@ panel.addEventListener('submit',async event=>{
   if(location.hash!=='#study')return;
   if(study.bookLink!==link){status('책 링크가 변경됐어요. 확인 후 다시 저장해주세요.');return;}
   if(persist())await publishCurrentStudy();else status();
- }finally{if(button)button.disabled=false;}
+ }finally{if(button){button.disabled=false;button.textContent=button.dataset.restLabel||'모임 정보 저장';}}
 });
 async function publishCurrentStudy(){
  if(!publicReady){status('공통 기록에 연결되지 않아 아직 공개할 수 없어요. 초안은 유지돼요. 새로고침 후 다시 저장해주세요.');return;}
@@ -199,18 +226,20 @@ async function recoverRecord(){
  }catch(error){status('최신 기록으로 전환하지 못했어요. 현재 초안은 유지돼요. '+error.message);}
 }
 async function syncPublicRecords(){
- publicFailure='';
+ if(connectionPending)return;connectionPending=true;publicFailure='';const hadForm=Boolean(panel.querySelector('.finder-form'));panel.setAttribute('aria-busy','true');updateConnectionNotice();
+ panel.querySelectorAll('[data-action="reload-public"]').forEach(button=>{button.disabled=true;button.setAttribute('aria-busy','true');button.textContent='최신 기록 확인 중…';});
  try{
-  publicLibrary=await fetchLibrary();publicReady=true;
-  if(recordId&&!readLatest()){
-   const record=publicLibrary.records.find(item=>item.id===recordId);
-   if(record){study=normalizedStudy(record.study);recordVersion=record.version;}
-  }
- }catch(error){publicFailure=error.message;}
- render();
+  publicLibrary=await fetchLibrary();publicReady=true;hadCachedLibrary=true;
+  let draft=null;try{draft=readLatest();}catch{}
+  if(recordId&&!draft&&!hadForm){const record=publicLibrary.records.find(item=>item.id===recordId);if(record){study=normalizedStudy(record.study);recordVersion=record.version;}}
+ }catch(error){publicReady=false;publicFailure=error.message;}
+ finally{connectionPending=false;panel.removeAttribute('aria-busy');}
+ if(hadForm&&panel.querySelector('.finder-form')){updateConnectionNotice();updatePreview();}else render();
 }
 addEventListener('hashchange',render);
 render();
 syncPublicRecords();
 const pause=document.querySelector('.finder-pause');
-pause?.addEventListener('click',()=>{const paused=pause.getAttribute('aria-pressed')!=='true';pause.setAttribute('aria-pressed',String(paused));pause.textContent=paused?'흐름 재생하기':'흐름 멈추기';document.querySelector('.finder-ticker').classList.toggle('is-paused',paused);});
+function syncFinderPause(){if(!pause)return;const paused=isMotionPaused(),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;pause.setAttribute('aria-pressed',String(paused));pause.disabled=reduced;pause.textContent=reduced?'동작 줄이기 적용 중':paused?'흐름 재생하기':'흐름 멈추기';document.querySelector('.finder-ticker').classList.toggle('is-paused',paused);}
+pause?.addEventListener('click',()=>setMotionPaused(!isMotionPaused()));
+document.addEventListener('sbs:motionchange',syncFinderPause);syncFinderPause();

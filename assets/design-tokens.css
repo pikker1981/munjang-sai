@@ -1,0 +1,42 @@
+/* Hallmark · built: the project · redesign: polish · theme: S.B.S preserved · signature: the real bookshelf · copy: verbatim */
+/* critique: preserve the warm paper, MaruBuri headings and SUIT reading controls; strengthen actions, contrast and focus. */
+/* preserved: the existing editorial hero and book artwork are approved user material. */
+:root {
+  --sbs-ground: #EDE8E1;
+  --sbs-paper: #F7F3EC;
+  --sbs-surface: #FFFDF6;
+  --sbs-ink: #4D4638;
+  --sbs-muted: #625B50;
+  --sbs-accent: #285D4B;
+  --sbs-accent-hover: #204E3F;
+  --sbs-accent-active: #193E32;
+  --sbs-accent-ink: #FFFDF6;
+  --sbs-soft-accent: #E2ECE4;
+  --sbs-border: #847B6C;
+  --sbs-rule: #D0C8BB;
+  --sbs-focus: #8B611E;
+  --sbs-focus-gap: #FFFDF6;
+  --sbs-error: #9B4238;
+  --sbs-error-soft: #F6E7E1;
+  --sbs-skeleton-base: #E8E2D8;
+  --sbs-skeleton-highlight: #F7F3EC;
+  --sbs-clear: transparent;
+  --sbs-backdrop: #423A2D66;
+  --sbs-hero-ink: #514A3F;
+  --sbs-wave-ink: #76623F;
+  --sbs-wave-settle: #625137;
+  --sbs-wave-glow: #D5AD6CB3;
+  --sbs-wave-glow-wide: #D5AD6C80;
+  --sbs-wave-glow-soft: #D5AD6C40;
+  --sbs-control-shadow: 0 1px 3px #302A211A, inset 0 1px 0 #FFFDF633;
+  --sbs-panel-shadow: 0 20px 70px #302A2126;
+  --sbs-font-body: SUIT, 'Malgun Gothic', sans-serif;
+  --sbs-font-display: 'MaruBuri', 'Batang', serif;
+  --sbs-font-title: var(--sbs-font-display);
+  --sbs-ease: cubic-bezier(.2, .7, .2, 1);
+  --sbs-ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --sbs-duration-panel: 200ms;
+  --sbs-duration-content: 170ms;
+  --sbs-duration-page: 200ms;
+  --sbs-touch-size: 44px;
+}
