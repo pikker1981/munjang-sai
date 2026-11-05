@@ -26,3 +26,5 @@
 .book-guide-link{display:inline-block;margin:0 0 16px;text-decoration:underline;text-underline-offset:4px;font-size:13px}
 
 
+
+.brand-fullname{position:absolute;top:29px;left:0;font:400 10px/1.2 var(--sans);letter-spacing:0;white-space:nowrap;transition:opacity .24s}.brand.is-collapsed .brand-fullname{opacity:0}
