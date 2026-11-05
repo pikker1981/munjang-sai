@@ -41,5 +41,5 @@
 @media(max-width:640px){.hero{padding-top:92px}.hero h1{line-height:1.8}.hero-letter{--letter-lift:-3px}.hero-subtitle{margin-top:34px}.hero-actions{margin-top:34px}}
 @media(prefers-reduced-motion:reduce){.hero-letter{animation:none;transform:none;color:#514a3f;text-shadow:none}}
 
-/* Mobile home ends with the current study book. */
-@media(max-width:767px){.home-page .paper-card:not(.featured-book),.home-page .how-section,.home-page .sendoff-section,.home-page>.footer-window,.home-page .mobile-menu a[href="#about"]{display:none!important}.home-page .meetings-section{padding-bottom:28px}}
+/* Mobile home shows the current study book followed by the footer. */
+@media(max-width:767px){.home-page .paper-card:not(.featured-book),.home-page .how-section,.home-page .sendoff-section,.home-page .mobile-menu a[href="#about"]{display:none!important}.home-page .meetings-section{padding-bottom:28px}}
