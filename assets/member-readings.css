@@ -47,3 +47,12 @@
  .member-reading-edit-toggle{width:100%}
  .member-reading-category>summary small{line-height:1.8}
 }
+
+/* Give member reading cards a wider page and more breathing room. */
+#member-readings.silence-leaf{padding:48px 32px 56px}
+.silence-width:has(>#member-readings){max-width:1280px}
+.member-reading-category>summary{padding:24px 30px;gap:20px}
+.member-reading-body{padding:0 30px 34px}
+@media(min-width:992px){.silence-reading-layout:has(#member-readings:not([hidden])){max-width:1280px;grid-template-columns:180px minmax(0,1fr);gap:36px}}
+@media(min-width:768px) and (max-width:991px){#member-readings.silence-leaf{padding-inline:24px}.member-reading-category>summary{padding-inline:24px}.member-reading-body{padding-inline:24px}}
+@media(max-width:767px){#member-readings.silence-leaf{padding:34px 12px 40px}.member-reading-category>summary{padding:20px;gap:12px}.member-reading-body{padding:0 20px 28px}}
