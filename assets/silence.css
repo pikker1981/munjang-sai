@@ -11,3 +11,8 @@
 /* Display the publisher cover at its true aspect ratio and below native resolution. */
 .silence-cover-link{display:block;width:330px;max-width:85%;margin:0 auto;line-height:0}.silence-cover-link img{display:block;width:100%;height:auto;max-width:none;transform:none;filter:none;box-shadow:8px 16px 24px #302a2126}.silence-book-stage{padding:26px 0;background:radial-gradient(ellipse at center,#d7d1c2,transparent 70%)}.silence-hero-art figcaption a{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:767px){.silence-cover-link{width:265px;max-width:85%}.silence-book-stage{padding:20px 0}}
+/* Highlight the original seven-chapter guide in the member schedule. */
+.silence-session .silence-guide-cta{display:inline-flex;align-items:center;justify-content:center;min-height:48px;max-width:100%;box-sizing:border-box;padding:12px 18px;margin-top:18px;border:1px solid #285d4b;border-radius:12px;background:#285d4b;color:#fffdf6;font:600 14px/1.7 var(--sans);text-decoration:none;box-shadow:0 5px 14px #285d4b26;transition:background .2s,box-shadow .2s,transform .2s}
+.silence-session .silence-guide-cta:hover{background:#1d493a;box-shadow:0 7px 18px #285d4b38;transform:translateY(-2px)}
+.silence-session .silence-guide-cta:focus-visible{outline:3px solid #b68b40;outline-offset:4px}
+@media(max-width:640px){.silence-session .silence-guide-cta{width:100%;padding:12px 14px;font-size:13px}}
