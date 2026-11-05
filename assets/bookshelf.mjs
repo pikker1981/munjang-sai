@@ -1,15 +1,19 @@
-// A progressive enhancement of the real book link. Reading data is never stored here.
+// Progressive enhancement of each real link; confirmed study data lives separately.
 export function initBookshelf(){
   const shelf=document.querySelector('[data-bookshelf]');
-  if(!shelf||shelf.dataset.bookshelfReady)return;
-  const link=shelf.querySelector('[data-bookshelf-link]');
+  if(!shelf)return;
+  const cleanups=[...shelf.querySelectorAll('[data-bookshelf-link]')].map(link=>attachBook(shelf,link));
+  return ()=>cleanups.forEach(cleanup=>cleanup?.());
+}
+function attachBook(shelf,link){
   const book=link?.querySelector('.bookshelf-book');
   const cover=book?.querySelector('img');
   if(!link||!book||!cover)return;
-  shelf.dataset.bookshelfReady='true';
+  if(link.dataset.bookshelfReady)return;
+  link.dataset.bookshelfReady='true';
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const status=shelf.querySelector('[data-bookshelf-status]');
-  const returnKey='munjang-sai-bookshelf-return-v1:'+location.pathname;
+  const returnKey='munjang-sai-bookshelf-return-v1:'+location.pathname+':'+link.getAttribute('href');
   let active=null,restoreVersion=0,restoreFrames=[];
 
   const coverReady=(async()=>{
@@ -126,7 +130,7 @@ export function initBookshelf(){
       document.body.append(overlay);
       link.classList.add('is-leaving');
       shelf.classList.add('is-transitioning');
-      const ratio=700/989;
+      const ratio=width/height;
       const targetHeight=Math.min(440,innerHeight*.64,(innerWidth-64)/ratio);
       const scale=Math.max(.5,targetHeight/height);
       const dx=innerWidth/2-(left+width/2),dy=innerHeight/2-(top+height/2);
@@ -152,7 +156,7 @@ export function initBookshelf(){
     }
   }
 
-  link.addEventListener('click',event=>{
+  function handleClick(event){
     if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||link.hasAttribute('download')||(link.target&&link.target!=='_self'))return;
     if(active){event.preventDefault();return;}
     if(reduced.matches||typeof book.animate!=='function'||!globalThis.CSS?.supports('transform-style','preserve-3d')){rememberReturn();return;}
@@ -163,19 +167,24 @@ export function initBookshelf(){
     addEventListener('wheel',preventScroll,{passive:false});
     addEventListener('touchmove',preventScroll,{passive:false});
     link.setAttribute('aria-busy','true');
-    if(status)status.textContent='침묵의 세계 독서 가이드를 여는 중이에요. Escape 키로 취소할 수 있어요.';
+    if(status)status.textContent=(link.querySelector('.bookshelf-caption strong')?.textContent||'책')+' 모임 기록을 여는 중이에요. Escape 키로 취소할 수 있어요.';
     select(transaction);
-  });
+  }
+  link.addEventListener('click',handleClick);
   function handleKeydown(event){
     if(!active)return;
     if(event.key==='Escape'){event.preventDefault();cancel();return;}
     if(!event.metaKey&&!event.ctrlKey&&['Enter',' ','Tab','PageDown','PageUp','Home','End','ArrowUp','ArrowDown'].includes(event.key))event.preventDefault();
   }
   const preventScroll=event=>{if(active)event.preventDefault();};
-  addEventListener('resize',()=>cancel({immediate:true}));
-  reduced.addEventListener('change',()=>{if(reduced.matches)cancel({immediate:true});});
-  addEventListener('pagehide',()=>{stopRestore();cancel({immediate:true,focus:false});if(active)clean(active);});
+  const resize=()=>cancel({immediate:true});
+  const motionChange=()=>{if(reduced.matches)cancel({immediate:true});};
+  const pageHide=()=>{stopRestore();cancel({immediate:true,focus:false});if(active)clean(active);};
+  addEventListener('resize',resize);
+  reduced.addEventListener('change',motionChange);
+  addEventListener('pagehide',pageHide);
   const pageShow=()=>{if(active)clean(active);stopRestore();restoreReturn();};
   addEventListener('pageshow',pageShow);
   if(document.readyState==='complete')pageShow();
+  return ()=>{stopRestore();cancel({immediate:true,focus:false});link.removeEventListener('click',handleClick);removeEventListener('resize',resize);reduced.removeEventListener('change',motionChange);removeEventListener('pagehide',pageHide);removeEventListener('pageshow',pageShow);delete link.dataset.bookshelfReady;};
 }

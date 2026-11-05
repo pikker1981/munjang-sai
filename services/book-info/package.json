@@ -1,1 +1,1 @@
-{"name":"sbs-book-info-api","version":"1.0.0","private":true,"type":"module","engines":{"node":">=22"},"scripts":{"test":"node --test"},"dependencies":{"cheerio":"1.2.0"}}
+{"name":"sbs-book-info-api","version":"1.0.0","private":true,"type":"module","engines":{"node":">=22"},"scripts":{"test":"node --test"},"dependencies":{"@vercel/blob":"2.8.2","cheerio":"1.2.0"}}
