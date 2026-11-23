@@ -2,11 +2,15 @@ import {cachedLibrary,fetchLibrary} from './study-client.mjs';
 const escapeHtml=value=>String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function imageFor(record){
  const value=record.study.bookInfo?.cover;
- if(value==='assets/book-silence-cover.jpg')return value;
+ if(['assets/book-silence-cover.jpg','assets/book-poverty-cover.jpg'].includes(value))return value;
  try{const u=new URL(value);if(u.protocol==='https:'&&!u.username&&!u.password&&!u.port&&['image.aladin.co.kr','image.yes24.com','contents.kyobobook.co.kr','image.kyobobook.co.kr'].includes(u.hostname))return u.href;}catch{}
  return 'assets/book-placeholder.svg';
 }
-const guideHref=record=>record.id==='silence'?'silence.html':'reading.html?record='+encodeURIComponent(record.id);
+function guideHref(record){
+ const candidate=String(record?.guide||'').trim();
+ if(/^[a-z0-9][a-z0-9_-]*\.html$/i.test(candidate))return candidate;
+ return record?.id==='silence'?'silence.html':'reading.html?record='+encodeURIComponent(record.id);
+}
 const summaryHref=record=>'find.html?record='+encodeURIComponent(record.id)+'#summary';
 function schedule(study){
  let date='날짜 미정';

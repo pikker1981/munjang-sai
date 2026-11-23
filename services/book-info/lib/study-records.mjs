@@ -98,6 +98,16 @@ function identityFor(study) {
   return `title:${normalizedBookText(study.book)}`;
 }
 
+/** Dedicated guide pages are selected only for editions with an explicit route. */
+export function guideForStudy(study) {
+  const normalized = normalizeStudy(study);
+  const isbn = isbn13(normalized.bookInfo?.isbn || '');
+  if (isbn === '9791170832843') return 'poverty.html';
+  if (normalized.book === '성서와 가난') return 'poverty.html';
+  if (isbn === '9788972914679' || normalized.book === '침묵의 세계') return 'silence.html';
+  return '';
+}
+
 export function seedRecord() {
   const study = emptyStudy();
   Object.assign(study, {
@@ -168,7 +178,7 @@ export function normalizeLibrary(raw) {
       id, version,
       createdAt: checkedTimestamp(record.createdAt, '최초 저장 시각'),
       updatedAt: checkedTimestamp(record.updatedAt, '최근 저장 시각'),
-      study, guide: clipped(record.guide, 300), identity: identityFor(study),
+      study, guide: clipped(record.guide, 300) || guideForStudy(study), identity: identityFor(study),
     };
   });
   if (!ids.has('silence')) {
@@ -224,7 +234,7 @@ export function commitRecord(rawLibrary, rawStudy, options = {}) {
   const record = {
     id, version: previous ? checkedInteger(previous.version + 1, '책별 모임 기록 버전', 1) : 1,
     createdAt: previous?.createdAt || timestamp, updatedAt: timestamp, study,
-    guide: previous?.guide || '', identity,
+    guide: previous?.guide || guideForStudy(study), identity,
   };
   const records = [...library.records];
   if (index === -1) records.push(record);

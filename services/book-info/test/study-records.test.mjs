@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {PEOPLE, emptyStudy, normalizeStudy, seedRecord, normalizeLibrary, commitRecord, sameBook} from '../lib/study-records.mjs';
+import {PEOPLE, emptyStudy, normalizeStudy, seedRecord, normalizeLibrary, commitRecord, sameBook, guideForStudy} from '../lib/study-records.mjs';
 
 const NOW = '2026-11-06T10:00:00.000Z';
 const newStudy = (book = '다음에 함께 읽을 책') => ({...emptyStudy(), book, date: '2026-11-12', time: '19:00', place: '온라인'});
@@ -43,6 +43,21 @@ test('committing a new book makes it latest while retaining every previous recor
   assert.equal(third.records[2].version, 1);
   assert.equal(third.records[2].createdAt, NOW);
   assert.equal(third.revision, 2);
+});
+
+test('assigns the dedicated poverty guide from the verified print ISBN', () => {
+  const study = newStudy('성서와 가난');
+  study.bookLink = 'https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=374546328';
+  study.bookInfo = {
+    title: '성서와 가난', author: '월터 브루그만', translator: '박규태', publisher: '복있는사람',
+    publishedAt: '2025-09-02', pages: '194', isbn: '9791170832843',
+    cover: 'assets/book-poverty-cover.jpg', sourceUrl: study.bookLink, store: '알라딘', linkInput: study.bookLink,
+  };
+  assert.equal(guideForStudy(study), 'poverty.html');
+  const saved = commitRecord(normalizeLibrary(null), study, {now: NOW});
+  assert.equal(saved.latestId, saved.records[1].id);
+  assert.equal(saved.records[1].guide, 'poverty.html');
+  assert.equal(saved.records[0].guide, 'silence.html');
 });
 
 test('editing an archived record changes only that record and preserves latestId and order', () => {

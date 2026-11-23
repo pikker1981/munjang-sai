@@ -1,0 +1,15 @@
+.poverty-document{--poverty-accent:#8c5f43;--poverty-soft:#eee2d7;--poverty-ink:#40372f}
+.poverty-document .silence-hero-art{align-self:start}
+.poverty-document .silence-book-stage{background:radial-gradient(ellipse at center,#e4d3c5,transparent 70%)}
+.poverty-document .silence-cover-link img{box-shadow:10px 18px 26px #4b352626}
+.poverty-document .silence-rail nav a[aria-current]{color:var(--poverty-accent);border-left-color:var(--poverty-accent);background:#f4e9df}
+.poverty-document .silence-progress span{background:var(--poverty-accent)}
+.poverty-document .silence-margin-note{border-left-color:var(--poverty-accent)}
+.poverty-document .silence-club{background:linear-gradient(145deg,#eadfd5,#f1ece5 70%)}
+.poverty-document .silence-club-facts{border-color:#cdb6a3}
+.poverty-document .silence-current-record{border-color:var(--poverty-accent);background:var(--poverty-soft)}
+.poverty-document .silence-source-list a{color:var(--poverty-accent)}
+.poverty-document .poverty-disclaimer{font-size:12px!important;line-height:1.9;color:#6b5c50!important}
+@media(max-width:767px){
+ .poverty-document .silence-rail nav a[aria-current]{border-bottom-color:var(--poverty-accent);background:transparent}
+}
