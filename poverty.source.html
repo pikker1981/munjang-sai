@@ -58,7 +58,27 @@
         <section class="silence-leaf silence-sources" id="sources" aria-labelledby="sources-title"><p class="silence-section-label">출처와 읽기의 범위</p><h2 id="sources-title">확인한 자료와,<br>본문에서 채울 자리.</h2><p>국내판 서지·목차·소개와 원서 공개 자료를 구분해 요약했어요. 이 가이드는 책의 전문이나 매슈 데즈먼드의 책을 대신하지 않으며, 직접 인용보다 짧은 요약과 토론 질문을 사용합니다.</p><details class="silence-details" open><summary>자료별 확인 범위</summary><ol class="silence-source-list"><li><a href="https://www.kobic.net/book/bookInfo/view.do?isbn=9791170832843" target="_blank" rel="noopener noreferrer">KOBIC · 『성서와 가난』 국내판 정보 ↗</a><p>저자·역자·출판사·출간일·쪽수·ISBN·국내판 목차와 책 소개를 확인했어요.</p></li><li><a href="https://www.walterbrueggemann.com/2024/08/13/poverty-in-the-promised-land/" target="_blank" rel="noopener noreferrer">Walter Brueggemann 공식 저자 페이지 ↗</a><p><em>Poverty in the Promised Land</em>의 제목·출간 정보와 책이 겨냥하는 질문을 확인했어요.</p></li><li><a href="https://static1.squarespace.com/static/54f238e7e4b0a83375017edf/t/6679f13d007d5a0665fb4368/1719267651499/1517%2BMedia%2BFall%2B2024.pdf" target="_blank" rel="noopener noreferrer">Fortress Press 카탈로그 PDF ↗</a><p>원서 부제, 편집자, 원서의 장 구성과 출간 정보를 확인했어요. 국내판과 판본·분량이 달라요.</p></li><li><a href="https://churchanew.org/brueggemann/production-and-defeat-of-poverty" target="_blank" rel="noopener noreferrer">저자 글 · The Production and Defeat of Poverty ↗</a><p>구조적 빈곤, 희년·토라·누가복음의 경제적 상상력, 교회와 이웃사랑 책임에 대한 저자의 공개 설명을 보조 자료로 참고했어요.</p></li><li><a href="https://www.jstor.org/stable/jj.12949087" target="_blank" rel="noopener noreferrer">JSTOR · 원서 목차 공개 범위 ↗</a><p>원서 장 제목을 확인했어요. 공개된 목차만 참고했으며 본문 전문을 재현하지 않았어요.</p></li></ol></details><p class="silence-small">페이지와 장 제목은 소지한 국내판을 우선해 주세요. 성서 본문과 저자의 논지를 직접 인용할 때에는 해당 판본에서 다시 확인해야 합니다.</p><a class="silence-top-link" href="#poverty-title">첫 페이지로 돌아가기 ↑</a></section>
       </div>
     </div>
-  </main>
+  <script>
+(() => {
+  const frame = document.querySelector('#commodity-slide-embed iframe');
+  if (!frame) return;
+  const fit = () => {
+    try {
+      const doc = frame.contentDocument;
+      if (!doc) return;
+      frame.style.height = Math.max(doc.body?.scrollHeight || 0, doc.documentElement?.scrollHeight || 0) + 12 + 'px';
+    } catch {}
+  };
+  frame.addEventListener('load', () => {
+    fit();
+    try {
+      const resize = new ResizeObserver(fit);
+      resize.observe(frame.contentDocument.documentElement);
+      frame.contentWindow.addEventListener('resize', fit, {passive:true});
+    } catch {}
+  }, {once:true});
+})();
+</script></main>
 </div>
 <div class="footer-window"><footer class="site-footer"><div class="footer-legal"><span>© <span id="year">2026</span> S.B.S(Solafide Book Study)</span><button class="text-button" data-info="about" type="button">모임 소개</button><button class="text-button" data-info="privacy" type="button">개인정보 안내</button></div><div class="footer-wordmark" aria-hidden="true">S.B.S</div></footer></div>
 <dialog class="meeting-dialog" id="meeting-dialog" aria-labelledby="meeting-title"><button class="dialog-close" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button><div id="dialog-content"></div></dialog>
