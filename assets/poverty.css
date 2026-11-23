@@ -34,6 +34,10 @@
 .poverty-translation-body p:last-child{margin-bottom:0}
 .poverty-translation-source{margin-top:18px;font-size:12px}
 .poverty-translation-source a{color:var(--poverty-accent);text-decoration:underline;text-underline-offset:3px}
+.poverty-inline-list{margin:22px 0;padding:18px 20px;background:#f4e9df;border-radius:8px;color:#5f5046}
+.poverty-inline-list strong{display:block;color:var(--poverty-accent);font-size:12px;margin-top:12px}
+.poverty-inline-list strong:first-child{margin-top:0}
+.poverty-inline-list ul{margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.9}
 @media(max-width:767px){
  .poverty-document .silence-rail nav a[aria-current]{border-bottom-color:var(--poverty-accent);background:transparent}
  .poverty-source-grid{grid-template-columns:1fr;gap:12px}
