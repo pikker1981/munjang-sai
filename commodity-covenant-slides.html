@@ -1,0 +1,2912 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품의 경제와 언약의 경제 · S.B.S(Solafide Book Study)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/static/woff2/SUIT.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.20/index.css">
+  <style>
+    :root {
+      --bg-desk: #ECEAE3;
+      --bg-sheet: #FAF8F3;
+      --bg-box: #F4F1E8;
+      --bg-box-alt: #EFECE2;
+      --ink: #111827;
+      --ink-soft: #374151;
+      --ink-muted: #57534E;
+      --border: #D6D1C4;
+      --border-strong: #BFB8A8;
+      --accent-blue: #1D4ED8;
+      --accent-blue-soft: #E8EEF9;
+      --accent-teal: #0F766E;
+      --accent-teal-soft: #E4F2F0;
+      --accent-amber: #B45309;
+      --accent-amber-soft: #F7EFE2;
+      --shadow-sheet: 0 18px 48px rgba(28, 25, 23, 0.08), 0 2px 8px rgba(28, 25, 23, 0.04);
+      --font-sans: 'SUIT', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-desk);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      letter-spacing: 0.018em;
+      line-height: 1.9;
+      word-break: keep-all;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent-blue);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1.5px;
+    }
+
+    a:hover {
+      color: var(--accent-teal);
+    }
+
+    /* Top Progress Bar */
+    .progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--border);
+      z-index: 200;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal));
+      transition: width 0.25s ease;
+    }
+
+    /* Sticky Top Navigation Shell */
+    .topbar {
+      position: sticky;
+      top: 5px;
+      z-index: 150;
+      background: rgba(250, 248, 243, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+    }
+
+    .topbar-inner {
+      max-width: 1520px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 10px;
+      height: 28px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, var(--accent-blue), var(--accent-teal));
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-muted);
+      background: var(--bg-box);
+      border: 1px solid var(--border);
+      padding: 2px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-sheet);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: var(--bg-box);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: var(--bg-sheet);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #1E40AF;
+      border-color: #1E40AF;
+      color: var(--bg-sheet);
+    }
+
+    .btn-teal {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+      color: var(--bg-sheet);
+    }
+
+    .btn-teal:hover:not(:disabled) {
+      background: #115E59;
+      border-color: #115E59;
+      color: var(--bg-sheet);
+    }
+
+    .jump-form {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-box);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 10px;
+    }
+
+    .jump-input {
+      width: 58px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-sheet);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      padding: 5px 6px;
+      border-radius: 7px;
+    }
+
+    .jump-total {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--ink-muted);
+      font-weight: 600;
+    }
+
+    /* Category Pills Row */
+    .category-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding-bottom: 2px;
+    }
+
+    .cat-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--bg-box);
+      color: var(--ink-soft);
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .cat-btn:hover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    .cat-btn.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: var(--bg-sheet);
+    }
+
+    .cat-count {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.08);
+    }
+
+    .cat-btn.active .cat-count {
+      background: rgba(250, 248, 243, 0.22);
+      color: var(--bg-sheet);
+    }
+
+    /* TOC Dropdown Drawer */
+    .toc-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 24, 39, 0.35);
+      z-index: 300;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 84px 20px 24px;
+    }
+
+    .toc-overlay.open {
+      display: flex;
+    }
+
+    .toc-drawer {
+      width: 100%;
+      max-width: 980px;
+      max-height: calc(100vh - 110px);
+      background: var(--bg-sheet);
+      border: 1px solid var(--border-strong);
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(17, 24, 39, 0.22);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .toc-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-box);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toc-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .toc-search-wrap {
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toc-search {
+      flex: 1;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-box);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      padding: 11px 16px;
+      border-radius: 10px;
+    }
+
+    .toc-search:focus {
+      outline: 2px solid var(--accent-blue);
+      background: var(--bg-sheet);
+    }
+
+    .toc-list {
+      overflow-y: auto;
+      padding: 14px 18px 20px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .toc-item {
+      appearance: none;
+      text-align: left;
+      border: 1px solid var(--border);
+      background: var(--bg-box);
+      border-radius: 12px;
+      padding: 13px 15px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.14s ease;
+    }
+
+    .toc-item:hover {
+      border-color: var(--accent-blue);
+      background: var(--accent-blue-soft);
+    }
+
+    .toc-item.current {
+      border-color: var(--accent-blue);
+      background: var(--accent-blue-soft);
+      box-shadow: inset 4px 0 0 var(--accent-blue);
+    }
+
+    .toc-item-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .toc-item-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.45;
+    }
+
+    .toc-core-badge {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-teal);
+      background: var(--accent-teal-soft);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    .toc-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 36px 16px;
+      color: var(--ink-muted);
+      font-size: 17px;
+    }
+
+    /* Main Stage */
+    .stage-wrap {
+      padding: 28px 24px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .slide-sheet {
+      width: 100%;
+      max-width: 1520px;
+      min-height: 920px;
+      background: var(--bg-sheet);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow-sheet);
+      padding: 46px 56px 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+      position: relative;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .slide-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .meta-category {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent-blue);
+      letter-spacing: 0.02em;
+    }
+
+    .meta-sep {
+      color: var(--border-strong);
+      font-weight: 700;
+    }
+
+    .meta-time {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-teal);
+      background: var(--accent-teal-soft);
+      padding: 3px 12px;
+      border-radius: 999px;
+    }
+
+    .meta-core-tag {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent-amber);
+      background: var(--accent-amber-soft);
+      padding: 3px 12px;
+      border-radius: 999px;
+    }
+
+    .meta-page {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-muted);
+    }
+
+    .slide-title {
+      margin: 0;
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.32;
+      color: var(--ink);
+      letter-spacing: -0.012em;
+    }
+
+    .slide-title.cover-title {
+      font-size: 48px;
+      line-height: 1.24;
+    }
+
+    /* Lead Box */
+    .lead-box {
+      background: var(--bg-box);
+      border-left: 6px solid var(--accent-blue);
+      border-radius: 0 14px 14px 0;
+      padding: 26px 32px;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.82;
+      color: var(--ink);
+    }
+
+    .lead-box.teal {
+      border-left-color: var(--accent-teal);
+    }
+
+    /* Slide Body */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .card-box {
+      background: var(--bg-box);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 380px;
+    }
+
+    .card-box.compact {
+      min-height: 240px;
+    }
+
+    .card-box.accent-blue-top {
+      border-top: 5px solid var(--accent-blue);
+    }
+
+    .card-box.accent-teal-top {
+      border-top: 5px solid var(--accent-teal);
+    }
+
+    .card-box.accent-amber-top {
+      border-top: 5px solid var(--accent-amber);
+    }
+
+    .card-heading {
+      margin: 0;
+      font-size: 27px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-heading.blue {
+      color: var(--accent-blue);
+    }
+
+    .card-heading.teal {
+      color: var(--accent-teal);
+    }
+
+    .card-heading.amber {
+      color: var(--accent-amber);
+    }
+
+    .body-text {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.9;
+      color: var(--ink);
+    }
+
+    .body-list {
+      margin: 0;
+      padding-left: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 23px;
+      line-height: 1.88;
+      color: var(--ink);
+    }
+
+    .body-list li::marker {
+      color: var(--accent-blue);
+      font-weight: 800;
+    }
+
+    .body-list.teal li::marker {
+      color: var(--accent-teal);
+    }
+
+    .quote-block {
+      margin: 0;
+      background: var(--bg-box-alt);
+      border-left: 5px solid var(--accent-teal);
+      border-radius: 0 14px 14px 0;
+      padding: 24px 30px;
+      font-size: 23px;
+      font-weight: 600;
+      line-height: 1.85;
+      color: var(--ink);
+    }
+
+    .quote-cite {
+      display: block;
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-teal);
+      font-style: normal;
+    }
+
+    /* Tables */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--bg-box);
+    }
+
+    .editorial-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .editorial-table th {
+      background: var(--bg-box-alt);
+      color: var(--ink);
+      font-size: 19px;
+      font-weight: 800;
+      padding: 20px 22px;
+      border-bottom: 2px solid var(--border-strong);
+      line-height: 1.5;
+    }
+
+    .editorial-table td {
+      font-size: 22px;
+      line-height: 1.8;
+      padding: 26px 22px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--ink);
+    }
+
+    .editorial-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .editorial-table td strong {
+      color: var(--accent-blue);
+    }
+
+    .editorial-table td .teal-em {
+      color: var(--accent-teal);
+      font-weight: 800;
+    }
+
+    /* SVG Diagram Container */
+    .diagram-box {
+      background: var(--bg-box);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .diagram-box svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Cover Specific */
+    .cover-hero {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      justify-content: center;
+      flex: 1;
+      padding: 16px 0;
+    }
+
+    .cover-kicker {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-teal);
+      letter-spacing: 0.04em;
+    }
+
+    .cover-subtitle {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      line-height: 1.75;
+      margin: 0;
+      max-width: 1240px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    .cover-meta-card {
+      background: var(--bg-box);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cover-meta-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-muted);
+    }
+
+    .cover-meta-val {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.45;
+    }
+
+    /* Bottom Summary Box */
+    .summary-box {
+      background: var(--bg-box-alt);
+      border: 1px solid var(--border-strong);
+      border-left: 6px solid var(--accent-teal);
+      border-radius: 14px;
+      padding: 24px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .summary-label {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--accent-teal);
+      letter-spacing: 0.02em;
+    }
+
+    .summary-text {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.82;
+      color: var(--ink);
+    }
+
+    /* Bottom Footer Nav */
+    .bottom-nav {
+      width: 100%;
+      max-width: 1520px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn-lg {
+      padding: 13px 26px;
+      font-size: 17px;
+      border-radius: 12px;
+    }
+
+    .shortcut-hint {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink);
+      color: var(--bg-sheet);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.25);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      z-index: 400;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Print Container (Hidden on Screen) */
+    #printContainer {
+      display: none;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1200px) {
+      .slide-sheet {
+        padding: 34px 32px 32px;
+        min-height: auto;
+      }
+      .slide-title {
+        font-size: 32px;
+      }
+      .slide-title.cover-title {
+        font-size: 38px;
+      }
+      .lead-box {
+        font-size: 21px;
+        padding: 20px 24px;
+      }
+      .card-heading {
+        font-size: 23px;
+      }
+      .body-text, .body-list, .quote-block {
+        font-size: 20px;
+      }
+      .editorial-table th {
+        font-size: 17px;
+        padding: 16px 16px;
+      }
+      .editorial-table td {
+        font-size: 19px;
+        padding: 18px 16px;
+      }
+      .cover-meta-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .card-box {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .topbar {
+        padding: 10px 14px;
+      }
+      .stage-wrap {
+        padding: 16px 12px 32px;
+      }
+      .slide-sheet {
+        padding: 24px 20px 24px;
+        border-radius: 16px;
+      }
+      .grid-2, .grid-3, .toc-list, .cover-meta-grid {
+        grid-template-columns: 1fr;
+      }
+      .slide-title {
+        font-size: 26px;
+      }
+      .slide-title.cover-title {
+        font-size: 30px;
+      }
+      .lead-box, .body-text, .body-list, .quote-block, .summary-text {
+        font-size: 18px;
+      }
+      .card-heading {
+        font-size: 21px;
+      }
+      .shortcut-hint {
+        display: none;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+      body {
+        background: var(--bg-sheet);
+      }
+      .progress-track,
+      .topbar,
+      .stage-wrap,
+      .toc-overlay,
+      .toast {
+        display: none !important;
+      }
+      #printContainer {
+        display: block !important;
+      }
+      #printContainer .slide-sheet {
+        max-width: none;
+        min-height: auto;
+        box-shadow: none;
+        border: 1px solid var(--border);
+        border-radius: 0;
+        page-break-after: always;
+        break-after: page;
+        margin: 0 0 12mm 0;
+        padding: 22px 28px;
+      }
+      #printContainer .slide-sheet:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+      #printContainer .slide-title {
+        font-size: 26px;
+      }
+      #printContainer .lead-box,
+      #printContainer .body-text,
+      #printContainer .body-list,
+      #printContainer .quote-block,
+      #printContainer .summary-text {
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      #printContainer .card-box {
+        min-height: auto;
+        padding: 16px 20px;
+      }
+      #printContainer .editorial-table th,
+      #printContainer .editorial-table td {
+        font-size: 14px;
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-track" aria-hidden="true">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-row">
+        <div class="brand-group">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <a class="brand-title" href="poverty.html#commodity-covenant" style="color:inherit;text-decoration:none;">돈과 소유: 월터 브루그만 심층 인터뷰 완전 분석</a>
+          <span class="brand-sub" id="modeStatusBadge">전체 36장</span>
+        </div>
+
+        <div class="controls-group"><a class="btn" href="poverty.html#commodity-covenant">← 독서 가이드</a>
+          <button type="button" class="btn btn-teal" id="modeToggleBtn" aria-pressed="false">핵심만 보기</button>
+          <button type="button" class="btn" id="tocToggleBtn" aria-expanded="false">전체 목차·검색</button>
+
+          <form class="jump-form" id="jumpForm">
+            <label for="jumpInput" style="font-size:13px;font-weight:700;color:var(--ink-muted);">이동</label>
+            <input type="number" id="jumpInput" class="jump-input" min="1" max="36" value="1" aria-label="슬라이드 번호 입력">
+            <span class="jump-total" id="jumpTotal">/ 36</span>
+            <button type="submit" class="btn" style="padding:5px 10px;font-size:13px;">이동</button>
+          </form>
+
+          <button type="button" class="btn" id="printBtn">인쇄·PDF</button>
+          <button type="button" class="btn" id="prevTopBtn" aria-label="이전 슬라이드">이전</button>
+          <button type="button" class="btn btn-primary" id="nextTopBtn" aria-label="다음 슬라이드">다음</button>
+        </div>
+      </div>
+
+      <nav class="category-bar" id="categoryBar" aria-label="카테고리 바로가기"></nav>
+    </div>
+  </header>
+
+  <main class="stage-wrap">
+    <article id="slideStage" class="slide-sheet" aria-live="polite"></article>
+
+    <div class="bottom-nav">
+      <button type="button" class="btn nav-btn-lg" id="prevBottomBtn">이전 슬라이드</button>
+      <div class="shortcut-hint">단축키: ← / → 이동 · Home 처음 · End 마지막 · Esc 목차 닫기 · 스와이프 지원</div>
+      <button type="button" class="btn btn-primary nav-btn-lg" id="nextBottomBtn">다음 슬라이드</button>
+    </div>
+  </main>
+
+  <!-- TOC Modal Drawer -->
+  <div class="toc-overlay" id="tocOverlay" role="dialog" aria-modal="true" aria-labelledby="tocHeading">
+    <div class="toc-drawer">
+      <div class="toc-header">
+        <h2 class="toc-title" id="tocHeading">전체 슬라이드 목차 및 실시간 검색</h2>
+        <button type="button" class="btn" id="tocCloseBtn">닫기 (Esc)</button>
+      </div>
+      <div class="toc-search-wrap">
+        <input type="search" id="tocSearchInput" class="toc-search" placeholder="키워드, 성서 구절, 학자 이름 또는 슬라이드 번호(예: 14, 안식일, 바울, 리쾨르)로 검색하세요...">
+      </div>
+      <div class="toc-list" id="tocList"></div>
+    </div>
+  </div>
+
+  <!-- Virtual Print Container -->
+  <section id="printContainer" aria-hidden="true"></section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      const CATEGORIES = [
+        { id: 'overview', name: '개관 및 배경' },
+        { id: 'exodus', name: '출애굽과 욕망의 경제' },
+        { id: 'totalism', name: '전체주의와 안식일 저항' },
+        { id: 'newtestament', name: '신약의 경제학 재발견' },
+        { id: 'ministry', name: '목회와 제2의 순진성' },
+        { id: 'politics_art', name: '고난주간·정치·예술' },
+        { id: 'synthesis', name: '종합 분석과 실천' }
+      ];
+
+      const SLIDES = [
+        {
+          id: 1,
+          category: 'overview',
+          core: true,
+          time: '전체 01:04:04',
+          title: '돈과 소유: 월터 브루그만 심층 인터뷰 완전 분석',
+          keywords: '표지 월터 브루그만 돈과 소유 트립 풀러 배리 테일러 Homebrewed Christianity',
+          render: () => `
+            <div class="cover-hero">
+              <div class="cover-kicker">HOMEBREWED CHRISTIANITY PODCAST · INTERVIEW DEEP ANALYSIS</div>
+              <h1 class="slide-title cover-title">돈과 소유: 월터 브루그만 심층 인터뷰 완전 분석</h1>
+              <p class="cover-subtitle">
+                약탈적·착취적 경제(파라오의 나라)와 이웃 중심 언약 경제(하나님 나라)의 대결을 구약과 신약 전체, 소비자본주의, 안식일 저항, 목회적 해석학, 예술적 상상력까지 빠짐없이 해부한 64분 인터뷰 전권 정리
+              </p>
+              <div class="cover-meta-grid">
+                <div class="cover-meta-card">
+                  <span class="cover-meta-label">인터뷰 대상</span>
+                  <span class="cover-meta-val">월터 브루그만<br><span style="font-size:16px;font-weight:600;color:var(--ink-muted);">Walter Brueggemann</span></span>
+                </div>
+                <div class="cover-meta-card">
+                  <span class="cover-meta-label">진행자 및 장소</span>
+                  <span class="cover-meta-val">트립 풀러 · 배리 테일러<br><span style="font-size:16px;font-weight:600;color:var(--ink-muted);">캘리포니아 더 해처리</span></span>
+                </div>
+                <div class="cover-meta-card">
+                  <span class="cover-meta-label">원본 영상 및 길이</span>
+                  <span class="cover-meta-val">1시간 4분 4초<br><span style="font-size:16px;font-weight:600;color:var(--ink-muted);">2017년 녹음 · 2024년 유튜브 공개</span></span>
+                </div>
+                <div class="cover-meta-card">
+                  <span class="cover-meta-label">기반 저서</span>
+                  <span class="cover-meta-val">Money and Possessions<br><span style="font-size:16px;font-weight:600;color:var(--ink-muted);">WJK Interpretation 시리즈 (2016)</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">원본 출처 안내</span>
+              <p class="summary-text">
+                유튜브 영상: <a href="https://www.youtube.com/watch?v=5MJ-0lrjHJA" target="_blank" rel="noopener noreferrer">Money and Possessions with Walter Brueggemann (Homebrewed Christianity)</a> ·
+                원본 에피소드: <a href="https://www.homebrewedchristianty.com/2017/05/30/money-and-possessions-with-walter-brueggemann/" target="_blank" rel="noopener noreferrer">Homebrewed Christianity 아카이브</a> ·
+                저서: <a href="https://www.wjkbooks.com/bookproduct/0664262805-money-and-possessions/" target="_blank" rel="noopener noreferrer">Westminster John Knox Press</a>
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 2,
+          category: 'overview',
+          core: true,
+          time: '00:00:00 – 01:04:04',
+          title: '인터뷰 전체 흐름과 7대 주제 타임라인 지도',
+          keywords: '타임라인 구조도 64분 전체 흐름 SVG',
+          render: () => `
+            <div class="lead-box">
+              64분 분량의 대담은 가벼운 오프닝(0~10분)으로 시작해 출애굽 경제학, 전체주의와 안식일, 신약성서 재발견, 목회적 해석학, 고난주간과 정치적 설교, 예술의 역할까지 유기적으로 확장됩니다.
+            </div>
+            <div class="diagram-box">
+              <svg viewBox="0 0 1360 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="64분 인터뷰 7대 주제 타임라인 구조도">
+                <rect x="0" y="0" width="1360" height="440" rx="14" fill="#FAF8F3"/>
+                <line x1="70" y1="220" x2="1290" y2="220" stroke="#BFB8A8" stroke-width="5" stroke-linecap="round"/>
+
+                <!-- Node 1 -->
+                <circle cx="110" cy="220" r="16" fill="#1D4ED8"/>
+                <text x="110" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#1D4ED8">00:00–10:22</text>
+                <rect x="24" y="42" width="172" height="122" rx="12" fill="#F4F1E8" stroke="#D6D1C4" stroke-width="2"/>
+                <text x="110" y="78" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="800" fill="#111827">1. 오프닝 맥락</text>
+                <text x="110" y="108" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">더 해처리 강의</text>
+                <text x="110" y="132" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">은퇴 후 신약 확장</text>
+
+                <!-- Node 2 -->
+                <circle cx="300" cy="220" r="16" fill="#0F766E"/>
+                <text x="300" y="264" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#0F766E">10:22–22:50</text>
+                <rect x="206" y="282" width="188" height="130" rx="12" fill="#E4F2F0" stroke="#0F766E" stroke-width="2"/>
+                <text x="300" y="318" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="800" fill="#111827">2. 출애굽과 욕망</text>
+                <text x="300" y="348" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">상품 대 언약 프레임</text>
+                <text x="300" y="372" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">파라오 불안·소비주의</text>
+                <text x="300" y="396" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">거짓 욕망과 버네이스</text>
+
+                <!-- Node 3 -->
+                <circle cx="490" cy="220" r="16" fill="#1D4ED8"/>
+                <text x="490" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#1D4ED8">22:50–32:21</text>
+                <rect x="394" y="42" width="192" height="122" rx="12" fill="#E8EEF9" stroke="#1D4ED8" stroke-width="2"/>
+                <text x="490" y="78" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="800" fill="#111827">3. 전체주의와 안식일</text>
+                <text x="490" y="108" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">리프턴·갈라디아서</text>
+                <text x="490" y="132" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">저항의 십계명·24/7</text>
+
+                <!-- Node 4 -->
+                <circle cx="680" cy="220" r="16" fill="#0F766E"/>
+                <text x="680" y="264" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#0F766E">32:21–37:10</text>
+                <rect x="586" y="282" width="188" height="130" rx="12" fill="#E4F2F0" stroke="#0F766E" stroke-width="2"/>
+                <text x="680" y="318" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="800" fill="#111827">4. 신약의 경제학</text>
+                <text x="680" y="348" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">바울·디모데·야고보</text>
+                <text x="680" y="372" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">일하지 않으면 역전독해</text>
+                <text x="680" y="396" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">근로소득 대 투자소득</text>
+
+                <!-- Node 5 -->
+                <circle cx="870" cy="220" r="16" fill="#1D4ED8"/>
+                <text x="870" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#1D4ED8">37:10–50:17</text>
+                <rect x="774" y="42" width="192" height="122" rx="12" fill="#E8EEF9" stroke="#1D4ED8" stroke-width="2"/>
+                <text x="870" y="78" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="800" fill="#111827">5. 목회와 해석학</text>
+                <text x="870" y="108" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">가르치는 직무·역사비평</text>
+                <text x="870" y="132" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">리쾨르·서기관 소명</text>
+
+                <!-- Node 6 -->
+                <circle cx="1060" cy="220" r="16" fill="#0F766E"/>
+                <text x="1060" y="264" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#0F766E">50:17–60:06</text>
+                <rect x="964" y="282" width="192" height="130" rx="12" fill="#E4F2F0" stroke="#0F766E" stroke-width="2"/>
+                <text x="1060" y="318" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="800" fill="#111827">6. 고난주간과 정치</text>
+                <text x="1060" y="348" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">로마 대 갈릴리 농민</text>
+                <text x="1060" y="372" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">트럼프 설교(눅 12장)</text>
+                <text x="1060" y="396" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">두 큰 계명 설교 전략</text>
+
+                <!-- Node 7 -->
+                <circle cx="1250" cy="220" r="16" fill="#B45309"/>
+                <text x="1250" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#B45309">60:06–64:04</text>
+                <rect x="1156" y="42" width="184" height="122" rx="12" fill="#F7EFE2" stroke="#B45309" stroke-width="2"/>
+                <text x="1250" y="78" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="800" fill="#111827">7. 예술과 연대</text>
+                <text x="1250" y="108" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">크리스테바·성서 예술론</text>
+                <text x="1250" y="132" text-anchor="middle" font-family="SUIT, sans-serif" font-size="15" fill="#374151">레드 레터 크리스천</text>
+              </svg>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">핵심 관전 포인트</span>
+              <p class="summary-text">
+                이 인터뷰는 단순한 신간 홍보를 넘어, 평생 구약을 연구한 석학이 신약 전체로 시야를 넓히며 현대 미국 자본주의와 교회의 정체성을 정면으로 진단한 기록입니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 3,
+          category: 'overview',
+          core: false,
+          time: '00:00:00 – 00:10:22',
+          title: '오프닝 맥락: 더 해처리 대안 신학교육과 은퇴 후의 확장',
+          keywords: '더 해처리 레돈도비치 보르도 와인 Q&A 대안 공동체 은퇴 신약',
+          render: () => `
+            <div class="lead-box">
+              본격 인터뷰에 앞서 트립 풀러와 배리 테일러는 캘리포니아 레돈도비치의 대안 신학교육 기관 ‘더 해처리(The Hatchery)’에서 브루그만과 보낸 강의와 저녁 원탁 대화의 생생한 일화를 공유합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">낮에는 명강의, 밤에는 2시간 원탁 Q&amp;A</h2>
+                <ul class="body-list">
+                  <li>브루그만은 더 해처리에서 구약 입문(Introduction to the Hebrew Bible) 강의를 진행했고, 저녁에는 학생들과 둘러앉아 와인을 곁들인 2시간 비공식 질의응답(“Bordeaux with Brueggemann”)을 가졌습니다.</li>
+                  <li>배리 테일러는 몇 시간째 들어도 지치지 않는 깊은 통찰과, 상투적 답변 대신 학생들의 질문을 진지하게 경청하는 브루그만의 따뜻한 태도를 높이 평가합니다.</li>
+                  <li>더 해처리 학생들은 제국 체제에 맞서는 대안적 공동체·교회·사회적 기업·비영리 단체(Common Cause Community)를 준비 중이었으며, 브루그만은 이들의 프로젝트가 히브리 성서와 만나는 지점을 구체적으로 조언했습니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">은퇴 후 열린 새로운 문: 신약성서로의 본격 진입</h2>
+                <ul class="body-list teal">
+                  <li>진행자들은 60권 넘게 집필한 브루그만이 은퇴한 뒤 오히려 더 왕성하게 글을 쓰고 있다고 농담 섞인 경의를 표합니다.</li>
+                  <li>특히 신간 <a href="https://www.wjkbooks.com/bookproduct/0664262805-money-and-possessions/" target="_blank" rel="noopener noreferrer">Money and Possessions</a>의 가장 놀라운 점은, 평생 구약에 천착해 온 그가 학문적 경력 내내 닫아 두었던 ‘신약성서’의 문을 본격적으로 열었다는 사실입니다.</li>
+                  <li>배리 테일러는 브루그만이 신약을 읽어내는 깊이에 감탄하며, 특히 진보적 독자들까지 바울을 새롭게 좋아하게 만들 만한(“not hate Paul”) 관점을 열어냈다고 예고합니다.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">맥락 메모</span>
+              <p class="summary-text">
+                트립 풀러는 이번 방문이 8년 만의 재출연(두 번째 임기)임을 언급하며, 2017년 당시 미국 정치·경제적 긴장 속에서 성서의 물질관을 묻는 시의성을 강조합니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 4,
+          category: 'overview',
+          core: true,
+          time: '00:10:22 – 00:14:25',
+          title: '핵심 분석 프레임워크: 상품(Commodity) 대 언약(Covenant)',
+          keywords: '상품 언약 약탈적 경제 착취적 경제 출애굽 창세기 요한계시록',
+          render: () => `
+            <div class="lead-box teal">
+              성서에는 돈과 소유에 관한 방대한 자료가 흩어져 있어 분류 체계(taxonomy)를 잡기 어려웠습니다. 브루그만은 창세기부터 요한계시록까지 정경 전체를 관통하는 하나의 렌즈로 ‘출애굽 서사’를 꺼내 듭니다.
+            </div>
+            <div class="diagram-box">
+              <svg viewBox="0 0 1360 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="상품 경제와 언약 경제의 대립 구조도">
+                <rect x="0" y="0" width="1360" height="320" rx="14" fill="#FAF8F3"/>
+                <!-- Left Box -->
+                <rect x="30" y="28" width="560" height="264" rx="16" fill="#F7EFE2" stroke="#B45309" stroke-width="2.5"/>
+                <text x="310" y="76" text-anchor="middle" font-family="SUIT, sans-serif" font-size="25" font-weight="800" fill="#B45309">상품 중심 · 약탈적 착취 경제</text>
+                <text x="310" y="108" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#57534E">Extractive Predatory Economy · Pharaoh</text>
+                <line x1="70" y1="128" x2="550" y2="128" stroke="#D6D1C4" stroke-width="1.5"/>
+                <text x="70" y="166" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">• 독점과 축적: 식량·토지·권력의 끝없는 집중</text>
+                <text x="70" y="204" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">• 동력: 결핍에 대한 거대한 불안과 탐욕</text>
+                <text x="70" y="242" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">• 결과: 농민의 빈곤화, 노예화, 휴식 박탈</text>
+
+                <!-- Center VS -->
+                <circle cx="680" cy="160" r="46" fill="#111827"/>
+                <text x="680" y="168" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="24" font-weight="800" fill="#FAF8F3">VS</text>
+                <text x="680" y="232" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" font-weight="700" fill="#374151">성서 전체를 관통하는</text>
+                <text x="680" y="256" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" font-weight="700" fill="#374151">단 하나의 경합 축</text>
+
+                <!-- Right Box -->
+                <rect x="770" y="28" width="560" height="264" rx="16" fill="#E4F2F0" stroke="#0F766E" stroke-width="2.5"/>
+                <text x="1050" y="76" text-anchor="middle" font-family="SUIT, sans-serif" font-size="25" font-weight="800" fill="#0F766E">언약 중심 · 이웃 경제</text>
+                <text x="1050" y="108" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#57534E">Covenantal Neighborly Economy · Exodus</text>
+                <line x1="810" y1="128" x2="1290" y2="128" stroke="#BFB8A8" stroke-width="1.5"/>
+                <text x="810" y="166" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">• 출애굽 공동체: 약탈적 체제에 대한 저항과 탈출</text>
+                <text x="810" y="204" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">• 동력: 시내산 언약, 이웃의 안식과 상생</text>
+                <text x="810" y="242" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">• 사명: 교회와 연대 세력이 모델링할 대안 경제</text>
+              </svg>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">현재적 함의</span>
+              <p class="summary-text">
+                억지로 끼워 맞출 필요조차 없이 이 대립 구도는 성서 거의 모든 곳에 반복됩니다. 오늘날 미국 역시 약탈적·착취적 경제 속에 놓여 있으며, 교회의 사명은 이에 맞서는 이웃 경제(neighborly economy)를 실천하고 옹호하는 데 있습니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 5,
+          category: 'exodus',
+          core: true,
+          time: '00:14:25 – 00:18:05',
+          title: '출애굽 패러다임의 네 주역: 파라오·요셉·모세·야훼',
+          keywords: '파라오 요셉 모세 야훼 네 인물 비교표 출애굽 패러다임',
+          render: () => `
+            <div class="lead-box">
+              트립 풀러의 요청에 따라 브루그만은 출애굽 패러다임을 구성하는 네 명의 핵심 인물이 경제적 권력 구조 안에서 각각 어떤 기능을 수행하는지 명쾌하게 해부합니다.
+            </div>
+            <div class="table-wrap">
+              <table class="editorial-table">
+                <thead>
+                  <tr>
+                    <th style="width:16%;">인물</th>
+                    <th style="width:24%;">경제적 위상 및 역할</th>
+                    <th style="width:34%;">서사 속 핵심 행위</th>
+                    <th style="width:26%;">신학적·현대적 의미</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>파라오</strong></td>
+                    <td>약탈적·독점적 경제의 정점</td>
+                    <td>가장 많은 식량을 쥐고도 결핍의 악몽에 시달리며, 불안에서 비롯된 탐욕으로 토지·식량·인력을 독점함</td>
+                    <td>불안이 탐욕을 낳고 독점으로 치닫는 착취 체제의 원형</td>
+                  </tr>
+                  <tr>
+                    <td><strong>요셉</strong></td>
+                    <td>파라오의 정책 집행자<br>(Hatchet Man)</td>
+                    <td>파라오의 흉년 꿈을 해몽하고, 중과세 정책을 실행해 농민에게서 식량과 토지를 거둬들이고 끝내 노예로 전락시킴</td>
+                    <td>제국의 착취 시스템을 합리적 행정으로 구현하는 기술관료적 역할</td>
+                  </tr>
+                  <tr>
+                    <td><span class="teal-em">모세</span></td>
+                    <td>대항 서사의 선봉<br>(Point Person)</td>
+                    <td>파라오의 착취에 깊은 분노(indignation)를 품고 약탈적 경제를 거부·저항·탈출하는 대항 운동을 이끔</td>
+                    <td>체제 바깥을 상상하고 집단 탈출을 조직하는 해방의 중재자</td>
+                  </tr>
+                  <tr>
+                    <td><span class="teal-em">야훼 하나님</span></td>
+                    <td>대안 경제의 정당성 부여자</td>
+                    <td>노예 공동체가 파라오의 경제를 떠나는 행위에 신적 정당성을 부여하고 시내산 언약으로 이웃 경제의 지침을 세움</td>
+                    <td>모세와 연대해 파라오의 나라에 맞서는 ‘하나님 나라’의 근원</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">핵심 통찰</span>
+              <p class="summary-text">
+                요셉을 흔히 ‘성공한 총리’로만 읽는 관성을 깨고, 파라오의 불안과 독점 정책을 현장에서 집행해 농민을 노예화한 역할(Hatchet Man)로 짚어낸 점이 브루그만 독해의 백미입니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 6,
+          category: 'exodus',
+          core: false,
+          time: '00:14:44 – 00:16:27',
+          title: '창세기 12장과 요셉 서사: 가장 많이 가진 자의 결핍 악몽',
+          keywords: '창세기 12장 아브라함 요셉 마른 소 살진 소 결핍 불안 독점 노예화',
+          render: () => `
+            <div class="lead-box">
+              창세기 12장에서 아브라함이 기근을 피해 식량 독점자 파라오에게 내려간 장면은 요셉 서사의 전주곡입니다. 브루그만은 파라오의 꿈에서 ‘풍요 속 결핍 불안’이라는 지독한 역설을 포착합니다.
+            </div>
+            <div class="diagram-box">
+              <svg viewBox="0 0 1360 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="파라오의 약탈적 경제 악순환 구조">
+                <rect x="0" y="0" width="1360" height="220" rx="14" fill="#FAF8F3"/>
+                <rect x="24" y="45" width="230" height="130" rx="14" fill="#F7EFE2" stroke="#B45309" stroke-width="2"/>
+                <text x="139" y="92" text-anchor="middle" font-family="SUIT, sans-serif" font-size="21" font-weight="800" fill="#B45309">1. 결핍의 악몽</text>
+                <text x="139" y="126" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#111827">마른 소가 살진 소를</text>
+                <text x="139" y="150" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#111827">삼키는 흉년의 공포</text>
+
+                <path d="M262 110 L294 110" stroke="#B45309" stroke-width="3" marker-end="url(#arr)"/>
+                <defs>
+                  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#B45309"/>
+                  </marker>
+                </defs>
+
+                <rect x="302" y="45" width="230" height="130" rx="14" fill="#F7EFE2" stroke="#B45309" stroke-width="2"/>
+                <text x="417" y="92" text-anchor="middle" font-family="SUIT, sans-serif" font-size="21" font-weight="800" fill="#B45309">2. 거대한 불안</text>
+                <text x="417" y="126" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#111827">가장 많이 가진 자가</text>
+                <text x="417" y="150" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#111827">가장 극심한 불안에 빠짐</text>
+
+                <path d="M540 110 L572 110" stroke="#B45309" stroke-width="3" marker-end="url(#arr)"/>
+
+                <rect x="580" y="45" width="230" height="130" rx="14" fill="#F7EFE2" stroke="#B45309" stroke-width="2"/>
+                <text x="695" y="92" text-anchor="middle" font-family="SUIT, sans-serif" font-size="21" font-weight="800" fill="#B45309">3. 탐욕과 수탈</text>
+                <text x="695" y="126" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#111827">요셉을 내세운 중과세로</text>
+                <text x="695" y="150" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#111827">농민의 식량·토지 회수</text>
+
+                <path d="M818 110 L850 110" stroke="#B45309" stroke-width="3" marker-end="url(#arr)"/>
+
+                <rect x="858" y="45" width="220" height="130" rx="14" fill="#F7EFE2" stroke="#B45309" stroke-width="2"/>
+                <text x="968" y="92" text-anchor="middle" font-family="SUIT, sans-serif" font-size="21" font-weight="800" fill="#B45309">4. 완전 독점</text>
+                <text x="968" y="126" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#111827">식량·화폐·토지를</text>
+                <text x="968" y="150" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#111827">모두 왕실이 장악</text>
+
+                <path d="M1086 110 L1118 110" stroke="#B45309" stroke-width="3" marker-end="url(#arr)"/>
+
+                <rect x="1126" y="45" width="210" height="130" rx="14" fill="#111827"/>
+                <text x="1231" y="92" text-anchor="middle" font-family="SUIT, sans-serif" font-size="21" font-weight="800" fill="#FAF8F3">5. 빈곤과 노예화</text>
+                <text x="1231" y="126" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#ECEAE3">자립 기반을 잃은</text>
+                <text x="1231" y="150" text-anchor="middle" font-family="SUIT, sans-serif" font-size="16" fill="#ECEAE3">백성의 종속 완성</text>
+              </svg>
+            </div>
+            <div class="grid-2">
+              <div class="card-box compact">
+                <h2 class="card-heading blue">가장 부유한 자의 역설적 공포</h2>
+                <p class="body-text">
+                  세상에서 가장 많은 자원을 독점한 파라오가 “식량이 바닥날지 모른다”는 결핍의 악몽에 시달립니다. 불안은 더 많은 축적을 향한 탐욕으로 직결되며, 약탈적 경제의 완벽한 심리 모델이 됩니다.
+                </p>
+              </div>
+              <div class="card-box compact">
+                <h2 class="card-heading teal">세금 정책이 노예 제도로 바뀌는 순간</h2>
+                <p class="body-text">
+                  파라오가 요셉을 앞세워 실행한 정책은 흉년 대비라는 명분 아래 농민에게서 곡식과 땅을 빼앗고, 결국 백성을 빈곤과 노예 상태로 떨어뜨리는 구조적 수탈로 귀결됩니다.
+                </p>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 7,
+          category: 'exodus',
+          core: false,
+          time: '00:16:27 – 00:18:05',
+          title: '모세의 분노, 시내산 언약, 그리고 하나님 나라',
+          keywords: '모세 분노 시내산 언약 이웃 경제 예수 하나님 나라 파라오의 나라',
+          render: () => `
+            <div class="lead-box teal">
+              출애굽은 단순한 영적 구원 이야기가 아닙니다. 착취 경제에 대한 모세의 의로운 분노와 야훼의 연대가 시내산 언약을 낳았고, 이 전통은 예수 운동의 ‘하나님 나라’로 그대로 이어집니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">구약: 탈출에서 시내산 이웃 경제로</h2>
+                <ul class="body-list teal">
+                  <li>모세는 파라오의 착취에 분노하며 약탈적 경제를 거부하고 빠져나가는 대항 서사의 중심에 섭니다.</li>
+                  <li>이스라엘의 하나님 야훼가 서사에 개입해, 노예 공동체가 파라오의 경제 질서를 이탈하는 행위에 정당성을 부여합니다.</li>
+                  <li>시내산에 이른 공동체는 언약을 맺고, 파라오의 경제와 정반대에 서는 ‘이웃 경제(neighborly economy)’의 구체적 지침을 수립합니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">신약: 하나님 나라 = 파라오 나라의 정반대</h2>
+                <ul class="body-list">
+                  <li>그리스도인에게 모세와 야훼가 승인한 이 대안 경제는 예수의 실천 속에 온전히 체현됩니다.</li>
+                  <li>예수 전승이 이 대안 경제에 붙인 이름이 바로 ‘하나님 나라(Kingdom of God)’입니다.</li>
+                  <li>브루그만의 결론은 선명합니다. 하나님 나라는 추상적 천국이 아니라, 착취와 독점의 ‘파라오의 나라(Kingdom of Pharaoh)’에 정면으로 맞서는 대척점(antithesis)입니다.</li>
+                </ul>
+              </div>
+            </div>
+            <blockquote class="quote-block">
+              “예수 전승에서 그 대안 경제에 붙인 이름이 바로 하나님 나라입니다. 그러므로 하나님 나라는 곧 파라오의 나라의 정반대(antithesis)가 됩니다.”
+              <cite class="quote-cite">월터 브루그만 (00:17:41 – 00:18:02)</cite>
+            </blockquote>
+          `
+        },
+        {
+          id: 8,
+          category: 'exodus',
+          core: true,
+          time: '00:18:05 – 00:19:46',
+          title: '부의 불안과 누가복음 12장의 재해석',
+          keywords: '누가복음 12장 어리석은 부자 염려하지 말라 불안 독을 마시다',
+          render: () => `
+            <div class="lead-box">
+              배리 테일러가 파라오의 불안과 예수의 “내일을 염려하지 말라”는 말씀을 연결하자, 브루그만은 누가복음 12장의 본문 배열을 짚으며 그 해석이 정확하다고 화답합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">누가복음 12장의 앞뒤 문맥이 말하는 것</h2>
+                <ul class="body-list">
+                  <li>제자들에게 “염려하지 말라”고 가르치기 직전, 누가복음은 더 큰 곳간을 지어 부를 쌓으려다 그 밤에 목숨을 잃은 ‘어리석은 부자 비유’를 배치합니다.</li>
+                  <li>두 본문이 나란히 놓인 까닭은 분명합니다. 예수가 경계하는 염려는 단순한 가난의 걱정이 아니라, 사람을 집어삼키는 ‘부의 불안(anxiety of wealth)’입니다.</li>
+                  <li>제자들은 더 많이 소유하려는 욕망의 덫에 걸려들지 말라는 구체적이고 물질적인 경고를 받은 것입니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">치료를 기대하며 독을 마시는 구조</h2>
+                <ul class="body-list">
+                  <li>현대 소비자본주의 사회는 특정 부의 목표를 달성하면 인생의 문제가 해결될 것처럼 선전합니다.</li>
+                  <li>그러나 브루그만의 관점에 따르면, 부를 축적하려는 강박 자체가 인간 내면의 깊은 불안을 낳는 핵심 원인입니다.</li>
+                  <li>배리 테일러는 이 역설을 한 문장으로 요약합니다. “우리는 치료를 기대하며 독을 마시고 있는 셈입니다(drinking the poison hoping for a cure).”</li>
+                </ul>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">핵심 정리</span>
+              <p class="summary-text">
+                파라오의 악몽에서 누가복음 12장의 부자 비유까지, 성서는 부의 축적이 불안을 잠재우기는커녕 오히려 불안을 영구 재생산한다고 일관되게 증언합니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 9,
+          category: 'exodus',
+          core: false,
+          time: '00:19:46 – 00:21:25',
+          title: '소비자본주의와 거짓 욕망(False Desire)의 제조',
+          keywords: '소비자본주의 거짓 욕망 광고 신발 산업 8개월 12개월 4개월 재고',
+          render: () => `
+            <div class="lead-box">
+              소비주의 이데올로기는 결핍을 채워주는 시스템이 아니라, 다음 상품을 손에 넣기 전까지 끊임없이 불안을 느끼도록 설계된 장치입니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">불안의 영구 생산 메커니즘</h2>
+                <ul class="body-list">
+                  <li>소비주의는 끊임없이 속삭입니다. “너는 아직 충분히 갖지 못했고, 충분히 해내지 못했으며, 충분한 존재가 아니다. 하지만 우리 상품에 투자하면 괜찮아질 것이다.”</li>
+                  <li>이 구조는 ‘거짓 욕망(false desire)’을 유통합니다. 결국 사람은 자신이 진짜 원하는 것이 무엇인지조차 확신하지 못한 채 끝없는 소비의 악순환에 갇힙니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">미국 신발 산업과 광고의 탄생 일화</h2>
+                <ul class="body-list">
+                  <li>브루그만이 지인에게 들은 일화에 따르면, 미국의 광고 산업은 신발 업계의 과잉 생산 문제에서 비롯되었습니다.</li>
+                  <li>공장들이 12개월 동안 시장에 필요한 신발을 단 8개월 만에 모두 생산해 낼 수 있게 되자, 남은 4개월 동안 찍어낼 신발을 팔 방법이 필요했습니다.</li>
+                  <li>사람들에게는 필요 없는 그 ‘추가 4개월치 신발’을 소비하게 만들려고, 광고로 거짓 욕망을 인위적으로 만들어내기 시작했다는 통찰입니다.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">경제·심리적 시사점</span>
+              <p class="summary-text">
+                과잉 생산을 해소하려고 인위적 욕망과 불안을 주입하는 순간, 경제는 인간의 필요를 섬기는 도구가 아니라 인간을 영원한 결핍 상태에 묶어두는 체제로 변질됩니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 10,
+          category: 'exodus',
+          core: false,
+          time: '00:21:25 – 00:22:50',
+          title: '에드워드 버네이스와 홍보·소비 사회의 탄생',
+          keywords: '에드워드 버네이스 자아의 세기 프로이트 우드로 윌슨 홍보 PR 희생양',
+          render: () => `
+            <div class="lead-box">
+              배리 테일러는 다큐멘터리 ‘자아의 세기(The Century of the Self)’를 인용해, 현대 소비문화의 욕망 제조 기술이 프로이트의 심리학에서 어떻게 탄생했는지 역사를 짚습니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">전쟁 선전에서 소비 욕망 설계로</h2>
+                <ul class="body-list">
+                  <li>‘홍보(PR)의 아버지’로 불리는 에드워드 버네이스(Edward Bernays)는 지그문트 프로이트의 조카였습니다.</li>
+                  <li>그는 제1차 세계대전 이후 우드로 윌슨 행정부의 평화 회담 및 선전 작업에 참여해 대중 심리 조작 기법을 다듬었습니다.</li>
+                  <li>이후 기업들에 고용되어 같은 기법을 소비 시장에 이식했고, 상품을 ‘필요품’이 아니라 ‘자아를 변화시키는 욕망의 대상’으로 바꾸는 미국 소비문화의 설계자가 되었습니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">한 사람에게 책임을 돌리지 않는 균형 감각</h2>
+                <ul class="body-list teal">
+                  <li>브루그만은 소비 욕망의 기원을 역사적으로 짚어낼 수 있다는 점에 감탄합니다.</li>
+                  <li>다만 배리 테일러는 한 개인에게 모든 책임을 떠넘기는 희생양 만들기(scapegoating)는 경계해야 하며, 출발점으로 삼아야 한다고 덧붙입니다.</li>
+                  <li>이에 트립 풀러와 브루그만은 유쾌하게 받아칩니다. “우리는 희생양 만들기는 안 믿지만, 성서는 일단 모든 걸 파라오 탓으로 돌리긴 하죠!”</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 11,
+          category: 'totalism',
+          core: true,
+          time: '00:22:50 – 00:25:19',
+          title: '로버트 제이 리프턴의 ‘전체주의(Totalism)’와 시장 헤게모니',
+          keywords: '로버트 제이 리프턴 전체주의 totalism 헤게모니 미국 예외주의 시장 이데올로기',
+          render: () => `
+            <div class="lead-box">
+              브루그만은 정신의학자 <a href="http://ellul.org/wp-content/uploads/2018/07/The-Ancient-Conflict-Between-Techne-and-Metis-Full-Paper.pdf" target="_blank" rel="noopener noreferrer">로버트 제이 리프턴(Robert Jay Lifton)</a>에게서 빌려온 ‘전체주의(Totalism)’ 개념으로, 오늘날 강제력 없이도 우리의 상상력을 완전히 가두는 시장 이데올로기를 진단합니다.
+            </div>
+            <div class="diagram-box">
+              <svg viewBox="0 0 1360 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="시장 전체주의의 동심원 지배 구조">
+                <rect x="0" y="0" width="1360" height="330" rx="14" fill="#FAF8F3"/>
+                <!-- Concentric Ellipses Left -->
+                <ellipse cx="350" cy="165" rx="300" ry="138" fill="#F7EFE2" stroke="#B45309" stroke-width="2.5"/>
+                <ellipse cx="350" cy="165" rx="215" ry="98" fill="#EFECE2" stroke="#BFB8A8" stroke-width="2"/>
+                <ellipse cx="350" cy="165" rx="125" ry="56" fill="#111827"/>
+                <text x="350" y="160" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="800" fill="#FAF8F3">시장 전체주의</text>
+                <text x="350" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#D6D1C4">Market Totalism</text>
+                <text x="350" y="92" text-anchor="middle" font-family="SUIT, sans-serif" font-size="17" font-weight="700" fill="#374151">모든 기술과 상상력의 포섭</text>
+                <text x="350" y="246" text-anchor="middle" font-family="SUIT, sans-serif" font-size="17" font-weight="700" fill="#374151">비강제적 헤게모니(내면화)</text>
+                <text x="350" y="52" text-anchor="middle" font-family="SUIT, sans-serif" font-size="17" font-weight="800" fill="#B45309">미국 예외주의 · 선전 서사와 결합</text>
+
+                <!-- Right Explanatory Panel -->
+                <rect x="700" y="34" width="630" height="262" rx="16" fill="#F4F1E8" stroke="#D6D1C4" stroke-width="2"/>
+                <text x="736" y="78" font-family="SUIT, sans-serif" font-size="22" font-weight="800" fill="#1D4ED8">전체주의가 지배를 숨기는 3단계 방식</text>
+                <text x="736" y="122" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">1. 지평의 독점: 자본주의 바깥의 정치·경제적 가능성을 지움</text>
+                <text x="736" y="166" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">2. 강제의 은폐: 지배당하는 줄도 모르게 헤게모니를 내면화</text>
+                <text x="736" y="210" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#111827">3. 전복자 침묵: 틀 밖을 사유하는 자를 위험분자로 낙인·제거</text>
+                <text x="736" y="262" font-family="SUIT, sans-serif" font-size="18" font-weight="700" fill="#0F766E">→ 많은 그리스도인이 신앙보다 시장 이데올로기에 더 충실한 이유</text>
+              </svg>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">핵심 진단</span>
+              <p class="summary-text">
+                전체주의가 완성되면 채찍이 필요 없습니다. 사람들이 그 틀 바깥을 생각하거나 상상할 능력 자체를 잃어버리기 때문입니다. 오늘날 미국 예외주의와 결합한 소비자본주의가 바로 이 지점에 서 있습니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 12,
+          category: 'totalism',
+          core: false,
+          time: '00:25:19 – 00:26:37',
+          title: '로마 제국의 전체주의, 예수, 그리고 브리기테 칼의 갈라디아서',
+          keywords: '로마 제국 예수 브리기테 칼 갈라디아서 율법 육체의 욕망 유니언 신학교',
+          render: () => `
+            <div class="lead-box teal">
+              전체주의에 맞선 저항은 구약의 파라오 시대에 그치지 않습니다. 로마 제국의 전체주의에 갇히기를 거부한 예수와, 제국의 법을 비판한 사도 바울의 서신에서 똑같은 충돌이 재현됩니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">로마의 틀에 갇히지 않은 예수</h2>
+                <ul class="body-list">
+                  <li>전체주의 체제는 자기 지평 바깥에서 사유하는 사람을 ‘매우 위험한 전복자(dangerous subversive)’로 규정하고 반드시 침묵시키려 합니다.</li>
+                  <li>브루그만은 로마 제국이 예수에게 내린 처형 결정 역시 같은 논리였다고 봅니다. 예수는 로마의 전체주의 안에 포섭되기를 거부했기 때문에 제거되어야 했습니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">브리기테 칼의 갈라디아서 재해석</h2>
+                <ul class="body-list teal">
+                  <li>뉴욕 유니언 신학교의 독일 출신 학자 <a href="https://www.workingpreacher.org/authors/brigitte-kahl" target="_blank" rel="noopener noreferrer">브리기테 칼(Brigitte Kahl)</a>은 갈라디아서 연구에서 설득력 있는 논지를 제시합니다.</li>
+                  <li>바울이 갈라디아서에서 반대하는 ‘율법(the law)’은 유대인의 토라가 아니라 <strong>로마 제국의 법</strong>이라는 것입니다.</li>
+                  <li>서신 말미의 ‘육체의 욕망’ 비판까지 연결하면, 바울은 그리스도인 공동체에 로마 법의 요구 바깥에서 생각하고 상상하며 살아가라고 촉구하는 셈입니다.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">신학적 전환점</span>
+              <p class="summary-text">
+                브리기테 칼의 논지는 브루그만이 구약에서 신약의 바울 서신으로 들어가 ‘돈과 제국’ 문제를 포착하는 결정적 관문(pivot point)이 되었습니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 13,
+          category: 'totalism',
+          core: true,
+          time: '00:26:37 – 00:28:13',
+          title: '저항의 십계명 대 파라오의 십계명',
+          keywords: '십계명 출애굽기 5장 벽돌 짚 법정 모순 파라오의 십계명 소비자본주의',
+          render: () => `
+            <div class="lead-box">
+              십계명을 ‘저항 공동체 형성의 헌장’으로 이해하지 못하면, 오늘날 제국의 법정 한가운데 모세의 십계명 석판을 걸어 두고도 아무런 모순을 느끼지 못하는 기이한 일이 벌어집니다.
+            </div>
+            <div class="table-wrap">
+              <table class="editorial-table">
+                <thead>
+                  <tr>
+                    <th style="width:22%;">비교 항목</th>
+                    <th style="width:39%;">파라오의 십계명 (출애굽기 5장)</th>
+                    <th style="width:39%;">모세의 대항 십계명 (출애굽기 20장)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>핵심 명령</strong></td>
+                    <td>“너희는 게으르다, 일하라! 짚을 주지 않아도 같은 수량의 벽돌을 구워 바쳐라.”</td>
+                    <td>파라오의 속임수와 유혹에 넘어가지 않는 해방된 언약 공동체의 규범</td>
+                  </tr>
+                  <tr>
+                    <td><strong>최종 목적</strong></td>
+                    <td>열 가지 요구 모두가 단 하나의 목표, 곧 <strong>파라오의 부를 불리는 데</strong> 기여함</td>
+                    <td>하나님의 주권과 이웃의 존엄을 지키며 착취 체제에 저항하는 대안 질서 구축</td>
+                  </tr>
+                  <tr>
+                    <td><strong>현대적 투영</strong></td>
+                    <td>소비자본주의와 로마 제국의 십계명으로도 어렵지 않게 그대로 번역 가능</td>
+                    <td>제국의 법정에 장식품으로 걸릴 대상이 아니라, 제국의 논리를 정면으로 거스르는 저항 선언</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">해석의 열쇠</span>
+              <p class="summary-text">
+                십계명의 전복적 힘을 제대로 보려면, 먼저 출애굽기 5장에서 파라오의 십계명(그리고 오늘날 소비자본주의의 십계명)을 재구성해 나란히 세워 보아야 합니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 14,
+          category: 'totalism',
+          core: true,
+          time: '00:28:13 – 00:30:07',
+          title: '제4계명 안식일: 생산성 우상에 맞서는 가장 전복적인 계명',
+          keywords: '제4계명 안식일 생산성 패트릭 밀러 하나님 이웃 휴식 십계명 구조',
+          render: () => `
+            <div class="lead-box teal">
+              파라오의 체제에서는 노예도, 감독관도, 십장도, 심지어 파라오 자신도 단 한순간 쉬지 못했습니다. 안식일 계명은 “너의 가치는 생산성으로 결정되지 않는다”고 선포하는 가장 급진적인 저항입니다.
+            </div>
+            <div class="diagram-box">
+              <svg viewBox="0 0 1360 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="패트릭 밀러의 십계명 제4계명 안식일 교차점 구조도">
+                <rect x="0" y="0" width="1360" height="300" rx="14" fill="#FAF8F3"/>
+                <!-- Left Block -->
+                <rect x="34" y="48" width="370" height="204" rx="16" fill="#E8EEF9" stroke="#1D4ED8" stroke-width="2.5"/>
+                <text x="219" y="96" text-anchor="middle" font-family="SUIT, sans-serif" font-size="24" font-weight="800" fill="#1D4ED8">제1 ~ 3계명</text>
+                <text x="219" y="132" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="700" fill="#111827">하나님을 향한 계명</text>
+                <text x="219" y="172" text-anchor="middle" font-family="SUIT, sans-serif" font-size="17" fill="#374151">뒤를 돌아보며</text>
+                <text x="219" y="200" text-anchor="middle" font-family="SUIT, sans-serif" font-size="18" font-weight="700" fill="#1D4ED8">“하나님께서 안식하신다”</text>
+
+                <!-- Arrows to Center -->
+                <line x1="404" y1="150" x2="466" y2="150" stroke="#1D4ED8" stroke-width="4"/>
+                <line x1="894" y1="150" x2="956" y2="150" stroke="#0F766E" stroke-width="4"/>
+
+                <!-- Center Pivot -->
+                <rect x="470" y="24" width="420" height="252" rx="18" fill="#111827"/>
+                <text x="680" y="72" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="700" fill="#D6D1C4">DECALOGUE PIVOT · PATRICK D. MILLER</text>
+                <text x="680" y="118" text-anchor="middle" font-family="SUIT, sans-serif" font-size="28" font-weight="800" fill="#FAF8F3">제4계명: 안식일</text>
+                <line x1="520" y1="140" x2="840" y2="140" stroke="#57534E" stroke-width="1.5"/>
+                <text x="680" y="178" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="600" fill="#ECEAE3">하나님과 이웃이 함께 안식하며 만나는 자리</text>
+                <text x="680" y="214" text-anchor="middle" font-family="SUIT, sans-serif" font-size="18" fill="#D6D1C4">생산적일 필요도, 무언가를 증명할 필요도 없음</text>
+                <text x="680" y="248" text-anchor="middle" font-family="SUIT, sans-serif" font-size="17" font-weight="700" fill="#5EEAD4">생산성 지상주의에 대한 정면 전복</text>
+
+                <!-- Right Block -->
+                <rect x="956" y="48" width="370" height="204" rx="16" fill="#E4F2F0" stroke="#0F766E" stroke-width="2.5"/>
+                <text x="1141" y="96" text-anchor="middle" font-family="SUIT, sans-serif" font-size="24" font-weight="800" fill="#0F766E">제5 ~ 10계명</text>
+                <text x="1141" y="132" text-anchor="middle" font-family="SUIT, sans-serif" font-size="19" font-weight="700" fill="#111827">이웃을 향한 계명</text>
+                <text x="1141" y="172" text-anchor="middle" font-family="SUIT, sans-serif" font-size="17" fill="#374151">앞을 내다보며</text>
+                <text x="1141" y="200" text-anchor="middle" font-family="SUIT, sans-serif" font-size="18" font-weight="700" fill="#0F766E">“이웃도 안식해야 한다”</text>
+              </svg>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">패트릭 밀러의 통찰</span>
+              <p class="summary-text">
+                구약학자 패트릭 밀러(Patrick D. Miller)의 분석처럼, 제4계명은 앞선 세 계명(하나님의 안식)과 뒤따르는 여섯 계명(이웃의 안식)을 잇는 중심축입니다. 모든 가치를 생산성으로 환원하는 경제에서 안식일은 가장 강력한 반체제 선언입니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 15,
+          category: 'totalism',
+          core: false,
+          time: '00:30:07 – 00:31:07',
+          title: '조너선 크래리의 ‘24/7’과 수면의 종말',
+          keywords: '조너선 크래리 24/7 후기자본주의 수면의 종말 휴식 악마화 교회',
+          render: () => `
+            <div class="lead-box">
+              배리 테일러는 브루그만의 안식일 통찰을 현대 문화 비평가 <a href="https://www.versobooks.com/products/2315-24-7" target="_blank" rel="noopener noreferrer">조너선 크래리(Jonathan Crary)</a>의 저서 <em>24/7: 후기자본주의와 수면의 종말</em>과 연결합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">자본주의가 정복하지 못한 마지막 보루, 수면</h2>
+                <ul class="body-list">
+                  <li>크래리는 현대 후기자본주의가 인간의 마지막 비(非)소비 영역인 ‘수면’마저 공격하고 있다고 분석합니다.</li>
+                  <li>“24시간 연중무휴(24/7)”, “죽어서나 자겠다(I’ll sleep when I’m dead)” 같은 표현은 휴식을 게으름으로 악마화하는 문화적 무기입니다.</li>
+                  <li>결국 인간은 잠들지 않고 끊임없이 대기(on call)하며 소비하고 노동하도록 내몰립니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">교회 안으로 침투한 24/7 이데올로기</h2>
+                <ul class="body-list">
+                  <li>더 심각한 문제는 이 휴식 거부 논리가 기독교 공동체 안으로 그대로 스며들었다는 점입니다.</li>
+                  <li>“예수를 위해 주 7일 24시간(24/7 for Jesus)” 같은 구호는 신앙적 열심처럼 보이지만, 실제로는 파라오의 생산성 강박을 기독교 언어로 포장한 것에 가깝습니다.</li>
+                  <li>잠시 멈추고 쉬어야 한다는 감각이 사라진 자리에 안식일의 대안적 상상력은 설 자리를 잃습니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 16,
+          category: 'totalism',
+          core: false,
+          time: '00:31:07 – 00:32:21',
+          title: '마크 슬루카의 경고: 휴식의 부재와 파시즘의 연결고리',
+          keywords: '마크 슬루카 휴식 비판적 성찰 파시즘 소비자본주의 순응',
+          render: () => `
+            <div class="lead-box teal">
+              브루그만은 작가 마크 슬루카(Mark Slouka)의 에세이를 인용하며, 휴식의 박탈이 단순한 피로의 문제가 아니라 민주주의의 붕괴와 파시즘으로 직결되는 정치적 위기임을 짚어냅니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">쉬지 못하면 비판적 성찰도 멈춘다</h2>
+                <ul class="body-list teal">
+                  <li>마크 슬루카의 핵심 논지는 명쾌합니다. 사람이 쉬지 못하면 <strong>비판적 성찰(critical reflection)</strong>을 할 시간 자체가 사라집니다.</li>
+                  <li>파시즘은 대중이 비판적으로 사고할 여력을 잃었을 때 자라납니다. 따라서 휴식의 부재는 곧 파시즘의 토양이 됩니다.</li>
+                  <li>소비자본주의가 사람들을 끊임없이 바쁘고 지치게 만드는 이유는, 대안을 상상하고 검토할 여유(leisure)를 빼앗아 체제에 순응(co-opted)하게 만들기 위함입니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">2017년 미국 정치 현실에 대한 풍자</h2>
+                <ul class="body-list">
+                  <li>진행자들은 잠을 거의 자지 않는다고 자랑하던 당시 미국 대통령(도널드 트럼프)의 이미지를 빗대어 뼈 있는 농담을 던집니다.</li>
+                  <li>브루그만은 “그 역시 파시즘 쪽으로 크게 기울어 있으니 모든 퍼즐이 딱 맞아떨어진다”며, 휴식 없는 권력과 비판적 성찰의 실종이 맞물린 시대적 위험을 정면으로 지적합니다.</li>
+                </ul>
+              </div>
+            </div>
+            <blockquote class="quote-block">
+              “소비자본주의는 우리가 비판적으로 성찰하고 대안을 검토할 여유를 갖지 못하도록, 끊임없이 바쁘고 체제에 포섭된 상태로 묶어 두려 합니다.”
+              <cite class="quote-cite">월터 브루그만 (00:31:45 – 00:32:01)</cite>
+            </blockquote>
+          `
+        },
+        {
+          id: 17,
+          category: 'newtestament',
+          core: true,
+          time: '00:32:21 – 00:34:12',
+          title: '구약학자 브루그만의 첫 신약 비평: 바울·디모데·야고보의 놀라운 발견',
+          keywords: '신약성서 바울 디모데서 야고보서 구약학자 돈과 소유 연속성',
+          render: () => `
+            <div class="lead-box">
+              평생 구약성서만 깊이 파고들었던 브루그만이 이번 저서 집필을 계기로 생애 처음 본격적인 신약 비평 작업에 뛰어들었을 때, 그를 기다린 것은 압도적인 놀라움이었습니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">신약 어디에나 가득한 돈과 소유의 문제</h2>
+                <ul class="body-list">
+                  <li>예수의 가르침에 물질 문제가 많다는 사실은 예상했지만, 사도 바울의 서신과 디모데서, 야고보서 곳곳에 이 주제가 넘쳐난다는 사실에 브루그만은 경탄합니다.</li>
+                  <li>특히 자신이 평생 받아 온 신학 교육에서 ‘바울이 돈 문제를 진지하게 다룬다’는 사실을 단 한 번도 제대로 배우지 못했다고 솔직하게 고백합니다.</li>
+                  <li>브리기테 칼의 갈라디아서 연구를 관문 삼아 바울을 다시 읽자, 구약의 언약 경제 궤적이 신약 전체에 완전히 충실하게 이어지고 있음이 드러났습니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">신구약 관통의 의미</h2>
+                <ul class="body-list teal">
+                  <li>구약의 출애굽·예언서 전통과 신약의 복음서·서신서는 단절된 별개의 이야기가 아닙니다.</li>
+                  <li>예수, 바울, 목회서신(디모데서), 야고보서에 이르기까지 신약 저자들은 로마 제국의 착취 경제 앞에서 구약의 이웃 경제를 계승하고 재해석했습니다.</li>
+                  <li>브루그만은 은퇴 이후에야 이 방대한 신약의 보물을 뒤늦게 발견한 기쁨과 배움의 경이로움을 숨기지 않습니다.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">핵심 발견</span>
+              <p class="summary-text">
+                “신약은 구약이 열어놓은 이 경제적 궤적에 완전히 충실합니다.” — 영적 구원론에 가려져 있던 바울의 사회·경제적 저항을 복원한 대목입니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 18,
+          category: 'newtestament',
+          core: true,
+          time: '00:34:12 – 00:35:22',
+          title: '“일하지 않으면 먹지도 말라”의 역전 독해',
+          keywords: '일하지 않으면 먹지도 말라 데살로니가후서 3장 10절 상속 부유층 노동계급',
+          render: () => `
+            <div class="lead-box teal">
+              흔히 게으른 빈민을 훈계하는 구절로 쓰여 온 “일하지 않으면 먹지도 말라”는 말씀을 브루그만은 180도 뒤집어 읽습니다. 실제로 일하지 않고 남의 노동에 기대어 사는 계층은 누구입니까?
+            </div>
+            <div class="table-wrap">
+              <table class="editorial-table">
+                <thead>
+                  <tr>
+                    <th style="width:20%;">구분</th>
+                    <th style="width:40%;">통념적 해석 (기존의 읽기)</th>
+                    <th style="width:40%;">브루그만의 역전 해석 (전복적 읽기)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>비판 대상</strong></td>
+                    <td>일하기 싫어하는 게으른 빈민, 사회적 낙오자(ne'er-do-wells)</td>
+                    <td><strong>노동 없이 부와 상속에 기대어 사는 유산·지배 계층</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>경제적 현실</strong></td>
+                    <td>개인의 나태함이 빈곤의 원인이라는 도덕주의적 훈계로 소비됨</td>
+                    <td>노동계급이 실제로 부를 생산하고, 일하지 않는 특권층이 그 잉여를 먹고사는 착취 구조 폭로</td>
+                  </tr>
+                  <tr>
+                    <td><strong>결론적 함의</strong></td>
+                    <td>가난한 이들에 대한 복지 축소나 정죄의 근거로 오용됨</td>
+                    <td>노동하지 않고 남의 땀 위에서 기생하는 부유층이야말로 “먹지 말아야 할 자”라는 급진적 비판</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">본문 출처 메모</span>
+              <p class="summary-text">
+                인터뷰 녹음에서 브루그만은 구두로 ‘데살로니가전서’라고 언급했으나, 성서 정경상 “누구든지 일하기 싫어하거든 먹지도 말게 하라”는 구절은 데살로니가후서 3장 10절에 위치합니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 19,
+          category: 'newtestament',
+          core: false,
+          time: '00:35:22 – 00:36:05',
+          title: '구스타보 구티에레스와 고대 예루살렘의 잉여 착취 구조',
+          keywords: '구스타보 구티에레스 해방신학 존엄한 노동 예루살렘 도시 엘리트 농민 잉여',
+          render: () => `
+            <div class="lead-box">
+              트립 풀러가 해방신학자 구스타보 구티에레스(Gustavo Gutiérrez)의 해석을 보태자, 브루그만은 고대 예루살렘의 도시 권력이 농민의 잉여를 어떻게 권력으로 바꿨는지 역사적 구조로 확장합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">구스타보 구티에레스의 국가 의무론</h2>
+                <ul class="body-list teal">
+                  <li>구티에레스는 “일하지 않으면 먹지 말라”는 말씀을 빈민 배제가 아니라 <strong>국가의 의무</strong>로 읽어냅니다.</li>
+                  <li>모든 국가는 시민에게 존엄한 일자리(work with dignity)와 인간다운 생계를 보장해야 할 책임이 있다는 뜻입니다.</li>
+                  <li>일할 기회조차 박탈당한 사람을 탓하는 것이 아니라, 노동의 존엄을 지키는 사회 구조를 요구하는 윤리적 선언입니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">고대 예루살렘 도시 엘리트의 착취 경제</h2>
+                <ul class="body-list">
+                  <li>브루그만은 고대 예루살렘의 경제 구조를 언급합니다. 왕, 서기관, 제사장으로 이루어진 도시 엘리트들은 직접 생산 노동을 하지 않았습니다.</li>
+                  <li>그들은 농촌의 농민들이 땀 흘려 생산한 농업 잉여(surplus)를 거둬들여 먹고살았습니다.</li>
+                  <li>더 나아가 농민이 만든 부와 잉여를 자신들의 정치·종교적 권력으로 전환하며 지배 체제를 유지했습니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 20,
+          category: 'newtestament',
+          core: false,
+          time: '00:36:05 – 00:37:10',
+          title: '현대 조세 제도의 역설: 근로소득 대 투자소득',
+          keywords: '세법 근로소득 투자소득 월스트리트 청지기 주일 십일조 일용직 노동자',
+          render: () => `
+            <div class="lead-box">
+              고대 예루살렘의 잉여 착취는 먼 옛날 이야기가 아닙니다. 진행자들과 브루그만은 현대 미국 세법의 핵심 모순을 정조준하며 유쾌하면서도 날카로운 제안을 내놓습니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">땀 흘린 돈보다 땀 안 흘린 돈에 세금을 덜 매기는 현실</h2>
+                <ul class="body-list">
+                  <li>트립 풀러는 현대 세법 논쟁의 본질을 찌릅니다. 월스트리트 투자 등으로 ‘땀 흘리지 않고 번 돈(투자소득)’이 ‘땀 흘려 번 돈(근로소득)’보다 낮은 세율을 적용받습니다.</li>
+                  <li>브루그만은 이 조세 구조가 “단순히 외설적(simply obscene)”이라고 직언합니다.</li>
+                  <li>“근로소득과 투자소득의 차별적 세율을 들여다보면, 도대체 누가 그 법을 만들었는지 단번에 알 수 있습니다.”</li>
+                </ul>
+              </div>
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">청지기 주일의 도발적인 ‘마지막 설교’ 제안</h2>
+                <ul class="body-list">
+                  <li>트립 풀러는 교회에서 쫓겨날 각오로 해볼 만한 ‘최고의 마지막 설교’ 시나리오를 농담처럼 제안합니다.</li>
+                  <li>“청지기 주일입니다. 십일조는 너무 근대적이니, 상위 소득 교인들은 근로소득 세율과 투자소득 세율의 차액만 교회에 헌금하십시오. 그 돈으로 우리 교회 일용직 노동자들을 세웁시다!”</li>
+                  <li>브루그만은 크게 웃으며 화답합니다. “그거야말로 딱 성서적이네요(That’s it, biblical)!”</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 21,
+          category: 'ministry',
+          core: true,
+          time: '00:37:10 – 00:40:57',
+          title: '오늘날 목회자의 소명: 가르치는 직무(Teaching Office)의 회복',
+          keywords: '목회자 가르치는 직무 해석 범주 재교육 강경파 대다수 교인 설교',
+          render: () => `
+            <div class="lead-box">
+              “매주 같은 교인들을 만나는 목회자가 어떻게 사람들을 쫓아내지 않으면서도 성서와 현대 전체주의의 대조를 보여줄 수 있을까요?” 브루그만은 목회자의 ‘가르치는 직무’를 해법으로 제시합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">텍스트에서 자라나는 새로운 해석 범주</h2>
+                <ul class="body-list">
+                  <li>오늘날 목회하기는 지극히 어렵지만, 목회자는 무엇보다 <strong>교사(teacher)</strong>가 되어야 합니다. 교인들에게 지금 없는 ‘해석 범주(interpretive categories)’를 제공해야 하기 때문입니다.</li>
+                  <li>이 범주는 이념 주입이 아니라 <strong>매우 부드럽고(gently), 철저히 성서 텍스트에서 자라나도록</strong> 제시해야 합니다. 그래야 교인들이 본문과 자기 현실의 연결고리를 스스로 발견합니다.</li>
+                  <li>목표는 완고한 강경파(hardcore people)를 개종시키는 일이 아닙니다. 이런 주제를 한 번도 진지하게 생각해 볼 도구를 얻지 못한 ‘교회의 대다수 일반 신자’가 대상입니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">목회자 자신의 재교육(Re-nurture)이 먼저다</h2>
+                <ul class="body-list teal">
+                  <li>브루그만이 여러 교회의 설교를 들으며 느끼는 안타까움은, 본문에 이 주제를 다룰 훌륭한 문이 열려 있는데도 설교자들이 그냥 지나쳐 버린다는 점입니다.</li>
+                  <li>목회자들 스스로 이 영역의 독서와 공부가 부족해 해석 도구를 갖추지 못했기 때문입니다.</li>
+                  <li>결국 핵심 과제는 목회자들의 <strong>재교육(re-nurture)</strong>입니다. 새로운 도구를 품고 차분히 가르치면, 교인들은 놀라워하면서도 성서와 자기 삶을 동시에 풀어주는 틀에 오히려 감사하게 됩니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 22,
+          category: 'ministry',
+          core: false,
+          time: '00:40:57 – 00:44:27',
+          title: '역사비평의 한계와 사회과학적·권력 패턴 비평으로의 전환',
+          keywords: '역사비평 신학교육 체계적 격자 사회과학 권력 패턴 탈식민 제3세계 계몽주의',
+          render: () => `
+            <div class="lead-box teal">
+              왜 많은 목회자가 본문 속 경제와 권력의 맥락을 보지 못할까요? 브루그만은 신학교육을 지배해 온 역사비평의 맹점과 계몽주의 합리성의 한계를 정면으로 진단합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">역사비평이 놓친 ‘체계적 격자(Systemic Grid)’</h2>
+                <ul class="body-list">
+                  <li>역사비평은 중요했지만, ‘단 한 번 일어난 사건(one-off questions)’과 연대 추정에만 매달린 나머지 텍스트 안에 흐르는 <strong>체계적 격자</strong>를 놓쳤습니다.</li>
+                  <li>그 결과 교회는 세상의 권력 구조에 저항한다고 착각하면서도, 실제로는 그 권력 지평 안에 완전히 흡수되어 버리는 환상(illusory view)에 빠집니다.</li>
+                  <li>브루그만은 기존의 성서학이 이 중대한 과제를 외면했다며 “학문의 배신(a betrayal)”이라는 강한 표현까지 씁니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">사회과학적 접근과 탈식민·제3세계 해석학</h2>
+                <ul class="body-list teal">
+                  <li>텍스트 안에서 반복되는 <strong>권력 패턴과 해석 패턴</strong>을 찾아내는 사회과학적 성서 연구로 방향을 틀어야 합니다.</li>
+                  <li>성서 속 권력 패턴을 알아보지 못하면, 오늘날 우리 사회와 경제의 권력 패턴도 결코 분별할 수 없습니다.</li>
+                  <li>앞으로의 돌파구는 <strong>탈식민 해석학(postcolonial)과 제3세계 교회 해석</strong>에 있습니다. 이들은 계몽주의 합리성에 갇힌 사치를 부릴 여유 없이, 절박한 정치·경제 현실 속에서 본문을 읽어왔기 때문입니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 23,
+          category: 'ministry',
+          core: true,
+          time: '00:44:27 – 00:48:20',
+          title: '폴 리쾨르의 후기비평적 해석과 ‘제2의 순진성(Second Naiveté)’',
+          keywords: '폴 리쾨르 후기비평 제2의 순진성 계몽주의 낯설게 하기 진보 보수 하나님',
+          render: () => `
+            <div class="lead-box">
+              계몽주의 이후 교회는 하나님의 존재를 과학적·역사적 증명 대상으로만 다루다 정작 ‘하나님’이라는 말을 생생하게 쓸 힘을 잃었습니다. 브루그만은 철학자 폴 리쾨르(Paul Ricoeur)에게서 해법을 찾습니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">후기비평적 해석과 제2의 순진성</h2>
+                <ul class="body-list">
+                  <li><strong>후기비평적 해석(Postcritical Interpretation)</strong>: 역사비평 작업을 성실히 마친 뒤, 다시 텍스트로 돌아와 “이 텍스트는 무엇을 계시하려 하며, 어떤 하나님을 드러내는가”를 묻는 태도입니다.</li>
+                  <li><strong>제2의 순진성(Second Naiveté)</strong>: 비평을 거친 뒤에도 순진하게 텍스트 앞에 서서, “이 서사가 우리가 실제로 살아낼 수 있는 이야기라면 어떨까?” 하고 진지하게 받아들이는 자세입니다.</li>
+                  <li>이 태도는 우리가 당연하게 여겨 온 <strong>계몽주의 서사를 낯설게 만들기(defamiliarize)</strong> 시작합니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">진보와 보수 모두가 서 있는 자리</h2>
+                <ul class="body-list teal">
+                  <li>주류 개신교(진보)는 텍스트 속 생동하는 하나님을 말할 언어를 잃었고, 복음주의(보수)는 역사적 사실 여부에 매달리다 서사의 전복적 힘을 놓칩니다.</li>
+                  <li>브루그만은 목회자로서 진보와 보수 교인 모두가 결국 <strong>두 서사(소비 서사 vs 언약 서사) 사이에 서 있다</strong>는 사실을 깨닫도록 돕고 싶다고 말합니다.</li>
+                  <li>해석의 핵심 질문은 “이것이 역사적 사실인가”가 아니라, “나는 지금 어떤 서사의 참여자로 살고 있는가”입니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 24,
+          category: 'ministry',
+          core: false,
+          time: '00:46:27 – 00:48:20',
+          title: '서사의 전환: 약속을 못 지키는 서사에서 약속을 지켜온 서사로',
+          keywords: '서사 전환 소비 서사 언약 서사 약속 다른 신들 참여자',
+          render: () => `
+            <div class="lead-box teal">
+              “내 인생의 가장 큰 작업은 서사를 갈아타는 일(switching narratives)입니다.” 브루그만은 현대인의 영적 위기를 ‘어떤 서사에 참여하고 있는가’의 문제로 압축합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">소비주의의 서사 (Narrative of Consumerism)</h2>
+                <ul class="body-list">
+                  <li>우리가 의식하지 못한 채 이미 깊이 참여하고 있는 지배 서사입니다.</li>
+                  <li>이 서사에는 성서의 하나님이 아니라 <strong>다른 신들(시장, 축적, 지위)</strong>이 군림합니다.</li>
+                  <li>결정적 결함은 분명합니다. 소비 서사는 화려한 행복과 안전을 약속하지만, <strong>결코 그 약속을 지키지 못하는 서사</strong>입니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">언약의 서사 (Covenantal Narrative)</h2>
+                <ul class="body-list teal">
+                  <li>언약의 하나님과 함께 살아가는 대안적 이야기이자 공동체적 현실입니다.</li>
+                  <li>완벽한 유토피아를 선전하는 대신, 긴 역사의 시간을 거치며 <strong>자신의 약속 가운데 일부를 실제로 지켜온 서사</strong>입니다.</li>
+                  <li>교회의 핵심 질문: “소비 서사의 참여자로 사는 것은 무엇을 뜻하며, 언약 서사의 참여자로 산다는 것은 무엇을 뜻하는가?”</li>
+                </ul>
+              </div>
+            </div>
+            <blockquote class="quote-block">
+              “소비주의 서사는 결코 약속을 지키지 못합니다. 그래서 나는 적어도 시간을 두고 약속을 지켜온 서사의 참여자가 될 가능성을 진지하게 품어보고 싶습니다.”
+              <cite class="quote-cite">월터 브루그만 (00:46:50 – 00:47:15)</cite>
+            </blockquote>
+          `
+        },
+        {
+          id: 25,
+          category: 'ministry',
+          core: true,
+          time: '00:48:20 – 00:50:17',
+          title: '예언자가 아니라 ‘서기관(Scribe)’으로 서는 목회자',
+          keywords: '서기관 예언자 텍스트 관리자 custodian 목회적 소명 해처리',
+          render: () => `
+            <div class="lead-box">
+              트립 풀러가 더 해처리 저녁 대화에서 들은 브루그만의 명언을 다시 꺼냅니다. “예언자 본문을 다룰 때 목회자의 소명은 예언자가 되는 것이 아니라, 서기관(Scribe)이 되는 것입니다.”
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">‘예언자 행세’의 함정</h2>
+                <ul class="body-list">
+                  <li>목회자가 스스로 예언자의 목소리가 되어 회중을 훈계하고 화나게 만든 뒤, “진리를 위해 핍박받았다”며 만족하는 태도는 공동체를 세우지 못합니다.</li>
+                  <li>개인의 정치적 분노와 텍스트의 증언이 뒤섞이면, 교인들은 본문이 아니라 목회자 개인에게 반감을 품고 귀를 닫아 버립니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">‘서기관(Scribe)’의 사역과 안전함</h2>
+                <ul class="body-list">
+                  <li>서기관은 텍스트의 <strong>신실한 관리자(careful custodian)</strong>로서, 그 본문이 당시의 전체주의를 어떻게 뿌리째 흔들었는지 정교하게 펼쳐 보입니다.</li>
+                  <li>목회자의 과업은 시간을 들여 교인들과 관계를 쌓고, 회중이 텍스트가 던지는 과제를 스스로 감당하도록 틀을 마련하는 일입니다.</li>
+                  <li>브루그만의 위트 있는 정리: “교인들이 텍스트를 싫어해도 그건 내 텍스트가 아닙니다. 굳이 나한테 화낼 필요가 없죠. 물론 화내는 사람도 있겠지만 괜찮습니다.”</li>
+                </ul>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">목회적 통찰</span>
+              <p class="summary-text">
+                서기관적 목회는 비겁한 회피가 아니라, 목회자의 자아를 뒤로 물리고 성서 텍스트 자체가 회중의 양심에 직접 말을 걸게 하는 가장 깊은 영적 전략입니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 26,
+          category: 'politics_art',
+          core: true,
+          time: '00:50:17 – 00:52:48',
+          title: '고난주간과 수난 서사의 재발견: 제국과 갈릴리 농민의 충돌',
+          keywords: '고난주간 수난 서사 로마 권력 유대 지도층 갈릴리 농민 십자가 부활',
+          render: () => `
+            <div class="lead-box teal">
+              신약의 물질적·정치적 관점으로 성서를 다시 읽은 뒤 맞이한 고난주간. 매일 밤 예배에 참석한 브루그만의 눈에는 익숙한 수난 서사가 완전히 새로운 충돌로 다가왔습니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">예루살렘 입성부터 금요일까지의 정면충돌</h2>
+                <ul class="body-list">
+                  <li>고난주간 전체는 <strong>로마 권력 및 로마와 결탁한 유대 지도층</strong> 대 <strong>농민 의식(peasant mentality)을 품고 갈릴리에서 올라온 전복자 예수</strong>의 충돌이었습니다.</li>
+                  <li>권력 구도상 예수 운동이 로마의 무력을 이길 가능성은 애초에 없었습니다. 따라서 성금요일의 십자가 처형은 지극히 ‘예측 가능한 결과’였습니다.</li>
+                  <li>복음서의 경이로움은 바로 그 예측 가능했던 금요일의 패배가 최종 결말이 아니었다는 데 있습니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-amber-top">
+                <h2 class="card-heading amber">관습적 예배가 놓치고 있는 현재성</h2>
+                <ul class="body-list">
+                  <li>브루그만은 오늘날 우리 역시 똑같은 제국적 충돌 한복판에 참여하고 있다는 강렬한 동시대성(contemporaneity)을 체감했습니다.</li>
+                  <li>그러나 자신이 출석한 지역 교회의 고난주간 예배에서는 이 정치·경제적 충돌의 차원이 거의 완전히 실종되어 있었습니다.</li>
+                  <li>너무나 익숙하고 관습적인 방식으로만 예배를 드리다 보니, 수난 서사의 날 선 전복성이 무뎌져 버린 것입니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 27,
+          category: 'politics_art',
+          core: false,
+          time: '00:52:48 – 00:55:56',
+          title: '전례의 위로와 선포의 흔들림: 전형적 인물(Paradigmatic Figures) 읽기',
+          keywords: '전례 위로 선포 설교 누가복음 3장 세례 요한 정치 지도자 전형적 인물',
+          render: () => `
+            <div class="lead-box">
+              큰 절기마다 익숙한 위로를 기대하는 회중의 마음을 거스르지 않으면서도, 어떻게 수난 서사의 정치·경제적 현실을 깨울 수 있을까요? 브루그만은 전례와 설교의 역할 분담, 그리고 누가복음의 서사 구조를 제시합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">전례는 위로를, 설교는 흔들림을</h2>
+                <ul class="body-list teal">
+                  <li>고난주간의 전통적 위로를 필요로 하는 교인들에게는 <strong>전례(Liturgy)</strong>가 그 안정을 충분히 제공해 줍니다.</li>
+                  <li>바로 그 전례가 만들어 놓은 안전한 공간 덕분에, <strong>말씀 선포(Proclamation)</strong>에서는 본문에 바짝 붙어 기존 관념을 흔들고 일깨울 여지가 생깁니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">누가복음 3장과 ‘전형적 인물(Paradigmatic Figures)’</h2>
+                <ul class="body-list">
+                  <li>누가복음으로 설교한다면 고난주간에 갑자기 시작할 게 아니라, 교회력 훨씬 앞부분인 세례 요한의 등장(누가복음 3장)부터 짚어야 합니다.</li>
+                  <li>누가가 수많은 절을 할애해 로마 황제와 총독, 분봉왕, 대제사장 등 정치·종교 권력자들을 한 문단에 나열한 이유는, 이들이 고난주간에 등장할 때 놀라지 않게 미리 무대에 세워 둔 것입니다.</li>
+                  <li>파라오에서 빌라도까지 이들은 역사적 인물이면서 동시에 매 시대 반복되는 <strong>전형적 인물(paradigmatic figures)</strong>입니다. “이들이 오늘 우리 시대에는 어떤 얼굴로 다시 나타나는가?” 묻는 것이 핵심입니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 28,
+          category: 'politics_art',
+          core: true,
+          time: '00:55:56 – 00:56:56',
+          title: '청취자 Q&A 1: 도널드 트럼프 대통령 앞 단 한 번의 설교 본문',
+          keywords: '트럼프 대통령 워싱턴 DC 장로교회 설교 본문 누가복음 12장 어리석은 부자',
+          render: () => `
+            <div class="lead-box">
+              청취자가 트위터로 보낸 첫 번째 질문: “내가 워싱턴 D.C. 장로교회의 담임목사이고, 도널드 트럼프 대통령이 딱 한 번 예배에 참석하는 주일에 설교해야 한다면 어떤 본문을 택하시겠습니까?”
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">브루그만의 선택: 누가복음 12장</h2>
+                <ul class="body-list">
+                  <li>브루그만은 자신이 평소 성서정과(lectionary) 설교자임을 밝히면서도, 단 한 번의 기회라면 앞서 배리 테일러가 언급한 <strong>누가복음 12장</strong>을 택하겠다고 망설임 없이 답합니다.</li>
+                  <li>첫째 부분: 기존 곳간을 헐고 더 큰 곳간을 지어 부를 쌓으려다 생명을 잃는 <strong>어리석은 부자의 비유</strong>.</li>
+                  <li>둘째 부분: 제자들에게 <strong>“먼저 하나님의 나라를 구하라, 그리고 나머지는 염려하지 말라”</strong>고 명하는 예수의 가르침.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">왜 이 본문이 가장 강력한가</h2>
+                <ul class="body-list teal">
+                  <li>특정 정당이나 인물을 향해 정치적 비난을 퍼붓지 않고도, 끝없는 축적·부동산·과시적 부의 논리를 성서 텍스트 자체가 정면으로 해체하기 때문입니다.</li>
+                  <li>파라오의 불안과 부의 축적 욕망을 관통해 “하나님 나라”라는 대안 질서를 선포하는, 브루그만 신학 전체의 결정판 같은 선택입니다.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">설교의 기술</span>
+              <p class="summary-text">
+                권력자 앞에서 개인의 정치적 의견을 외치는 대신, 권력자의 삶의 논리와 정면으로 충돌하는 성서 본문을 고요하고 정확하게 펼쳐 놓는 ‘서기관적 설교’의 모범입니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 29,
+          category: 'politics_art',
+          core: true,
+          time: '00:56:56 – 01:00:06',
+          title: '청취자 Q&A 2: 선거 이후 언약적 저항을 위한 설교 전략 ‘기본으로 돌아가기’',
+          keywords: '선거 이후 Back to Basics 두 가지 큰 계명 레위기 신명기 제3계명 미국 예외주의',
+          render: () => `
+            <div class="lead-box teal">
+              같은 청취자의 후속 질문: “선거 직후 언약적 저항을 일깨우려면 어떤 본문으로 설교해야 합니까?” 브루그만은 자신이 집필 중인 논문 제목 ‘기본으로 돌아가기(Back to Basics)’로 답합니다.
+            </div>
+            <div class="grid-3">
+              <div class="card-box compact accent-blue-top">
+                <h2 class="card-heading blue">1. 두 가지 큰 계명</h2>
+                <p class="body-text">
+                  “하나님 사랑”과 “이웃 사랑”을 분리하지 않고 수개월에 걸쳐 설교합니다. 예수가 직접 꼽은 가장 큰 계명을 설교하는데 정파적이라고 시비 걸 사람은 아무도 없습니다.
+                </p>
+              </div>
+              <div class="card-box compact accent-teal-top">
+                <h2 class="card-heading teal">2. 레위기와 신명기 연결</h2>
+                <p class="body-text">
+                  이웃 사랑은 레위기(거룩한 백성의 삶)로, 하나님 사랑은 신명기(이웃 경제와 약자 보호)로 직결됩니다. 교인들이 지루한 덩어리로 방치한 구약 율법의 본래 힘을 깨우는 ‘텍스트 작업’입니다.
+                </p>
+              </div>
+              <div class="card-box compact accent-amber-top">
+                <h2 class="card-heading amber">3. 제3계명의 현대적 적용</h2>
+                <p class="body-text">
+                  “하나님의 이름을 망령되이 부르지 말라”는 뜻은 하나님을 <strong>미국 예외주의나 자본주의, 우리의 사적 프로젝트에 묶어두지(harness) 말라</strong>는 경고입니다.
+                </p>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">죽음의 서사에 맞서는 대안의 목소리</span>
+              <p class="summary-text">
+                “목회자들은 성서 텍스트가 오늘날 우리가 얽혀 있는 ‘죽음의 서사(narrative of death)’에 맞서는 대안의 목소리임을 다시 결단해야 합니다. 교인들이 교회에 올 때는 세상과 다른 ‘이상한 말(funny things)’을 들을 마음의 여지가 조금은 있으니 그 기회를 붙잡아야 합니다.”
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 30,
+          category: 'politics_art',
+          core: true,
+          time: '01:00:22 – 01:02:04',
+          title: '청취자 Q&A 3: 예술가의 역할과 줄리아 크리스테바의 통찰',
+          keywords: '예술가 시 전체주의 줄리아 크리스테바 성스러움 제2의 탄생 성서는 예술',
+          render: () => `
+            <div class="lead-box">
+              “기독교 예술을 만드는 것을 넘어, 신앙을 가진 예술가들이 오늘날 어떤 역할을 감당해야 할까요?” 브루그만은 예술을 전체주의 바깥을 여는 가장 강력한 힘으로 정의합니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">전체주의 바깥에 인간을 위한 공간을 열다</h2>
+                <ul class="body-list">
+                  <li>브루그만은 “시는 그저 우리 기분을 좋게 하려고 있는 것”이라는 도널드 트럼프의 최근 발언을 정면으로 반박합니다.</li>
+                  <li>시와 모든 형태의 예술은 기분 전환용 장식이 아니라, <strong>전체주의 바깥에 인간이 숨 쉴 공간을 창조하는 작업</strong>입니다.</li>
+                  <li>배리 테일러는 철학자 <strong>줄리아 크리스테바(Julia Kristeva)</strong>의 통찰을 덧붙입니다. 예술과 이미지는 인류가 성스러움(the sacred)과 맺는 마지막 연결고리이며, 오직 예술만이 세계를 재구성해 ‘제2의 탄생(second birth)’을 가능케 합니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">성서 자체가 하나의 예술 형식이다</h2>
+                <ul class="body-list teal">
+                  <li>브루그만은 여기서 한 걸음 더 나아갑니다. 교회는 사람들이 <strong>성서 자체가 하나의 예술 형식(art form)</strong>임을 보도록 도와야 합니다.</li>
+                  <li>너무 오랫동안 성서를 단순한 역사 기록으로만 취급한 탓에, 성서가 품은 예술적 차원을 놓쳐 버렸습니다.</li>
+                  <li>성서 서사가 ‘전형적(paradigmatic)’이라는 말은 곧, 성서가 <strong>세상을 어떻게 경험할 것인지 제시하는 예술적 제안(artistic proposals)</strong>이라는 뜻입니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 31,
+          category: 'politics_art',
+          core: false,
+          time: '01:02:04 – 01:04:04',
+          title: '은퇴 이후의 희망: 레드 레터 크리스천과 정의의 연대',
+          keywords: '은퇴 희망 레드 레터 크리스천 셰인 클레이본 토니 캠폴로 복음주의 정의 네트워크',
+          render: () => `
+            <div class="lead-box teal">
+              인터뷰의 마지막 질문: “은퇴 후 전국의 신자들과 더 많은 시간을 보내며 요즘 가장 기대되는 일은 무엇입니까?” 브루그만은 책 밖의 살아 움직이는 연대 네트워크를 꼽습니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">레드 레터 크리스천(Red Letter Christians)</h2>
+                <ul class="body-list teal">
+                  <li>브루그만은 자신의 저서 <em>Money and Possessions</em>에서 뻗어 나온 선들이 현장의 다양한 실천 운동과 연결되는 모습을 보며 큰 기쁨을 느낍니다.</li>
+                  <li>대표 사례로 <strong>셰인 클레이본(Shane Claiborne)</strong>과 <strong>토니 캠폴로(Tony Campolo)</strong>가 시작한 ‘레드 레터 크리스천’ 운동을 언급합니다.</li>
+                  <li>이들은 정의 프로젝트에 헌신하는 복음주의자들로서, 기존 진보·보수 이분법을 넘어 예수의 가르침을 삶과 사회 정의로 옮기는 실천 공동체입니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">용기·자유·상상력의 연대</h2>
+                <ul class="body-list">
+                  <li>브루그만은 “용기와 자유와 상상력을 품은 사람들의 네트워크에 연대하고 싶다”는 말로 인터뷰를 마무리합니다.</li>
+                  <li>진행자들이 “책과 책 사이 텀이 너무 길다”며 농담하자, 브루그만은 “이제 거의 끝무렵”이라고 웃으면서도 “우리 모두에겐 각자의 강박(집필 열정)이 있으니까요”라며 유쾌하게 대담을 맺습니다.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">마무리 울림</span>
+              <p class="summary-text">
+                노학자의 시선은 강의실이나 서재에 머물지 않고, 용기·자유·상상력으로 제국의 대안을 살아내는 현장의 연대 네트워크를 향해 열려 있었습니다.
+              </p>
+            </div>
+          `
+        },
+        {
+          id: 32,
+          category: 'synthesis',
+          core: true,
+          time: '전체 종합 분석',
+          title: '전체 대립 구조 총정리 비교표: 파라오·시장 경제 대 야훼·언약 경제',
+          keywords: '종합 비교표 파라오 시장 경제 야훼 언약 경제 7대 차원',
+          render: () => `
+            <div class="lead-box">
+              64분 인터뷰 전체에서 반복적으로 대조된 두 체제의 원리를 7개 핵심 차원으로 압축해 비교합니다.
+            </div>
+            <div class="table-wrap">
+              <table class="editorial-table">
+                <thead>
+                  <tr>
+                    <th style="width:18%;">비교 차원</th>
+                    <th style="width:41%;">파라오 · 시장 전체주의 (상품 경제)</th>
+                    <th style="width:41%;">야훼 · 하나님 나라 (언약 경제)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>지배 감정</strong></td>
+                    <td>결핍의 악몽, 끊임없는 불안, 끝없는 탐욕</td>
+                    <td><span class="teal-em">하나님의 신실함에 대한 신뢰, 이웃과의 연대</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>핵심 계명</strong></td>
+                    <td>파라오의 십계명: “게으르다, 짚 없이 벽돌을 더 구워라”</td>
+                    <td><span class="teal-em">모세의 십계명 · 두 가지 큰 계명(하나님 사랑·이웃 사랑)</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>인간 가치</strong></td>
+                    <td>오직 생산성과 소비 능력으로만 평가됨</td>
+                    <td><span class="teal-em">생산성·증명과 무관한 언약적 존엄</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>시간과 휴식</strong></td>
+                    <td>24/7 연중무휴, 수면의 종말, 비판적 성찰 박탈(파시즘 토양)</td>
+                    <td><span class="teal-em">제4계명 안식일: 하나님과 이웃이 함께 멈추어 쉬는 저항</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>분배와 조세</strong></td>
+                    <td>농민·노동자의 잉여 수탈, 근로소득보다 투자소득 우대</td>
+                    <td><span class="teal-em">존엄한 노동 보장, 약자와 일용직 노동자를 세우는 분배</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>서사와 인식</strong></td>
+                    <td>약속을 지키지 못하는 소비 서사, 강제를 숨긴 헤게모니</td>
+                    <td><span class="teal-em">역사 속에서 약속을 지켜온 언약 서사, 제2의 순진성</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>예술과 언어</strong></td>
+                    <td>거짓 욕망을 제조하는 광고·선전, 기분 전환용 시</td>
+                    <td><span class="teal-em">전체주의 바깥에 공간을 여는 예술, 예술적 제안으로서의 성서</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          `
+        },
+        {
+          id: 33,
+          category: 'synthesis',
+          core: false,
+          time: '성서 본문 아카이브',
+          title: '인터뷰에 등장한 핵심 성서 본문 10선 총람',
+          keywords: '성서 본문 창세기 출애굽기 레위기 신명기 누가복음 갈라디아서 데살로니가 야고보서',
+          render: () => `
+            <div class="lead-box teal">
+              브루그만과 진행자들이 64분 동안 직접 인용하고 재해석한 구약·신약 핵심 본문 10곳을 타임스탬프와 함께 정리했습니다.
+            </div>
+            <div class="table-wrap">
+              <table class="editorial-table">
+                <thead>
+                  <tr>
+                    <th style="width:20%;">성서 본문</th>
+                    <th style="width:14%;">등장 시점</th>
+                    <th style="width:66%;">인터뷰 속 핵심 해석과 적용</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>창세기 12장</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:14:44</td>
+                    <td>기근 때 아브라함이 식량을 독점한 파라오에게 내려간 사건 — 독점 경제의 첫 장면</td>
+                  </tr>
+                  <tr>
+                    <td><strong>창세기 41·47장 (요셉 서사)</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:14:52</td>
+                    <td>파라오의 결핍 악몽과 요셉의 중과세 집행으로 농민이 토지를 잃고 노예화된 과정</td>
+                  </tr>
+                  <tr>
+                    <td><strong>출애굽기 5장</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:27:28</td>
+                    <td>“게으르다, 짚 없이 벽돌을 만들라” — 휴식 없는 ‘파라오의 십계명’ 원전</td>
+                  </tr>
+                  <tr>
+                    <td><strong>출애굽기 20장 (십계명·안식일)</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:26:43</td>
+                    <td>파라오에 대한 저항 헌장, 특히 제4계명 안식일은 하나님과 이웃의 휴식이 만나는 축</td>
+                  </tr>
+                  <tr>
+                    <td><strong>레위기 · 신명기</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:58:49</td>
+                    <td>예수의 두 가지 큰 계명(이웃 사랑·하나님 사랑)의 원천이자 거룩한 이웃 경제 법전</td>
+                  </tr>
+                  <tr>
+                    <td><strong>누가복음 3장</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:54:52</td>
+                    <td>세례 요한 등장 시 나열된 정치 권력자 명단 — 매 시대 반복되는 전형적 인물들</td>
+                  </tr>
+                  <tr>
+                    <td><strong>누가복음 12장</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:18:29<br>00:56:32</td>
+                    <td>어리석은 부자 비유 + “염려하지 말고 먼저 하나님 나라를 구하라” (트럼프 앞 추천 설교 본문)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>갈라디아서</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:25:47</td>
+                    <td>브리기테 칼의 해석: 바울이 비판한 ‘율법’은 로마 제국의 법이며, 제국 법 바깥의 삶을 촉구</td>
+                  </tr>
+                  <tr>
+                    <td><strong>데살로니가후서 3:10</strong><br><span style="font-size:15px;color:var(--ink-muted);">(발언: 전서)</span></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:34:12</td>
+                    <td>“일하지 않으면 먹지 말라” — 게으른 빈민이 아니라 노동 없이 잉여를 먹는 부유층 비판으로 역전 독해</td>
+                  </tr>
+                  <tr>
+                    <td><strong>디모데서 · 야고보서</strong></td>
+                    <td style="font-family:var(--font-mono);font-size:18px;">00:33:28</td>
+                    <td>구약의 언약 경제 궤적이 신약 서신 전체에 충실히 계승되고 있음을 보여주는 증거</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          `
+        },
+        {
+          id: 34,
+          category: 'synthesis',
+          core: false,
+          time: '사상가·참고문헌 아카이브',
+          title: '인터뷰에 인용된 현대 사상가·신학자 9인 아카이브',
+          keywords: '로버트 제이 리프턴 브리기테 칼 패트릭 밀러 조너선 크래리 마크 슬루카 구스타보 구티에레스 에드워드 버네이스 폴 리쾨르 줄리아 크리스테바',
+          render: () => `
+            <div class="lead-box">
+              브루그만과 진행자들이 성서와 현대 자본주의를 연결하기 위해 소환한 핵심 사상가·학자 9인의 개념을 한눈에 정리합니다.
+            </div>
+            <div class="table-wrap">
+              <table class="editorial-table">
+                <thead>
+                  <tr>
+                    <th style="width:22%;">인물</th>
+                    <th style="width:24%;">핵심 개념 · 저서</th>
+                    <th style="width:54%;">인터뷰 내 활용 맥락</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>에드워드 버네이스</strong></td>
+                    <td>홍보(PR) · <em>자아의 세기</em></td>
+                    <td>프로이트의 조카로, 전쟁 선전 기법을 기업 소비 욕망 제조에 이식한 인물 (00:21:36)</td>
+                  </tr>
+                  <tr>
+                    <td><strong><a href="http://ellul.org/wp-content/uploads/2018/07/The-Ancient-Conflict-Between-Techne-and-Metis-Full-Paper.pdf" target="_blank" rel="noopener noreferrer">로버트 제이 리프턴</a></strong></td>
+                    <td>전체주의 (Totalism)</td>
+                    <td>강제 없이 모든 기술과 상상력을 포섭하는 시장 헤게모니 분석 틀 제공 (00:23:58)</td>
+                  </tr>
+                  <tr>
+                    <td><strong><a href="https://www.workingpreacher.org/authors/brigitte-kahl" target="_blank" rel="noopener noreferrer">브리기테 칼</a></strong></td>
+                    <td>갈라디아서와 로마 제국법</td>
+                    <td>유니언 신학교 교수. 갈라디아서의 ‘율법’을 로마 제국의 법으로 재해석 (00:25:47)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>패트릭 밀러</strong></td>
+                    <td>제4계명 안식일 구조론</td>
+                    <td>제4계명이 앞 3계명(하나님 안식)과 뒤 6계명(이웃 안식)의 교차점임을 밝힘 (00:29:28)</td>
+                  </tr>
+                  <tr>
+                    <td><strong><a href="https://www.versobooks.com/products/2315-24-7" target="_blank" rel="noopener noreferrer">조너선 크래리</a></strong></td>
+                    <td><em>24/7: 후기자본주의와 수면의 종말</em></td>
+                    <td>자본주의가 마지막 보루인 수면과 휴식마저 공격하는 현상 진단 (00:30:15)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>마크 슬루카</strong></td>
+                    <td>휴식 부재와 파시즘</td>
+                    <td>휴식이 없으면 비판적 성찰이 사라지고 파시즘으로 이어진다는 경고 (00:31:10)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>구스타보 구티에레스</strong></td>
+                    <td>존엄한 노동과 국가 의무</td>
+                    <td>“일하지 않으면 먹지 말라”를 국가의 일자리·생계 보장 의무로 해석 (00:35:22)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>폴 리쾨르</strong></td>
+                    <td>후기비평 · 제2의 순진성</td>
+                    <td>역사비평 이후 계몽주의를 낯설게 하며 성서 서사에 참여하는 해석학 (00:45:47)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>줄리아 크리스테바</strong></td>
+                    <td>예술과 제2의 탄생</td>
+                    <td>예술은 성스러움과의 마지막 연결고리이자 세계를 재구성하는 힘 (01:01:03)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          `
+        },
+        {
+          id: 35,
+          category: 'synthesis',
+          core: true,
+          time: '현장 적용 아젠다',
+          title: '오늘의 교회와 개인을 위한 5대 실천 아젠다',
+          keywords: '실천 아젠다 안식일 서기관 소비 서사 조세 정의 예술 연대',
+          render: () => `
+            <div class="lead-box teal">
+              브루그만의 분석을 책상 위 신학에 머무르게 하지 않고, 개인의 일상과 지역 교회의 사역으로 옮기기 위한 다섯 가지 구체적 실천 과제입니다.
+            </div>
+            <div class="grid-2">
+              <div class="card-box accent-blue-top">
+                <h2 class="card-heading blue">일상과 영성의 저항</h2>
+                <ul class="body-list">
+                  <li><strong>1. 안식일 회복과 24/7 거부</strong>: “생산성이 곧 내 가치”라는 파라오의 거짓말을 끊고, 비판적 성찰과 이웃의 쉼을 지키는 의도적 멈춤을 실천합니다.</li>
+                  <li><strong>2. 소비 서사 낯설게 하기</strong>: 광고와 소비문화가 주입하는 ‘거짓 욕망’을 알아차리고, 약속을 지키지 못하는 서사에서 약속을 지켜온 언약 서사로 삶의 중심을 옮깁니다.</li>
+                  <li><strong>3. 예술적 상상력 가꾸기</strong>: 시와 예술, 그리고 예술 작품으로서의 성서를 가까이하며 시장 전체주의 바깥의 대안적 현실을 상상하는 근육을 기릅니다.</li>
+                </ul>
+              </div>
+              <div class="card-box accent-teal-top">
+                <h2 class="card-heading teal">교회와 공적 영역의 실천</h2>
+                <ul class="body-list teal">
+                  <li><strong>4. 서기관적 텍스트 교육 강화</strong>: 목회자와 리더는 정파적 구호 대신 성서 본문 속 권력·경제 패턴을 차분히 가르쳐, 회중 스스로 해석 도구를 갖추도록 돕습니다.</li>
+                  <li><strong>5. 경제·조세 정의와 대안 공동체 연대</strong>: 근로와 투자의 불공정한 격차, 취약 노동자의 존엄을 신앙의 언어로 질문하며, 레드 레터 크리스천 같은 정의·이웃 경제 네트워크와 연대합니다.</li>
+                </ul>
+              </div>
+            </div>
+          `
+        },
+        {
+          id: 36,
+          category: 'synthesis',
+          core: true,
+          time: '최종 요약 및 출처',
+          title: '최종 요약: 브루그만이 남긴 세 문장과 원본 출처',
+          keywords: '최종 요약 결론 출처 유튜브 링크 저서 링크',
+          render: () => `
+            <div class="lead-box">
+              64분 인터뷰 전체를 관통하는 월터 브루그만의 핵심 메시지를 세 문장으로 정리하며, 모든 검증된 원본 출처를 함께 남깁니다.
+            </div>
+            <div class="grid-3">
+              <div class="card-box compact accent-blue-top">
+                <h2 class="card-heading blue">첫째, 대립의 본질</h2>
+                <p class="body-text">
+                  성서는 창세기부터 계시록까지 약탈적 상품 경제(파라오의 나라)와 이웃 중심 언약 경제(하나님 나라)의 치열한 경합을 증언한다.
+                </p>
+              </div>
+              <div class="card-box compact accent-teal-top">
+                <h2 class="card-heading teal">둘째, 저항의 중심</h2>
+                <p class="body-text">
+                  안식일은 “너의 가치는 생산성으로 결정되지 않는다”고 선언하며, 24/7 소비자본주의와 파시즘에 맞서는 비판적 성찰의 공간을 열어준다.
+                </p>
+              </div>
+              <div class="card-box compact accent-amber-top">
+                <h2 class="card-heading amber">셋째, 목회와 예술</h2>
+                <p class="body-text">
+                  목회자는 예언자 행세가 아니라 성실한 ‘서기관’으로 서야 하며, 성서라는 예술적 제안을 통해 소비 서사에서 언약 서사로의 전환을 초대한다.
+                </p>
+              </div>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">검증된 원본 및 참고 출처</span>
+              <p class="summary-text">
+                • 원본 유튜브 영상: <a href="https://www.youtube.com/watch?v=5MJ-0lrjHJA" target="_blank" rel="noopener noreferrer">Money and Possessions with Walter Brueggemann (Homebrewed Christianity, 1:04:04)</a><br>
+                • 팟캐스트 공식 아카이브: <a href="https://www.homebrewedchristianty.com/2017/05/30/money-and-possessions-with-walter-brueggemann/" target="_blank" rel="noopener noreferrer">Homebrewed Christianity (2017.05.30)</a> ·
+                기반 저서: <a href="https://www.wjkbooks.com/bookproduct/0664262805-money-and-possessions/" target="_blank" rel="noopener noreferrer">Walter Brueggemann, Money and Possessions (WJK Press)</a><br>
+                • 주요 참고 학자: <a href="https://www.workingpreacher.org/authors/brigitte-kahl" target="_blank" rel="noopener noreferrer">Brigitte Kahl</a> ·
+                <a href="https://www.versobooks.com/products/2315-24-7" target="_blank" rel="noopener noreferrer">Jonathan Crary (24/7)</a> ·
+                <a href="http://ellul.org/wp-content/uploads/2018/07/The-Ancient-Conflict-Between-Techne-and-Metis-Full-Paper.pdf" target="_blank" rel="noopener noreferrer">Robert Jay Lifton &amp; Brueggemann (Totalism)</a>
+              </p>
+            </div>
+          `
+        }
+      ];
+
+      const STORAGE_KEY = 'brueggemann_slides_state_v1';
+      let state = {
+        coreOnly: false,
+        currentIndex: 0
+      };
+
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (typeof parsed.coreOnly === 'boolean') state.coreOnly = parsed.coreOnly;
+          if (typeof parsed.currentIndex === 'number') state.currentIndex = parsed.currentIndex;
+        }
+      } catch (e) {
+        // Storage unavailable in sandboxed iframe; continue with in-memory state
+      }
+
+      const elProgress = document.getElementById('progressFill');
+      const elStage = document.getElementById('slideStage');
+      const elModeStatus = document.getElementById('modeStatusBadge');
+      const elModeToggle = document.getElementById('modeToggleBtn');
+      const elTocToggle = document.getElementById('tocToggleBtn');
+      const elTocOverlay = document.getElementById('tocOverlay');
+      const elTocClose = document.getElementById('tocCloseBtn');
+      const elTocSearch = document.getElementById('tocSearchInput');
+      const elTocList = document.getElementById('tocList');
+      const elJumpForm = document.getElementById('jumpForm');
+      const elJumpInput = document.getElementById('jumpInput');
+      const elJumpTotal = document.getElementById('jumpTotal');
+      const elCategoryBar = document.getElementById('categoryBar');
+      const elPrintBtn = document.getElementById('printBtn');
+      const elPrintContainer = document.getElementById('printContainer');
+      const elPrevTop = document.getElementById('prevTopBtn');
+      const elNextTop = document.getElementById('nextTopBtn');
+      const elPrevBottom = document.getElementById('prevBottomBtn');
+      const elNextBottom = document.getElementById('nextBottomBtn');
+      const elToast = document.getElementById('toast');
+
+      let toastTimer = null;
+      function showToast(msg) {
+        elToast.textContent = msg;
+        elToast.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          elToast.classList.remove('show');
+        }, 2000);
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          // Ignore storage errors
+        }
+      }
+
+      function getVisibleSlides() {
+        return state.coreOnly ? SLIDES.filter((s) => s.core) : SLIDES;
+      }
+
+      function getCategoryName(catId) {
+        const found = CATEGORIES.find((c) => c.id === catId);
+        return found ? found.name : '';
+      }
+
+      function buildSlideMarkup(slide, idxInList, totalInList) {
+        const catName = getCategoryName(slide.category);
+        const isCover = slide.id === 1;
+        const headerHtml = isCover
+          ? `
+            <div class="slide-header" style="border-bottom:none;padding-bottom:0;">
+              <div class="slide-meta-row">
+                <div class="meta-left">
+                  <span class="meta-category">${catName}</span>
+                  <span class="meta-sep">·</span>
+                  <span class="meta-time">${slide.time}</span>
+                  <span class="meta-core-tag">핵심 슬라이드</span>
+                </div>
+                <span class="meta-page">${String(idxInList + 1).padStart(2, '0')} / ${String(totalInList).padStart(2, '0')}</span>
+              </div>
+            </div>
+          `
+          : `
+            <div class="slide-header">
+              <div class="slide-meta-row">
+                <div class="meta-left">
+                  <span class="meta-category">${catName}</span>
+                  <span class="meta-sep">·</span>
+                  <span class="meta-time">${slide.time}</span>
+                  ${slide.core ? '<span class="meta-core-tag">핵심 슬라이드</span>' : ''}
+                </div>
+                <span class="meta-page">${String(idxInList + 1).padStart(2, '0')} / ${String(totalInList).padStart(2, '0')}</span>
+              </div>
+              <h1 class="slide-title">${slide.title}</h1>
+            </div>
+          `;
+
+        return `${headerHtml}<div class="slide-body">${slide.render()}</div>`;
+      }
+
+      function renderCategories(activeCategory) {
+        const visible = getVisibleSlides();
+        elCategoryBar.innerHTML = CATEGORIES.map((cat) => {
+          const count = visible.filter((s) => s.category === cat.id).length;
+          if (count === 0) return '';
+          const isActive = cat.id === activeCategory;
+          return `
+            <button type="button" class="cat-btn ${isActive ? 'active' : ''}" data-cat="${cat.id}">
+              <span>${cat.name}</span>
+              <span class="cat-count">${count}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      function renderToc(query) {
+        const visible = getVisibleSlides();
+        const q = (query || '').trim().toLowerCase();
+        const activeSlide = visible[state.currentIndex];
+
+        const filtered = visible
+          .map((s, idx) => ({ slide: s, idx }))
+          .filter(({ slide, idx }) => {
+            if (!q) return true;
+            const hay = `${idx + 1} ${slide.id} ${slide.title} ${slide.time} ${slide.keywords} ${getCategoryName(slide.category)}`.toLowerCase();
+            return hay.includes(q);
+          });
+
+        if (filtered.length === 0) {
+          elTocList.innerHTML = '<div class="toc-empty">검색어와 일치하는 슬라이드가 없습니다. 다른 키워드나 번호를 입력해 보세요.</div>';
+          return;
+        }
+
+        elTocList.innerHTML = filtered.map(({ slide, idx }) => {
+          const isCurrent = activeSlide && activeSlide.id === slide.id;
+          return `
+            <button type="button" class="toc-item ${isCurrent ? 'current' : ''}" data-idx="${idx}">
+              <div class="toc-item-meta">
+                <span>${String(idx + 1).padStart(2, '0')} · ${getCategoryName(slide.category)} · ${slide.time}</span>
+                ${slide.core ? '<span class="toc-core-badge">핵심</span>' : ''}
+              </div>
+              <div class="toc-item-title">${slide.title}</div>
+            </button>
+          `;
+        }).join('');
+      }
+
+      function render() {
+        const visible = getVisibleSlides();
+        if (state.currentIndex < 0) state.currentIndex = 0;
+        if (state.currentIndex >= visible.length) state.currentIndex = visible.length - 1;
+
+        const slide = visible[state.currentIndex];
+        const total = visible.length;
+
+        // Virtualized single-slide render
+        elStage.innerHTML = buildSlideMarkup(slide, state.currentIndex, total);
+
+        // Progress bar
+        const pct = total > 1 ? ((state.currentIndex + 1) / total) * 100 : 100;
+        elProgress.style.width = `${pct}%`;
+
+        // Mode button & badge
+        elModeStatus.textContent = state.coreOnly ? `핵심 ${total}장` : `전체 ${total}장`;
+        elModeToggle.textContent = state.coreOnly ? '전체 보기 (36장)' : '핵심만 보기 (16장)';
+        elModeToggle.setAttribute('aria-pressed', String(state.coreOnly));
+
+        // Jump input
+        elJumpInput.max = String(total);
+        elJumpInput.value = String(state.currentIndex + 1);
+        elJumpTotal.textContent = `/ ${total}`;
+
+        // Prev / Next disabled state
+        const atStart = state.currentIndex === 0;
+        const atEnd = state.currentIndex === total - 1;
+        elPrevTop.disabled = atStart;
+        elPrevBottom.disabled = atStart;
+        elNextTop.disabled = atEnd;
+        elNextBottom.disabled = atEnd;
+
+        renderCategories(slide.category);
+        saveState();
+      }
+
+      function goToIndex(nextIdx, scrollTop) {
+        const visible = getVisibleSlides();
+        const clamped = Math.max(0, Math.min(visible.length - 1, nextIdx));
+        state.currentIndex = clamped;
+        render();
+        if (scrollTop) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+
+      function openToc() {
+        renderToc(elTocSearch.value);
+        elTocOverlay.classList.add('open');
+        elTocToggle.setAttribute('aria-expanded', 'true');
+        setTimeout(() => elTocSearch.focus(), 40);
+      }
+
+      function closeToc() {
+        elTocOverlay.classList.remove('open');
+        elTocToggle.setAttribute('aria-expanded', 'false');
+      }
+
+      function populatePrintView() {
+        const visible = getVisibleSlides();
+        elPrintContainer.innerHTML = visible.map((slide, idx) => `
+          <article class="slide-sheet">${buildSlideMarkup(slide, idx, visible.length)}</article>
+        `).join('');
+      }
+
+      // Event Listeners
+      elPrevTop.addEventListener('click', () => goToIndex(state.currentIndex - 1, true));
+      elNextTop.addEventListener('click', () => goToIndex(state.currentIndex + 1, true));
+      elPrevBottom.addEventListener('click', () => goToIndex(state.currentIndex - 1, true));
+      elNextBottom.addEventListener('click', () => goToIndex(state.currentIndex + 1, true));
+
+      elModeToggle.addEventListener('click', () => {
+        const prevVisible = getVisibleSlides();
+        const currentSlideId = prevVisible[state.currentIndex] ? prevVisible[state.currentIndex].id : 1;
+        state.coreOnly = !state.coreOnly;
+        const nextVisible = getVisibleSlides();
+        const matchedIdx = nextVisible.findIndex((s) => s.id === currentSlideId);
+        state.currentIndex = matchedIdx >= 0 ? matchedIdx : 0;
+        render();
+        showToast(state.coreOnly ? '핵심만 보기 모드로 전환했습니다 (16장)' : '전체 보기 모드로 전환했습니다 (36장)');
+      });
+
+      elCategoryBar.addEventListener('click', (e) => {
+        const btn = e.target.closest('.cat-btn');
+        if (!btn) return;
+        const catId = btn.getAttribute('data-cat');
+        const visible = getVisibleSlides();
+        const firstIdx = visible.findIndex((s) => s.category === catId);
+        if (firstIdx >= 0) {
+          goToIndex(firstIdx, true);
+        }
+      });
+
+      elJumpForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const visible = getVisibleSlides();
+        const num = parseInt(elJumpInput.value, 10);
+        if (Number.isNaN(num) || num < 1 || num > visible.length) {
+          showToast(`1부터 ${visible.length} 사이의 번호를 입력해 주세요.`);
+          elJumpInput.value = String(state.currentIndex + 1);
+          return;
+        }
+        goToIndex(num - 1, true);
+      });
+
+      elTocToggle.addEventListener('click', openToc);
+      elTocClose.addEventListener('click', closeToc);
+      elTocOverlay.addEventListener('click', (e) => {
+        if (e.target === elTocOverlay) closeToc();
+      });
+
+      elTocSearch.addEventListener('input', () => {
+        renderToc(elTocSearch.value);
+      });
+
+      elTocList.addEventListener('click', (e) => {
+        const item = e.target.closest('.toc-item');
+        if (!item) return;
+        const idx = parseInt(item.getAttribute('data-idx'), 10);
+        if (!Number.isNaN(idx)) {
+          closeToc();
+          goToIndex(idx, true);
+        }
+      });
+
+      elPrintBtn.addEventListener('click', () => {
+        populatePrintView();
+        window.print();
+      });
+
+      window.addEventListener('beforeprint', populatePrintView);
+
+      // Keyboard Shortcuts
+      document.addEventListener('keydown', (e) => {
+        const tag = document.activeElement ? document.activeElement.tagName : '';
+        const isInput = tag === 'INPUT' || tag === 'TEXTAREA';
+
+        if (e.key === 'Escape') {
+          if (elTocOverlay.classList.contains('open')) {
+            closeToc();
+          }
+          return;
+        }
+
+        if (isInput || elTocOverlay.classList.contains('open')) return;
+
+        if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+          e.preventDefault();
+          goToIndex(state.currentIndex + 1, true);
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+          e.preventDefault();
+          goToIndex(state.currentIndex - 1, true);
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          goToIndex(0, true);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          goToIndex(getVisibleSlides().length - 1, true);
+        }
+      });
+
+      // Touch Swipe Support
+      let touchStartX = 0;
+      let touchStartY = 0;
+      elStage.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      elStage.addEventListener('touchend', (e) => {
+        if (e.changedTouches.length !== 1) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+          if (dx < 0) {
+            goToIndex(state.currentIndex + 1, true);
+          } else {
+            goToIndex(state.currentIndex - 1, true);
+          }
+        }
+      }, { passive: true });
+
+      // Initial render
+      render();
+    })();
+  </script>
+</body>
+</html>
