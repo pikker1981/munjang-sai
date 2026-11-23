@@ -10,6 +10,18 @@
 .poverty-document .silence-current-record{border-color:var(--poverty-accent);background:var(--poverty-soft)}
 .poverty-document .silence-source-list a{color:var(--poverty-accent)}
 .poverty-document .poverty-disclaimer{font-size:12px!important;line-height:1.9;color:#6b5c50!important}
+.poverty-source-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:28px}
+.poverty-source-grid article{padding:20px;border:1px solid #d8c8ba;border-radius:10px;background:#f8f3ee}
+.poverty-source-kind{display:block;font-size:11px;letter-spacing:.04em;color:var(--poverty-accent);margin-bottom:10px}
+.poverty-source-grid h3{font:600 19px/1.5 var(--display);letter-spacing:-.04em;margin-bottom:10px}
+.poverty-source-grid p{font-size:13px;line-height:1.85;color:#6b5c50}
+.poverty-source-grid a{display:inline-block;margin:12px 12px 0 0;color:var(--poverty-accent);font-size:12px;text-decoration:underline;text-underline-offset:3px}
+.poverty-source-question{margin-top:14px!important;padding-top:12px;border-top:1px solid #decec1;color:var(--poverty-ink)!important}
+.poverty-external-note{margin-top:22px;padding:18px 20px;border-left:3px solid var(--poverty-accent);background:#f4e9df}
+.poverty-external-note strong{display:block;font-size:12px;color:var(--poverty-accent);margin-bottom:6px}
+.poverty-external-note p{font-size:13px;line-height:1.85;color:#6b5c50}
 @media(max-width:767px){
  .poverty-document .silence-rail nav a[aria-current]{border-bottom-color:var(--poverty-accent);background:transparent}
+ .poverty-source-grid{grid-template-columns:1fr;gap:12px}
+ .poverty-source-grid article{padding:17px}
 }
