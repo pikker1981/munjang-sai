@@ -53,6 +53,9 @@
 .poverty-readray-extended-list article{padding:20px;border:1px solid #d8c8ba;border-radius:10px;background:#fbf8f4}
 .poverty-readray-extended-list h3{font:600 20px/1.5 var(--display);letter-spacing:-.04em;margin:8px 0 10px}
 .poverty-readray-extended-list p{font-size:13px;line-height:1.9;color:#6b5c50}
+.poverty-external-subnav{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:10px;border:1px solid #d8c8ba;border-radius:9px;background:#fbf8f4}
+.poverty-external-subnav a{display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:999px;background:#f4e9df;color:var(--poverty-accent);font-size:12px;text-decoration:none}
+.poverty-external-subnav a:hover{background:var(--poverty-accent);color:#fff}
 @media(max-width:767px){
  .poverty-document .silence-rail nav a[aria-current]{border-bottom-color:var(--poverty-accent);background:transparent}
  .poverty-source-grid{grid-template-columns:1fr;gap:12px}
