@@ -57,7 +57,7 @@
 .poverty-external-subnav a{display:inline-flex;align-items:center;min-height:36px;padding:6px 12px;border-radius:999px;background:#f4e9df;color:var(--poverty-accent);font-size:12px;text-decoration:none}
 .poverty-external-subnav a:hover{background:var(--poverty-accent);color:#fff}
 .poverty-slide-embed{margin-top:22px;padding:18px;border:1px solid #d8c8ba;border-radius:10px;background:#f4e9df}
-.poverty-slide-embed iframe{display:block;width:100%;height:1080px;border:1px solid #cfc4b6;border-radius:8px;background:#eceae3;overflow:hidden;scrollbar-width:none}
+.poverty-slide-embed iframe{display:block;width:100%;height:760px;border:1px solid #cfc4b6;border-radius:8px;background:#eceae3;overflow:hidden;scrollbar-width:none}
 .poverty-slide-embed iframe::-webkit-scrollbar{display:none}
 @media(max-width:767px){
  .poverty-document .silence-rail nav a[aria-current]{border-bottom-color:var(--poverty-accent);background:transparent}
@@ -68,5 +68,5 @@
  .poverty-readray-grid{grid-template-columns:1fr;gap:12px}
  .poverty-readray-grid article{padding:17px}
  .poverty-slide-embed{padding:10px}
- .poverty-slide-embed iframe{height:900px}
+ .poverty-slide-embed iframe{height:680px}
 }

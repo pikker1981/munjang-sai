@@ -66,14 +66,20 @@
     try {
       const doc = frame.contentDocument;
       if (!doc) return;
-      frame.style.height = Math.max(doc.body?.scrollHeight || 0, doc.documentElement?.scrollHeight || 0) + 12 + 'px';
+      const stage = doc.querySelector('#slideStage');
+      if (!stage) return;
+      const topbar = doc.querySelector('.topbar');
+      const bottom = doc.querySelector('.bottom-nav');
+      const stageHeight = Math.max(stage.getBoundingClientRect().height, stage.scrollHeight || 0);
+      const height = (topbar?.getBoundingClientRect().height || 0) + stageHeight + (bottom?.getBoundingClientRect().height || 0) + 28;
+      frame.style.height = Math.ceil(height) + 'px';
     } catch {}
   };
   frame.addEventListener('load', () => {
     fit();
     try {
       const resize = new ResizeObserver(fit);
-      resize.observe(frame.contentDocument.documentElement);
+      resize.observe(frame.contentDocument.querySelector('#slideStage'));
       frame.contentWindow.addEventListener('resize', fit, {passive:true});
     } catch {}
   }, {once:true});
