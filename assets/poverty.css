@@ -27,8 +27,17 @@
 .poverty-video{margin-top:16px}
 .poverty-video-label{font-size:11px!important;color:var(--poverty-accent)!important;margin-bottom:8px}
 .poverty-video iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:8px;background:#2d2824}
+.poverty-translation-meta{font-size:12px;color:#7e695b;margin-top:12px}
+.poverty-translation-notice{margin-top:22px;padding:14px 16px;border-radius:8px;background:#f4e9df;color:#6b5c50;font-size:12px;line-height:1.8}
+.poverty-translation-body{margin-top:28px;padding:28px 30px;background:#fbf8f4;border:1px solid #dfd0c3;border-radius:10px}
+.poverty-translation-body p{font-size:14px;line-height:2;color:#4f463e;margin:0 0 20px}
+.poverty-translation-body p:last-child{margin-bottom:0}
+.poverty-translation-source{margin-top:18px;font-size:12px}
+.poverty-translation-source a{color:var(--poverty-accent);text-decoration:underline;text-underline-offset:3px}
 @media(max-width:767px){
  .poverty-document .silence-rail nav a[aria-current]{border-bottom-color:var(--poverty-accent);background:transparent}
  .poverty-source-grid{grid-template-columns:1fr;gap:12px}
  .poverty-source-grid article{padding:17px}
+ .poverty-translation-body{padding:20px 18px}
+ .poverty-translation-body p{font-size:13px;line-height:1.9}
 }
