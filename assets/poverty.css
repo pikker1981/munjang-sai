@@ -20,6 +20,13 @@
 .poverty-external-note{margin-top:22px;padding:18px 20px;border-left:3px solid var(--poverty-accent);background:#f4e9df}
 .poverty-external-note strong{display:block;font-size:12px;color:var(--poverty-accent);margin-bottom:6px}
 .poverty-external-note p{font-size:13px;line-height:1.85;color:#6b5c50}
+.poverty-source-detail{margin-top:14px;border-top:1px solid #decec1;padding-top:10px}
+.poverty-source-detail summary{cursor:pointer;color:var(--poverty-accent);font-size:12px;font-weight:600}
+.poverty-source-detail p{margin-top:10px;font-size:12px;line-height:1.85;color:#6b5c50}
+.poverty-source-note{font-size:11px!important;color:#8b7565!important}
+.poverty-video{margin-top:16px}
+.poverty-video-label{font-size:11px!important;color:var(--poverty-accent)!important;margin-bottom:8px}
+.poverty-video iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:8px;background:#2d2824}
 @media(max-width:767px){
  .poverty-document .silence-rail nav a[aria-current]{border-bottom-color:var(--poverty-accent);background:transparent}
  .poverty-source-grid{grid-template-columns:1fr;gap:12px}
